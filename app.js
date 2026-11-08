@@ -76,39 +76,55 @@
     { src: "v4.mp4", th: "v4.jpg", v: true, d: "Récents" },
     { src: "p-costard.jpg", th: "p-costard.jpg", d: "moi au mariage de Gros loup (un jour)" },
     { src: "v5.mp4", th: "v5.jpg", v: true, d: "Récents" },
-    { src: "p-profil.jpg", th: "p-profil.jpg", d: "Capture d'écran" },
     { src: "v6.mp4", th: "v6.jpg", v: true, d: "Récents" },
     { src: "p-maman.jpg", th: "p-maman.jpg", d: "maman 🤍" },
     { src: "p-bebe.jpg", th: "p-bebe.jpg", d: "3 décembre 2019" },
     { src: "wallpaper.jpg", th: "wallpaper.jpg", d: "Fond d'écran" },
   ];
+  // Album « Masqués » : déverrouillé avec le code du téléphone
+  const HIDDEN = [
+    { src: "p-profil.jpg", th: "p-profil.jpg", d: "🙈 le mot de passe est là-dessus" },
+    ...(C.hiddenVideos || []).map((v) => ({ src: v, th: v.replace(/\.\w+$/, ".jpg"), v: true, d: "🙈 à ne montrer à personne" })),
+  ];
+  const album = () => (S.p.album === "hidden" ? HIDDEN : GALLERY);
 
   const ext = [C.insta && `insta : ${C.insta}`, C.snap && `snap : ${C.snap}`, C.x && `x : ${C.x}`].filter(Boolean);
+  const red = (w = 3) => `<span class="redact">${"0".repeat(w)}</span>`;
 
   const NOTES = [
     { t: "choses à faire avec nana 🌂", time: "23:12", prev: "goûter les nouveautés kinder", pin: true,
       body: () => `<h1>choses à faire avec nana 🌂</h1>
         ${chk(true, "goûter les nouveautés kinder")}
-        ${chk(false, "lui faire goûter le 129 (c'est un grec, elle va voir)")}
+        ${chk(false, `lui faire goûter le ${red()} (c'est un grec, elle va voir)`, true)}
         ${chk(false, "regarder NANA ensemble jusqu'au dernier épisode")}
         ${chk(false, "lui jouer le morceau")}
         ${chk(false, "arrêter de perdre mon téléphone")}` },
     { t: "brouillon", time: "02:41", prev: "Dis, Nana…",
       body: () => `<h1>brouillon</h1>Dis, Nana…\n\n<span class="muted">(la suite je l'écris pas ici. elle est dans le piano.)</span>` },
     { t: "code ??", time: "01:58", prev: "6 chiffres.",
-      body: () => `<h1>code ??</h1>6 chiffres.\n\nles 3 premiers sont quelque part dans mes notes.\nles 3 derniers sont dans sa fiche.\n\nensuite → <b>Téléphone</b>, clavier.${opensAt ? `\n\npas avant ${fmtLong(opensAt)}. elle va me détester mdr` : ""}` },
+      body: () => `<h1>code ??</h1>6 chiffres.\n\nje l'ai mis dans une <b>note verrouillée</b> 🔒, comme ça personne tombe dessus.\n\nle mot de passe ? rangé avec les photos que personne doit voir 🙈` },
     { t: "piano", time: "hier", prev: "do ré mi fa sol la si",
       body: () => `<h1>piano</h1>do ré mi fa sol la si\nA B C D E F G…\n\nn = sol, a = la\n<b>nana = sol la sol la</b>\n\ns = mi, o = la, u = sol\n<b>sousou = mi la sol mi la sol</b>\n\n(personne va capter)` },
     { t: "phrases à arrêter de dire", time: "lundi", prev: "« j'arrive dans 5 min »",
       body: () => `<h1>phrases à arrêter de dire</h1>« j'arrive dans 5 min » (j'arrive dans 25)\n« c'est la dernière partie »\n« t'inquiète »\n« je dors pas, je repose mes yeux »` },
     { t: "courses", time: "samedi", prev: "kinder (les nouveaux)",
       body: () => `<h1>courses</h1>${chk(true, "kinder (les nouveaux)")}${chk(false, "pain (sinon la madré me tue)")}${chk(false, "rendre son chargeur à sista")}${chk(false, "croquettes")}` },
+    // dossier verrouillé
+    { t: "le numéro 🌂", time: "03:07", prev: "Verrouillée", folder: "locked",
+      body: () => `<h1>le numéro 🌂</h1>6 chiffres, dans cet ordre :\n\n<b>1.</b> ce que je devais te faire goûter <span class="muted">(3 chiffres)</span>\n<b>2.</b> la porte derrière laquelle vivent les deux Nana <span class="muted">(3 chiffres)</span>\n\n→ <b>Téléphone</b>, clavier.\n\n<span class="muted">attention : mes potes t'ont menti. tous. enfin presque.</span>${opensAt ? `\n\n<span class="muted">et ça sonnera pas avant ${fmtLong(opensAt)}.</span>` : ""}` },
+    // supprimés récemment (fausses pistes)
+    { t: "VRAI CODE (à supprimer)", time: "il y a 2 j", prev: "424 242", folder: "deleted",
+      body: () => `<h1>VRAI CODE</h1><b style="font-size:30px">424 242</b>\n\nà supprimer avant qu'elle tombe dessus !!` },
+    { t: "mdp notes", time: "il y a 3 j", prev: "kinder 🍫", folder: "deleted",
+      body: () => `<h1>mdp notes</h1>mot de passe des notes verrouillées : <b>kinder</b> 🍫\n\n(ou nana ? je sais plus)` },
+    { t: "ancien brouillon", time: "il y a 5 j", prev: "Dis, Nana… non.", folder: "deleted",
+      body: () => `<h1>ancien brouillon</h1>Dis, Nana… non c'est nul.\nrecommence.\n\nDis, Nana… toujours nul.\n\n<span class="muted">(le vrai est dans le piano)</span>` },
   ];
-  function chk(done, txt) { return `<div class="check${done ? " done" : ""}"><i>${done ? svg.check : ""}</i><span>${esc(txt)}</span></div>`; }
+  function chk(done, txt, html) { return `<div class="check${done ? " done" : ""}"><i>${done ? svg.check : ""}</i><span>${html ? txt : esc(txt)}</span></div>`; }
 
   const CONTACTS = [
-    { n: "129 🥙", tone: "t5", phone: "03 •• •• •• 29", note: "le meilleur grec de Troyes.\n(pas encore testé avec elle)" },
-    { n: "Amaruuu", tone: "t2", phone: "06 •• •• •• 41" },
+    { n: "129 🥙", tone: "t5", phone: "03 25 •• •• ••", note: "le meilleur grec de Troyes.\n(pas encore testé avec elle)" },
+    { n: "Amaruuu", tone: "t2", phone: "06 •• •• •• 41", note: "ment tout le temps" },
     { n: "Amine", tone: "t3", phone: "06 •• •• •• 07", note: "le complice" },
     { n: "CJ", img: "p-cj.jpg", phone: "Grove Street", note: "ah shit, here we go again" },
     { n: "Dadoum", tone: "t4", phone: "07 •• •• •• 18" },
@@ -118,8 +134,9 @@
     { n: "Mimine", tone: "t1", phone: "07 •• •• •• 33" },
     { n: "Momo", tone: "t2", phone: "06 •• •• •• 54" },
     { n: "Nana 🌂", tone: "t5", fav: true, phone: "06 •• •• •• ••", note: "elle porte le prénom d'une héroïne.\nl'autre Nana habite avec elle, derrière la porte n° ███.\n(regarde l'anime 😉)" },
+    { n: "numéro secret 🤫", tone: "mono", phone: "70 71 29", note: "le numéro de l'appel. promis.\n(appeler à minuit)" },
     { n: "Sasa", tone: "t3", phone: "07 •• •• •• 90" },
-    { n: "Shams", tone: "t4", phone: "06 •• •• •• 12", note: "expert en anime" },
+    { n: "Shams", tone: "t4", phone: "06 •• •• •• 12", note: "expert en anime. le seul qui dit la vérité." },
     { n: "Sista", tone: "t1", phone: "06 •• •• •• 77", note: "lui rendre son chargeur" },
     { n: "Soso", tone: "t2", phone: "07 •• •• •• 25" },
     { n: "Taytay", tone: "t6", phone: "06 •• •• •• 38" },
@@ -131,7 +148,30 @@
     const c = typeof n === "string" ? contact(n) : n;
     if (c.img) return `<span class="av ${cls}" style="width:${size}px;height:${size}px;background-image:url('${M("thumb/" + c.img)}')"></span>`;
     if (c.n === "Nana 🌂") return `<span class="av ${c.tone} ${cls}" style="width:${size}px;height:${size}px;font-size:${size * 0.48}px">🌂</span>`;
+    if (c.n === "numéro secret 🤫") return `<span class="av mono ${cls}" style="width:${size}px;height:${size}px;font-size:${size * 0.45}px">🤫</span>`;
     return `<span class="av ${c.tone || "mono"} ${cls}" style="width:${size}px;height:${size}px;font-size:${size * 0.38}px">${initials(c.n)}</span>`;
+  };
+
+  // Faux numéros → faux appels (les fausses pistes)
+  const FAKE_CALLS = {
+    "666666": { n: "CJ", line: "Ah shit, here we go again…\nT'as écouté Amaruuu 😭" },
+    "424242": { n: "Gros loup", line: "J'ai menti. Désolé pas désolé 🕴️" },
+    "707129": { n: "numéro secret 🤫", line: "Raté. Ce contact ment, comme les potes de sousou." },
+    "129129": { n: "129 🥙", line: "Allô le 129 bonjour ? Pour commander, tapez 1…\n(t'as faim ou quoi 🥙)" },
+    "707707": { n: "Shams", line: "La porte deux fois ? 😭\nRelis la note." },
+    "0312": { me: 1, line: "Ça, c'est le code de mon téléphone. Pas le numéro 😏" },
+    "031219": { me: 1, line: "Ça, c'est le code de mon téléphone. Pas le numéro 😏" },
+  };
+  // Faux mots de passe pour la note verrouillée
+  const PW_TROLL = {
+    kinder: "Mdr non. Trop facile 🍫",
+    nana: "Dadoum t'a menti 😭",
+    rrsdy2: "Ça c'est un identifiant, pas un mot de passe 😏",
+    sousou: "Mon prénom ? Sérieux ? 😭",
+    soso: "Mon prénom ? Sérieux ? 😭",
+    "129": "Un mot. Pas des chiffres.",
+    "707": "Un mot. Pas des chiffres.",
+    "0312": "Ça c'est le code du téléphone. Ici c'est un mot.",
   };
 
   const WA_COLORS = { "Amine": "#53bdeb", "Momo": "#ff7aa2", "Gros loup": "#f7b955", "Amaruuu": "#a685ff", "Dadoum": "#4fd1a5", "Shams": "#ff8a65", "Taytay": "#e872d6", "Wiwi": "#9ad35a", "Mimine": "#6ec6ff" };
@@ -142,14 +182,16 @@
       msgs: [
         { sys: "Vous avez créé le groupe « " + GROUP + " »" },
         { f: "Amine", t: "frérot t'es sûr de ton plan ?", tm: "21:02" },
-        { me: 1, t: "t'inquiète. elle va galérer mais ça vaut le coup", tm: "21:03" },
+        { me: 1, t: "t'inquiète. elle va galérer. genre vraiment.", tm: "21:03" },
         { f: "Momo", t: "il a fait un FAUX téléphone 😭😭😭", tm: "21:04" },
-        { f: "Gros loup", t: "moi je dis rien, je suis juste là pour le grec", tm: "21:06" },
-        { f: "Amaruuu", t: "c'est quoi le code déjà ?", tm: "21:10" },
-        { me: 1, t: "chut. 6 chiffres. 3 pour manger, 3 pour dormir 🏠", tm: "21:11" },
-        { f: "Dadoum", t: "dormir ?? 💀", tm: "21:11" },
-        { f: "Shams", t: "regarde l'anime tu comprendras", tm: "21:12" },
-        { f: "Shams", t: "la porte des deux Nana. tout le monde la connaît", tm: "21:12" },
+        { f: "Amaruuu", t: "elle trouvera jamais le numéro", tm: "21:10" },
+        { f: "Amaruuu", t: "allez je l'aide : 66 66 66 🤫", tm: "21:10" },
+        { f: "Gros loup", t: "arrête de l'embrouiller 😭", tm: "21:11" },
+        { f: "Gros loup", t: "le vrai il l'a mis dans ses notes supprimées, je l'ai vu de mes yeux", tm: "21:11" },
+        { f: "Dadoum", t: "et le mot de passe de la note c'est « nana », trop facile", tm: "21:12" },
+        { me: 1, t: "🤐", tm: "21:12" },
+        { f: "Shams", t: "vous racontez que des dingueries", tm: "21:20" },
+        { f: "Shams", t: "moi je dis juste : le premier générique 🎤", tm: "21:20" },
         { f: "Taytay", t: "et si elle trouve pas ?", tm: "21:30" },
         { me: 1, t: "elle trouvera. c'est nana.", tm: "21:31" },
         ...(ext.length ? [{ me: 1, t: "et si elle bloque, le reste est dehors 👀\n" + ext.join("\n"), tm: "21:40" }] : []),
@@ -159,6 +201,11 @@
     { id: "nathan", name: "Gros loup", time: "20:14", unread: 1, msgs: [
         { f: "Gros loup", vid: "v1.mp4", t: "le barbecue est prêt, t'es où", tm: "20:12" },
         { f: "Gros loup", t: "t'as encore perdu ton tel ou quoi", tm: "20:14" } ] },
+    { id: "amaruuu", name: "Amaruuu", time: "19:02", msgs: [
+        { f: "Amaruuu", t: "frr c'est quoi le mdp de ta note", tm: "18:58" },
+        { me: 1, t: "kinder", tm: "19:01" },
+        { f: "Amaruuu", t: "ça marche pas 😭", tm: "19:02" },
+        { me: 1, t: "normal 😏", tm: "19:02" } ] },
     { id: "momo", name: "Momo", time: "18:40", msgs: [
         { f: "Momo", vid: "v4.mp4", t: "l'ascenseur c'est notre studio", tm: "18:39" },
         { me: 1, t: "💀💀", tm: "18:40" } ] },
@@ -175,16 +222,16 @@
         { f: "Shams", vid: "v7.mp4", tm: "02:13" },
         { f: "Shams", t: "tu dors ?", tm: "02:13" },
         { me: 1, t: "non je regarde nana", tm: "02:20" },
-        { f: "Shams", t: "l'anime ou la fille 😭", tm: "02:20" } ] },
+        { f: "Shams", t: "l'anime ou la fille 😭", tm: "02:20" },
+        { f: "Shams", t: "si elle connaît pas le numéro de l'appart des deux Nana, c'est qu'elle a jamais regardé 😤", tm: "02:22" } ] },
   ];
 
   const secretLines = () => [
     "Si tu lis ça, c'est que t'as trouvé mon téléphone.",
-    "Il y a un appel qui t'attend. Six chiffres.",
-    "Les trois premiers : un truc qu'on devait manger ensemble.",
-    "Les trois derniers : la porte derrière laquelle vivent les deux Nana.",
-    ...(opensAt ? [`Mais ça ne sonnera pas avant ${fmtLong(opensAt)}.`] : []),
-    "Tout est dans ce téléphone 🌂",
+    "Il y a un appel qui t'attend. Mais le numéro, je l'ai caché.",
+    "Fouille. Et méfie-toi de mes potes : la moitié ment.",
+    ...(opensAt ? [`De toute façon ça ne sonnera pas avant ${fmtLong(opensAt)}.`] : []),
+    "🌂",
   ];
   const IM = [
     { id: "secret", name: "sousou (2)", hidden: true, time: "", unread: true, msgs: () => secretLines().map((t) => ({ t })) },
@@ -263,6 +310,10 @@
     return `<div class="lock" id="lock" style="background-image:url('${M("wallpaper.jpg")}')">
       <div class="lock-top">${svg.lock}<div class="lock-date">${cap(DAYS[d.getDay()])} ${d.getDate()} ${MONTHS[d.getMonth()]}</div>
       <div class="lock-time" data-clock>${hm(d)}</div><div class="lock-cap">tu as trouvé le téléphone de ${esc(C.owner)}…</div></div>
+      <div class="lock-notifs">
+        <div class="lnotif">${icon("gallery", 34)}<span class="grow"><span class="top"><b>Souvenirs</b><span>9:41</span></span><p>Il y a quelques années… 3 décembre 🍼</p></span><span class="lthumb" style="background-image:url('${M("thumb/p-bebe.jpg")}')"></span></div>
+        <div class="lnotif">${icon("messages", 34)}<span class="grow"><span class="top"><b>La madré</b><span>19:48</span></span><p>prends du pain</p></span></div>
+      </div>
       <button class="lock-hint" data-a="unlock">Balayez vers le haut pour ouvrir</button>${homeBar().replace('data-a="home"', 'data-a="unlock"')}</div>`;
   };
 
@@ -278,33 +329,50 @@
       ${homeBar()}</div>`;
   };
 
-  V.gallery = () => `<div class="scr">${statusBar()}<div class="nav">${backBtn("Accueil")}<span></span></div>
-    <div class="scroll"><div class="big-title">Galerie</div><div class="sub">${GALLERY.length} éléments</div>
-    <div class="ph-grid">${GALLERY.map((g, i) => `<button class="ph-cell" data-a="photo" data-i="${i}" style="background-image:url('${M("thumb/" + g.th)}')" aria-label="${g.v ? "Vidéo" : "Photo"} ${i + 1}">${g.v ? `<span class="vb">${svg.play("#fff", 12)}</span>` : ""}</button>`).join("")}</div>
+  V.gallery = () => {
+    const hid = S.p.album === "hidden", list = album();
+    return `<div class="scr">${statusBar()}<div class="nav">${hid ? backBtn("Galerie", "open", 'data-v="gallery"') : backBtn("Accueil")}<span></span></div>
+    <div class="scroll"><div class="big-title">${hid ? "Masqués" : "Galerie"}</div><div class="sub">${list.length} éléments</div>
+    <div class="ph-grid">${list.map((g, i) => `<button class="ph-cell" data-a="photo" data-i="${i}" data-album="${hid ? "hidden" : ""}" style="background-image:url('${M("thumb/" + g.th)}')" aria-label="${g.v ? "Vidéo" : "Photo"} ${i + 1}">${g.v ? `<span class="vb">${svg.play("#fff", 12)}</span>` : ""}</button>`).join("")}</div>
+    ${hid ? "" : `<div class="sec">Utilitaires</div><div class="card"><button class="row" data-a="hiddenalbum"><span>🙈</span><span class="grow">Masqués</span><span class="muted">🔒</span><span class="chev">${svg.chev}</span></button><button class="row" data-a="toast" data-t="Supprimés récemment : vide. J'efface pas mes photos, moi."><span>🗑️</span><span class="grow">Supprimés récemment</span><span class="chev">${svg.chev}</span></button></div>`}
     <div class="pad-bottom"></div></div>${homeBar()}</div>`;
+  };
 
   V.photo = () => {
-    const i = S.p.i, g = GALLERY[i];
+    const list = album(), i = S.p.i, g = list[i], al = S.p.album || "";
     const media = g.v ? `<video src="${M(g.src)}" controls playsinline autoplay loop></video>` : `<img src="${M(g.src)}" alt="">`;
-    return `<div class="scr viewer">${statusBar()}<div class="nav">${backBtn("Galerie", "open", 'data-v="gallery"')}<div class="viewer-h"><b>${esc(g.d)}</b><small>${i + 1} sur ${GALLERY.length}</small></div><span style="width:70px"></span></div>
+    return `<div class="scr viewer">${statusBar()}<div class="nav">${backBtn(al ? "Masqués" : "Galerie", "open", `data-v="gallery" data-album="${al}"`)}<div class="viewer-h"><b>${esc(g.d)}</b><small>${i + 1} sur ${list.length}</small></div><span style="width:70px"></span></div>
       <div class="media">${media}
-      ${i > 0 ? `<button class="photo-nav prev" data-a="photo" data-i="${i - 1}" aria-label="Précédent">‹</button>` : ""}
-      ${i < GALLERY.length - 1 ? `<button class="photo-nav next" data-a="photo" data-i="${i + 1}" aria-label="Suivant">›</button>` : ""}</div>
+      ${i > 0 ? `<button class="photo-nav prev" data-a="photo" data-album="${al}" data-i="${i - 1}" aria-label="Précédent">‹</button>` : ""}
+      ${i < list.length - 1 ? `<button class="photo-nav next" data-a="photo" data-album="${al}" data-i="${i + 1}" aria-label="Suivant">›</button>` : ""}</div>
       <div style="height:40px"></div>${homeBar()}</div>`;
   };
 
-  V.notes = () => `<div class="scr notes-app">${statusBar()}<div class="nav">${backBtn("Dossiers")}<span></span></div>
-    <div class="scroll"><div class="big-title">iCloud (toutes)</div><div class="sub">${NOTES.length} notes</div>
-    <div class="sec">Épinglées</div><div class="card">${NOTES.filter((n) => n.pin).map(noteRow).join("")}</div>
-    <div class="sec">Récentes</div><div class="card">${NOTES.filter((n) => !n.pin).map(noteRow).join("")}</div>
+  V.notes = () => {
+    const del = S.p.folder === "deleted";
+    const mine = NOTES.filter((n) => !n.folder);
+    if (del) {
+      return `<div class="scr notes-app">${statusBar()}<div class="nav">${backBtn("Notes", "open", 'data-v="notes"')}<span></span></div>
+      <div class="scroll"><div class="big-title">Supprimés récemment</div><div class="sub">Les notes sont effacées définitivement après 30 jours.</div>
+      <div class="card">${NOTES.filter((n) => n.folder === "deleted").map(noteRow).join("")}</div><div class="pad-bottom"></div></div>${homeBar()}</div>`;
+    }
+    return `<div class="scr notes-app">${statusBar()}<div class="nav">${backBtn("Accueil")}<span></span></div>
+    <div class="scroll"><div class="big-title">iCloud (toutes)</div><div class="sub">${mine.length} notes</div>
+    <div class="sec">Épinglées</div><div class="card">${mine.filter((n) => n.pin).map(noteRow).join("")}</div>
+    <div class="sec">Récentes</div><div class="card">${mine.filter((n) => !n.pin).map(noteRow).join("")}</div>
+    <div class="sec">Dossiers</div><div class="card">
+      <button class="row" data-a="note" data-i="${NOTES.findIndex((n) => n.folder === "locked")}"><span>🔒</span><span class="grow">Notes verrouillées</span><span class="muted">1</span><span class="chev">${svg.chev}</span></button>
+      <button class="row" data-a="open" data-v="notes" data-folder="deleted"><span>🗑️</span><span class="grow">Supprimés récemment</span><span class="muted">${NOTES.filter((n) => n.folder === "deleted").length}</span><span class="chev">${svg.chev}</span></button></div>
     <div class="pad-bottom"></div></div>${homeBar()}</div>`;
+  };
   function noteRow(n) {
     const i = NOTES.indexOf(n);
-    return `<button class="row note-row" data-a="note" data-i="${i}"><div class="grow"><b class="ellip">${esc(n.t)}</b><small class="ellip">${esc(n.time)} <em>${esc(n.prev)}</em></small><span class="folder">${svg.folder} Notes</span></div></button>`;
+    return `<button class="row note-row" data-a="note" data-i="${i}"><div class="grow"><b class="ellip">${esc(n.t)}</b><small class="ellip">${esc(n.time)} <em>${esc(n.prev)}</em></small><span class="folder">${svg.folder} ${n.folder === "deleted" ? "Supprimés récemment" : "Notes"}</span></div></button>`;
   }
   V.note = () => {
     const n = NOTES[S.p.i];
-    return `<div class="scr notes-app">${statusBar()}<div class="nav">${backBtn("Notes", "open", 'data-v="notes"')}<span></span></div>
+    const back = n.folder === "deleted" ? backBtn("Supprimés", "open", 'data-v="notes" data-folder="deleted"') : backBtn("Notes", "open", 'data-v="notes"');
+    return `<div class="scr notes-app">${statusBar()}<div class="nav">${back}<span></span></div>
       <div class="scroll"><p class="note-date">${esc(n.time)}</p><div class="note-body">${n.body()}</div></div>${homeBar()}</div>`;
   };
 
@@ -534,9 +602,24 @@
   };
 
   function unlock() {
+    if (S.asking) return;
+    if (C.lockCode && !S.codeOk) {
+      const el = document.getElementById("lock");
+      if (el) { el.style.transform = "translateY(-100%)"; el.style.opacity = "0"; }
+      S.asking = true;
+      askCode({
+        sub: "Saisissez le code", hint: "indice : regarde tes Souvenirs 🍼",
+        onOk: () => { S.asking = false; S.codeOk = true; doUnlock(); },
+        onCancel: () => { S.asking = false; go("lock", {}, false); },
+      });
+      return;
+    }
+    doUnlock();
+  }
+  function doUnlock() {
     const el = document.getElementById("lock");
     if (el) { el.style.transform = "translateY(-100%)"; el.style.opacity = "0"; }
-    setTimeout(() => go("home", {}, false), 280);
+    setTimeout(() => go("home", {}, false), el && el.style.opacity !== "0" ? 280 : 0);
     if (S.unlocked) return;
     S.unlocked = true;
     setTimeout(() => {
@@ -546,6 +629,75 @@
     }, C.delays.whatsapp);
     if (!S.secret) setTimeout(revealSecret, C.delays.secret);
     else S.secretTime = store.get("secretTime", hm());
+  }
+
+  // Écran de code façon iPhone (déverrouillage + album Masqués)
+  function askCode({ sub, hint, onOk, onCancel }) {
+    const len = C.lockCode.length;
+    let val = "", fails = 0;
+    const el = document.createElement("div");
+    el.className = "pc";
+    const keys = [["1", ""], ["2", "ABC"], ["3", "DEF"], ["4", "GHI"], ["5", "JKL"], ["6", "MNO"], ["7", "PQRS"], ["8", "TUV"], ["9", "WXYZ"], ["", ""], ["0", ""], ["", ""]];
+    el.innerHTML = `<div class="pc-bg" style="background-image:url('${M("wallpaper.jpg")}')"></div>
+      <div class="pc-in"><div class="pc-lock">${svg.lock}</div><p class="pc-t">${esc(sub)}</p>
+      <div class="pc-dots">${"<i></i>".repeat(len)}</div><p class="pc-hint" aria-live="polite"></p>
+      <div class="pc-keys">${keys.map(([k, s]) => (k ? `<button class="pc-key" data-k="${k}"><b>${k}</b><small>${s || "&nbsp;"}</small></button>` : "<span></span>")).join("")}</div>
+      <div class="pc-foot"><button data-p="faceid">Face ID</button><button data-p="cancel">Annuler</button></div></div>`;
+    el.style.pointerEvents = "auto";
+    $overlay.appendChild(el);
+    const dots = el.querySelector(".pc-dots"), hintEl = el.querySelector(".pc-hint"), cancelBtn = el.querySelector('[data-p="cancel"]');
+    const paint = () => { [...dots.children].forEach((d, i) => d.classList.toggle("on", i < val.length)); cancelBtn.textContent = val ? "Effacer" : "Annuler"; };
+    const close = () => { document.removeEventListener("keydown", onKey, true); el.remove(); };
+    const press = (k) => {
+      if (val.length >= len) return;
+      val += k; paint();
+      if (val.length === len) setTimeout(() => {
+        if (val === C.lockCode) { close(); onOk(); return; }
+        fails++; val = "";
+        dots.classList.remove("shake"); void dots.offsetWidth; dots.classList.add("shake");
+        paint();
+        hintEl.textContent = fails >= 3 ? hint : fails === 2 ? "Toujours pas…" : "Code incorrect";
+      }, 160);
+    };
+    const onKey = (e) => {
+      if (/^[0-9]$/.test(e.key)) { press(e.key); e.preventDefault(); e.stopPropagation(); }
+      else if (e.key === "Backspace") { val = val.slice(0, -1); paint(); e.preventDefault(); e.stopPropagation(); }
+      else if (e.key === "Escape") { close(); onCancel && onCancel(); }
+    };
+    document.addEventListener("keydown", onKey, true);
+    el.addEventListener("click", (e) => {
+      const k = e.target.closest("[data-k]"), p = e.target.closest("[data-p]");
+      if (k) press(k.dataset.k);
+      else if (p && p.dataset.p === "faceid") toast("Face ID : visage non reconnu. T'es pas " + C.owner + " 😏");
+      else if (p && p.dataset.p === "cancel") { if (val) { val = ""; paint(); } else { close(); onCancel && onCancel(); } }
+    });
+  }
+
+  // Mot de passe de la note verrouillée
+  function askPassword(onOk) {
+    let fails = 0;
+    const el = document.createElement("div");
+    el.className = "sheet-bg";
+    el.style.pointerEvents = "auto";
+    el.innerHTML = `<form class="sheet pw" autocomplete="off"><div class="grab"></div><h3>🔒 Note verrouillée</h3>
+      <p class="muted" style="margin:0 18px 12px">Saisissez le mot de passe des notes pour voir « le numéro 🌂 ».</p>
+      <input id="pw-input" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Mot de passe" aria-label="Mot de passe" />
+      <p class="pw-msg" aria-live="polite"></p>
+      <div class="pw-btns"><button type="button" data-p="cancel">Annuler</button><button type="submit">OK</button></div></form>`;
+    $overlay.appendChild(el);
+    const input = el.querySelector("input"), msg = el.querySelector(".pw-msg"), form = el.querySelector("form");
+    setTimeout(() => input.focus(), 250);
+    el.addEventListener("click", (e) => { if (e.target === el || e.target.closest('[data-p="cancel"]')) el.remove(); });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const v = input.value.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+      if (!v) return;
+      if (v === C.notesPassword.toLowerCase()) { el.remove(); onOk(); return; }
+      fails++;
+      msg.textContent = PW_TROLL[v] || (fails >= 3 ? "Mot de passe incorrect. indice : 🎤 un seul pote dit la vérité." : "Mot de passe incorrect.");
+      form.classList.remove("shake"); void form.offsetWidth; form.classList.add("shake");
+      input.select();
+    });
   }
   function revealSecret() {
     S.secret = true; S.secretTime = hm();
@@ -558,7 +710,7 @@
     const n = document.createElement("button");
     n.className = "notif";
     n.innerHTML = `${icon(app, 38)}<span class="grow"><span class="top"><b>${esc(title)}</b><span>maintenant</span></span><p>${esc(text)}</p></span>`;
-    n.addEventListener("click", () => { n.remove(); if (S.view === "lock") { unlock(); setTimeout(onTap, 320); } else onTap(); });
+    n.addEventListener("click", () => { n.remove(); if (S.view === "lock") unlock(); else if (!S.asking) onTap(); });
     $overlay.appendChild(n);
     setTimeout(() => { n.classList.add("out"); setTimeout(() => n.remove(), 400); }, 6500);
   }
@@ -579,14 +731,27 @@
     el.querySelector(".hang").addEventListener("click", close);
     setTimeout(close, ms);
   }
+  function trollCall(f) {
+    const el = document.createElement("div");
+    el.className = "call";
+    const a = f.me ? av({ n: C.owner, img: "p-bebe.jpg" }, 110) : av(f.n, 110);
+    el.innerHTML = `${a}<h2 style="margin-top:16px">${esc(f.me ? C.owner : f.n)}</h2><p>appel…</p><button class="hang" aria-label="Raccrocher">${svg.phone("#fff", 34).replace("<svg", '<svg style="transform:rotate(135deg)"')}</button>`;
+    $screen.appendChild(el);
+    const p = el.querySelector("p");
+    const t1 = setTimeout(() => { p.style.whiteSpace = "pre-line"; p.style.color = "#fff"; p.style.fontSize = "20px"; p.textContent = f.line; }, 1500);
+    const close = () => { clearTimeout(t1); el.remove(); };
+    el.querySelector(".hang").addEventListener("click", close);
+    setTimeout(close, 6500);
+  }
   function placeCall() {
     if (!S.dial) return;
+    if (FAKE_CALLS[S.dial]) { const f = FAKE_CALLS[S.dial]; S.dial = ""; render(false); trollCall(f); return; }
     if (S.dial !== C.code) {
       S.fails++;
       const n = codeFmt(S.dial);
       S.dial = ""; render(false);
       callScreen(n, "Le numéro que vous avez demandé n'est pas attribué.");
-      if (S.fails === 3) setTimeout(() => toast("indice : regarde dans mes Notes… et dans sa fiche 🌂", 4200), 2700);
+      if (S.fails === 3) setTimeout(() => toast("indice : il y a une note que tu n'as pas encore ouverte 🔒", 4200), 2700);
       return;
     }
     if (opensAt && new Date() < opensAt) {
@@ -681,9 +846,18 @@
     switch (a) {
       case "unlock": unlock(); break;
       case "home": if (S.view !== "lock") go("home", {}, false); break;
-      case "open": go(d.v); break;
-      case "photo": go("photo", { i: +d.i }, false); break;
-      case "note": go("note", { i: +d.i }); break;
+      case "open": go(d.v, { album: d.album || "", folder: d.folder || "" }); break;
+      case "photo": go("photo", { i: +d.i, album: d.album || "" }, false); break;
+      case "note": {
+        const i = +d.i;
+        if (NOTES[i].folder === "locked" && !S.notesOpen) askPassword(() => { S.notesOpen = true; go("note", { i }); });
+        else go("note", { i });
+        break;
+      }
+      case "hiddenalbum":
+        if (S.hiddenOpen) go("gallery", { album: "hidden" });
+        else askCode({ sub: "Saisissez le code pour voir Masqués", hint: "c'est le même code que le téléphone 😉", onOk: () => { S.hiddenOpen = true; go("gallery", { album: "hidden" }); } });
+        break;
       case "contact": go("contact", { n: d.n }); break;
       case "wa": S.readWa.add(d.id); go("wa", { id: d.id }); break;
       case "im": S.readIm.add(d.id); go("im", { id: d.id }); break;
@@ -728,6 +902,7 @@
     }
   });
   document.addEventListener("keydown", (e) => {
+    if (S.asking || document.querySelector(".pc, .pw")) return;
     if (S.view === "lock" && ["ArrowUp", "Enter", " "].includes(e.key)) { e.preventDefault(); unlock(); }
     else if (S.view === "phone" && S.phoneTab === "keypad" && /^[0-9*#]$/.test(e.key)) { S.dial += e.key; render(false); }
     else if (S.view === "phone" && e.key === "Backspace") { S.dial = S.dial.slice(0, -1); render(false); }

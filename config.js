@@ -8,6 +8,18 @@ window.CONFIG = {
   // Météo (vraie météo en direct)
   city: { name: "Troyes", lat: 48.2973, lon: 4.0744 },
 
+  // Code pour déverrouiller le téléphone (et l'album « Masqués »).
+  // 0312 = la date de la photo de toi bébé, montrée dans « Souvenirs » sur l'écran verrouillé.
+  lockCode: "0312",
+
+  // Mot de passe de la note verrouillée « le numéro ».
+  // Indice réel : Shams dit « le premier générique » → Rose (+ la capture « Rose » dans Masqués).
+  notesPassword: "rose",
+
+  // Vidéos cachées dans Galerie → Masqués (mets ta vidéo ici quand tu l'as tournée,
+  // le fichier va dans media/). La première de la liste s'affiche en premier.
+  hiddenVideos: ["v8.mp4", "v9.mp4"],
+
   // Code à taper dans Téléphone → Clavier.
   // 129 = le grec qu'elle doit goûter, 707 = l'appart des deux Nana dans l'anime.
   code: "129707",
