@@ -54,6 +54,11 @@ PHRASES = [
     ("G4 .5 A4 .5 C5 7", ("C", "C")),                                   # fin
 ]
 
+# Ordre de jeu : intro, thème, reprise en variation (mélodie à l'octave sur
+# la première moitié, main gauche différente), puis la fin.
+ORDER = ([(0, 0, 0)] + [(i, 0, 0) for i in range(1, 14)]
+         + [(i, 12 if i <= 6 else 0, 1) for i in range(1, 14)] + [(14, 0, 0), (15, 0, 0)])
+
 CHORDS = {  # fondamentale (MIDI), tierce
     "Am": (45, 3), "F": (41, 4), "C": (48, 4), "G": (43, 4),
     "Dm": (50, 3), "E": (40, 4), "Em": (40, 3),
@@ -119,9 +124,11 @@ def main(outdir):
     t = LEAD
     starts = []
     events = []  # (start, midi, dur, vel, pan)
-    for pi, (mel, (c1, c2)) in enumerate(PHRASES):
+    n_order = len(ORDER)
+    for oi, (pi, up, var) in enumerate(ORDER):
+        mel, (c1, c2) = PHRASES[pi]
         # ralentissement sur les deux dernières phrases
-        beat = BEAT * (1.0 if pi < len(PHRASES) - 2 else (1.12 if pi == len(PHRASES) - 2 else 1.3))
+        beat = BEAT * (1.0 if oi < n_order - 2 else (1.12 if oi == n_order - 2 else 1.3))
         starts.append(round(t, 3))
         bar = 4 * beat
         last = pi == len(PHRASES) - 1
@@ -130,6 +137,8 @@ def main(outdir):
         for bi, ch in enumerate((c1, c2)):
             root, third = CHORDS[ch]
             pattern = [0, 7, 12, 12 + third, 19, 12 + third, 12, 7]
+            if var:
+                pattern = [0, 12, 7, 12 + third, 0, 12, 19, 12 + third]
             if last and bi == 1:
                 pattern = [0, 7, 12, 16, 19, 24, 26, 28]  # C add9, ça s'ouvre
             for k, iv in enumerate(pattern):
@@ -140,6 +149,7 @@ def main(outdir):
         # main droite
         bt = 0.0
         for note, d in parse(mel):
+            note += up
             st = t + bt * beat + rng.normal(0, 0.008)
             bar_end = t + (1 if bt < 4 else 2) * bar
             hold = max(d * beat, bar_end - st) + (0.05 if not last else 4.0)

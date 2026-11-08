@@ -487,7 +487,7 @@
   V.soutube = () => `<div class="scr yt">${statusBar()}<div class="yt-top"><button data-a="home" aria-label="Accueil" style="display:flex">${ICONS.soutube().replace('width="44" height="32"', 'width="30" height="22"')}</button><span>SouTube</span></div>
     <div class="yt-chips"><span class="on">Tout</span><span>Piano</span><span>Anime</span><span>Nana</span><span>Mixes</span></div>
     <div class="scroll">
-      ${C.youtubeUrl ? `<a class="yt-vid" href="${esc(C.youtubeUrl)}" target="_blank" rel="noopener">` : '<button class="yt-vid" data-a="yt">'}<div class="yt-th" style="background-image:url('${M("wallpaper.jpg")}')"><span class="dur">1:59</span>${C.youtubeUrl ? "" : '<span class="lockd">🔒 Vidéo privée<br>Elle ne se termine que si quelqu\'un compose le bon numéro.</span>'}</div>
+      ${C.youtubeUrl ? `<a class="yt-vid" href="${esc(C.youtubeUrl)}" target="_blank" rel="noopener">` : '<button class="yt-vid" data-a="yt">'}<div class="yt-th" style="background-image:url('${M("wallpaper.jpg")}')"><span class="dur">3:28</span>${C.youtubeUrl ? "" : '<span class="lockd">🔒 Vidéo privée<br>Elle ne se termine que si quelqu\'un compose le bon numéro.</span>'}</div>
       <div class="yt-info">${av({ n: C.owner, img: "p-bebe.jpg" }, 36)}<div><b>solo pour nana 🌂 (piano)</b><small>${esc(C.owner)} · 1 vue · non répertoriée</small></div></div>${C.youtubeUrl ? "</a>" : "</button>"}
       <button class="yt-vid" data-a="toast" data-t="Vidéo indisponible dans ton pays (le pays de sousou)"><div class="yt-th" style="background-image:url('${M("thumb/p-cj.jpg")}')"><span class="dur">0:12</span></div>
       <div class="yt-info">${av("CJ", 36)}<div><b>moi quand elle répond « mdr » à mon pavé</b><small>CJ · 2,4 k vues · il y a 3 jours</small></div></div></button>
