@@ -41,26 +41,19 @@ window.CONFIG = {
   // Délais des notifications (en millisecondes)
   delays: { whatsapp: 7000, secret: 45000 },
 
-  // Le texte qui s'écrit pendant le solo (1 ligne = 1 phrase de piano, 16 lignes)
-  text: [
-    "Dis, Nana…",
-    "Tu te souviens de la première fois qu'on s'est parlé ?",
-    "Moi oui. Et je crois que je vais m'en souvenir longtemps.",
-    "Dans l'anime, deux filles avec le même prénom se croisent dans un train, sous la neige.",
-    "Aucune des deux ne sait encore que sa vie vient de prendre un virage.",
-    "Moi non plus, je savais pas.",
-    "Je croyais pas trop au destin. Je trouvais ça bien pour les dessins animés.",
-    "Et puis il y a eu toi.",
-    "Ta voix, ton regard, ta façon de rire avant même la fin de mes phrases.",
-    "Depuis, il y a des petits riens qui me ramènent à toi :",
-    "une chanson qui passe, un prénom dans un générique, le chiffre sept.",
-    "J'ai pas de groupe de rock, pas de studio, pas de chambre 707.",
-    "J'ai juste un piano, quelques notes, et l'envie que tu les entendes.",
-    "Je sais pas encore comment notre histoire se termine.",
-    "Mais si c'est un anime… j'ai pas envie de sauter l'intro.",
-    "— sousou",
-  ],
-
-  // Début de chaque phrase de piano (en secondes) — généré par tools/compose_piano.py
-  timings: [0.6, 7.457, 14.314, 21.171, 28.029, 34.886, 41.743, 48.6, 55.457, 62.314, 69.171, 76.029, 82.886, 89.743, 96.6, 104.28],
+  // La lettre qui s'écrit au stylo plume pendant le solo de piano
+  letter: {
+    place: "Troyes",
+    greeting: "Nana,",
+    paragraphs: [
+      "Ça fait deux mois qu'on se parle, et j'ai l'impression que c'est passé à une vitesse… waw.",
+      "Au début, quand je suis venu te parler, je te trouvais juste belle. Maintenant, c'est ta personne que je trouve belle.",
+      "On ne s'est jamais vus. Je ne vais pas te dire que je me suis attaché à toi, parce qu'on ne peut pas s'attacher à quelqu'un qu'on n'a jamais vu. Mais je me suis attaché à la personne que tu es.",
+      "Je te respecte beaucoup. Toi, Haki, ton addiction au rose, ton addiction au mimi… C'est ça que j'aime chez toi : tu es toi-même.",
+      "Je ne t'écris pas tout ça pour te séduire. Je te l'écris pour te dire que tu es une fille superbe. Avec tout ce qui t'est arrivé, tu aurais pu devenir quelqu'un de mauvais, et personne au monde ne t'en aurait voulu. Mais toi, tu as choisi la bonté.",
+      "Je tenais à te l'écrire, parce que je ne sais pas si on te le dit assez. Alors sache-le :",
+      "Eiva, tu es une femme merveilleuse, qui a conquis mon cœur. Je ne te le cache pas.",
+    ],
+    signature: "Sousou 🤍",
+  },
 };

@@ -1,6 +1,6 @@
 # Le téléphone de sousou 🌂
 
-Une chasse au trésor pour Nana : elle « trouve » le téléphone de sousou (une fausse page qui imite un iPhone), le fouille, reconstitue un code à 6 chiffres et compose le numéro. Un solo de piano se lance et un texte s'écrit ligne par ligne, en même temps que la musique.
+Une chasse au trésor pour Nana : elle « trouve » le téléphone de sousou (une fausse page qui imite un iPhone), le fouille, reconstitue un code à 6 chiffres et compose le numéro. Un solo de piano se lance et une lettre s'écrit toute seule, au stylo plume, pendant la musique.
 
 ## Le parcours (le vrai chemin)
 1. **Écran verrouillé.** Une notif « Souvenirs : 3 décembre 🍼 » donne le code. Elle balaie vers le haut et tape **0312**. Après 3 erreurs, un indice s'affiche. Le bouton Face ID la trolle.
@@ -9,7 +9,7 @@ Une chasse au trésor pour Nana : elle « trouve » le téléphone de sousou (un
 4. **Note « code ?? ».** Le numéro est dans une note verrouillée, et le mot de passe est « rangé avec les photos que personne doit voir ».
 5. **Galerie → Masqués 🔒** (même code 0312). On y trouve la capture « Nom : Rose / ID : RRSDY2 » et les vidéos cachées.
 6. **Notes → Notes verrouillées → mot de passe `rose`** (« Rose » est le premier générique de NANA). La note donne l'énigme : ce que je devais te faire goûter (129), puis la porte des deux Nana (707).
-7. **Téléphone → Clavier → `129707`.** Elle décroche l'appel, puis le piano joue et le texte s'écrit.
+7. **Téléphone → Clavier → `129707`.** Elle décroche l'appel. Le piano joue et la lettre s'écrit au stylo plume, à la vitesse de la musique (la plume ralentit sur la ponctuation). À la fin, elle peut la relire.
 
 ## Les fausses pistes
 | Piège | Où | Ce qui se passe |
@@ -33,14 +33,17 @@ Une chasse au trésor pour Nana : elle « trouve » le téléphone de sousou (un
 | `startDate` | le jour J, utilisé par le Calendrier |
 | `insta`, `snap`, `x` | tes comptes : ils apparaissent dans le groupe WhatsApp et dans le Calendrier |
 | `youtubeUrl` | le lien de la vidéo non répertoriée du solo (sinon : « vidéo privée ») |
-| `text` | le texte final, 16 lignes, une par phrase de piano |
+| `letter` | la lettre : lieu, « Nana, », les paragraphes et la signature |
 
 ## Le piano
 `tools/compose_piano.py` compose et synthétise le solo. C'est une mélodie originale en la mineur, avec deux motifs cachés :
 - **N‑A‑N‑A → sol la sol la**
 - **S‑O‑U‑S‑O‑U → mi la sol mi la sol**
 
-Ce code musical est expliqué dans la note « piano ». Le script produit aussi `piano-timings.json`, qui donne le début de chaque phrase (champ `timings` dans `config.js`).
+Ce code musical est expliqué dans la note « piano ». 
+
+## Écriture
+Les polices manuscrites sont Parisienne (le corps de la lettre) et Pinyon Script (« Nana, » et la signature). Elles sont sous licence OFL, rangées dans `fonts/`, et intégrées dans la page au moment de l'assemblage.
 
 ## Photos et vidéos
 Le dossier `media/` (photos, vidéos, `piano.mp3`) **n'est pas dans le repo**, parce que le repo est public. Il contient :

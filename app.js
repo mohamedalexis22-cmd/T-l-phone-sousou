@@ -761,9 +761,16 @@
     finale();
   }
 
-  // ───────── finale : piano + texte ─────────
+  // ───────── finale : le piano joue, la lettre s'écrit au stylo plume ─────────
+  const PEN = `<svg class="pen" width="34" height="120" viewBox="0 0 34 120" aria-hidden="true">
+    <defs><linearGradient id="pg" x1="0" x2="1"><stop offset="0" stop-color="#0d0d12"/><stop offset=".45" stop-color="#3a3a46"/><stop offset="1" stop-color="#0d0d12"/></linearGradient>
+    <linearGradient id="ng" x1="0" x2="1"><stop offset="0" stop-color="#b8892f"/><stop offset=".5" stop-color="#f3d27a"/><stop offset="1" stop-color="#a67a25"/></linearGradient></defs>
+    <path d="M17 0 L22 16 L12 16 Z" fill="url(#ng)"/><path d="M17 1 L17 13" stroke="#5a3e10" stroke-width=".8"/><circle cx="17" cy="11" r="1.2" fill="#5a3e10"/>
+    <rect x="10.5" y="16" width="13" height="10" rx="2" fill="#1a1a22"/><rect x="10" y="25" width="14" height="3" fill="url(#ng)"/>
+    <rect x="9" y="28" width="16" height="90" rx="7" fill="url(#pg)"/><rect x="23.5" y="34" width="2.5" height="40" rx="1.2" fill="url(#ng)"/></svg>`;
+
   function finale() {
-    const lines = C.text, T = C.timings;
+    const L = C.letter;
     const el = document.createElement("div");
     el.className = "fin";
     el.innerHTML = `<div class="fin-bg" style="background-image:url('${M("wallpaper.jpg")}')"></div>${statusBar()}
@@ -780,58 +787,77 @@
     el.querySelector('[data-f="yes"]').addEventListener("click", () => start());
 
     function start() {
+      const d = new Date();
+      // chaque caractère dans un <span>, les mots insécables : la mise en page est fixée dès le départ
+      const chars = (txt) => [...txt].map((c) => c === " " ? '<span class="ch gap"> </span>' : `<span class="ch">${esc(c)}</span>`).join("")
+        .replace(/((?:<span class="ch">[^<]*<\/span>)+)/g, '<span class="w">$1</span>');
+      const paras = [`<p class="l-date">${chars(`${L.place}, le ${d.getDate()} ${MONTHS[d.getMonth()]}`)}</p>`,
+        `<p class="l-hello">${chars(L.greeting)}</p>`,
+        ...L.paragraphs.map((p) => `<p>${chars(p)}</p>`),
+        `<p class="l-sign">${chars(L.signature)}</p>`];
       el.querySelector(".fin-start").remove();
-      el.insertAdjacentHTML("beforeend", `<div class="fin-top"><b>${esc(C.owner)}</b><small id="fclock">00:00</small></div>
-        <div class="lyrics"><div class="lyr-in" id="lyr">${lines.map((l, i) => `<p class="lyr${i === lines.length - 1 ? " sign" : ""}">${esc(l)}</p>`).join("")}</div></div>
-        <div class="fin-prog"><div class="tr"><i id="fbar"></i></div><div class="tt"><span id="fcur">0:00</span><span id="frem">-0:00</span></div></div>
-        <div class="fin-ctrl"><button id="fpp" aria-label="Pause">${svg.pause("#fff", 26)}</button><button class="end" id="fend" aria-label="Raccrocher">${svg.phone("#fff", 30).replace("<svg", '<svg style="transform:rotate(135deg)"')}</button></div>`);
-      const lyr = el.querySelector("#lyr"), ps = [...lyr.children];
-      const mmss = (s) => `${Math.floor(s / 60)}:${pad(Math.floor(s % 60))}`;
-      let cur = -1, raf;
+      el.classList.add("fin-letter");
+      el.insertAdjacentHTML("beforeend", `<div class="desk" id="desk"><article class="paper" id="paper">${paras.join("")}${PEN}</article></div>
+        <div class="l-ctrl"><button id="fpp" aria-label="Pause">${svg.pause("#3a2f22", 22)}</button><span class="l-prog"><i id="fbar"></i></span><button id="fend" aria-label="Fermer la lettre">✕</button></div>`);
+      const desk = el.querySelector("#desk"), paper = el.querySelector("#paper"), pen = paper.querySelector(".pen");
+      const cs = [...paper.querySelectorAll(".ch")];
+      // poids : la plume ralentit sur la ponctuation et entre les paragraphes
+      const wts = cs.map((c) => {
+        const t = c.textContent, last = c === c.parentElement.lastElementChild && c.closest("p").lastElementChild.contains(c);
+        let w = t === " " ? 0.55 : /[,;:]/.test(t) ? 4 : /[.!?…]/.test(t) ? 7 : 1;
+        if (last) w += 12;
+        return w;
+      });
+      const cum = []; wts.reduce((a, w, i) => (cum[i] = a + w), 0);
+      const W = cum[cum.length - 1];
+      let shown = 0, raf, ended = false, failed = false, t0 = performance.now(), userPaused = false, ft = 0, lastNow = performance.now();
+      const dur = () => (isFinite(audio.duration) && audio.duration > 20 ? audio.duration : 119);
+      const now = () => {
+        if (!failed) return audio.currentTime;
+        const n = performance.now(); if (!userPaused) ft += (n - lastNow) / 1000; lastNow = n; return ft;
+      };
+      const movePen = (c) => {
+        const r = c.getBoundingClientRect(), pr = paper.getBoundingClientRect();
+        pen.style.transform = `translate(${r.right - pr.left - 4}px, ${r.bottom - pr.top - 6}px) rotate(-38deg)`;
+        const y = r.bottom - desk.getBoundingClientRect().top;
+        if (y > desk.clientHeight * 0.62) desk.scrollTop += y - desk.clientHeight * 0.62;
+      };
       const tick = () => {
-        const t = audio.currentTime, d = audio.duration || 119;
-        let k = -1; T.forEach((s, i) => { if (t >= s - 0.15) k = i; });
-        if (k !== cur) {
-          cur = k;
-          ps.forEach((p, i) => { p.className = "lyr" + (i === lines.length - 1 ? " sign" : "") + (i < k ? " past" : i === k ? " now" : ""); });
-          const box = el.querySelector(".lyrics").clientHeight;
-          const target = k >= 0 ? ps[k].offsetTop - box * 0.32 : -box * 0.3;
-          lyr.style.transform = `translateY(${-target}px)`;
-        }
-        el.querySelector("#fbar").style.width = (t / d) * 100 + "%";
-        el.querySelector("#fcur").textContent = mmss(t);
-        el.querySelector("#frem").textContent = "-" + mmss(Math.max(0, d - t));
-        el.querySelector("#fclock").textContent = `${pad(Math.floor(t / 60))}:${pad(Math.floor(t % 60))}`;
+        const t = now(), D = dur();
+        const prog = Math.min(1, Math.max(0, (t - 1.2) / (D - 10)));
+        const target = W * prog;
+        while (shown < cs.length && cum[shown] <= target) cs[shown++].classList.add("on");
+        if (shown > 0) movePen(cs[shown - 1]);
+        el.querySelector("#fbar").style.width = Math.min(100, (t / D) * 100) + "%";
+        if (shown >= cs.length) { pen.classList.add("lift"); S.done = true; store.set("done", true); }
+        if (failed && t >= D) { ended = true; return onEnd(); }
         raf = requestAnimationFrame(tick);
       };
-      audio.play().catch(() => toast("Touche ▶︎ pour lancer le son"));
+      audio.play().catch(() => { failed = true; lastNow = performance.now(); });
       tick();
       const pp = el.querySelector("#fpp");
-      const box = el.querySelector(".lyrics");
-      let ended = false;
+      const setPP = (paused) => { pp.innerHTML = paused ? svg.play("#3a2f22", 22) : svg.pause("#3a2f22", 22); pp.setAttribute("aria-label", paused ? "Lecture" : "Pause"); };
       pp.addEventListener("click", () => {
-        if (ended) {
-          ended = false; box.style.overflowY = ""; lyr.style.position = ""; lyr.style.paddingBlock = ""; cur = -2;
-          audio.currentTime = 0; audio.play(); tick();
-        } else if (audio.paused) audio.play(); else audio.pause();
-        pp.innerHTML = audio.paused ? svg.play("#fff", 26) : svg.pause("#fff", 26);
-        pp.setAttribute("aria-label", audio.paused ? "Lecture" : "Pause");
+        if (ended) { // relire depuis le début
+          ended = false; shown = 0; cs.forEach((c) => c.classList.remove("on")); pen.classList.remove("lift"); desk.scrollTop = 0;
+          ft = 0; lastNow = performance.now(); audio.currentTime = 0; if (!failed) audio.play().catch(() => {}); userPaused = false; setPP(false); tick(); return;
+        }
+        if (failed) { userPaused = !userPaused; lastNow = performance.now(); setPP(userPaused); return; }
+        if (audio.paused) audio.play(); else audio.pause();
+        setPP(audio.paused);
       });
-      const finish = () => {
+      function onEnd() {
+        cancelAnimationFrame(raf); ended = true;
+        cs.forEach((c) => c.classList.add("on")); pen.classList.add("lift");
+        S.done = true; store.set("done", true);
+        pp.innerHTML = "↻"; pp.setAttribute("aria-label", "Relire");
+      }
+      audio.addEventListener("ended", onEnd);
+      el.querySelector("#fend").addEventListener("click", () => {
         cancelAnimationFrame(raf); audio.pause();
         S.done = true; store.set("done", true);
         el.remove(); S.dial = ""; go("home", {}, false);
         setTimeout(() => notify("spotify", "Spotify", "« solo pour nana » a été ajouté à ta playlist 🌂", () => go("spotify")), 600);
-      };
-      el.querySelector("#fend").addEventListener("click", finish);
-      audio.addEventListener("ended", () => {
-        cancelAnimationFrame(raf); ended = true;
-        ps.forEach((p, i) => { p.className = "lyr past" + (i === lines.length - 1 ? " sign now" : ""); });
-        box.style.overflowY = "auto";
-        lyr.style.position = "relative"; lyr.style.transform = "none"; lyr.style.paddingBlock = "20px 80px";
-        pp.innerHTML = svg.play("#fff", 26);
-        pp.setAttribute("aria-label", "Réécouter");
-        S.done = true; store.set("done", true);
       });
     }
   }

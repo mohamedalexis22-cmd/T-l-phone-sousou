@@ -12,6 +12,10 @@ css = (root / "style.css").read_text()
 cfg = (root / "config.js").read_text()
 app = (root / "app.js").read_text()
 
+import base64
+for f in (root / "fonts").glob("*.woff2"):
+    data = base64.b64encode(f.read_bytes()).decode()
+    css = css.replace(f'url("fonts/{f.name}")', f'url(data:font/woff2;base64,{data})')
 head = re.search(r"<head>(.*)</head>", html, re.S).group(1)
 head = re.sub(r'\s*<meta charset[^>]*>', "", head)
 head = re.sub(r'\s*<meta name="viewport"[^>]*>', "", head)
