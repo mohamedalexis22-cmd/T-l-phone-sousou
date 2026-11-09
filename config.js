@@ -18,7 +18,7 @@ window.CONFIG = {
   // Shams ne donne l'indice que si elle répond à sa question (le prénom de son chat).
   catName: "haki",
 
-  // Question pour ouvrir la note secrète « pour toi 🤍 » : ce qu'on a déjà goûté ensemble.
+  // Question pour ouvrir la note secrète « pour toi 🤍 » : à part le 129, ce qu'on doit goûter ensemble.
   secretAnswer: "kinder",
 
   // Mot de passe de la note verrouillée « le numéro ».
@@ -62,7 +62,7 @@ window.CONFIG = {
       "Je ne t'écris pas tout ça pour te séduire. Je te l'écris pour te dire que tu es une fille superbe.",
       "Avec tout ce qui t'est arrivé, tu aurais pu devenir quelqu'un de mauvais, et personne au monde ne t'en aurait voulu. Tu aurais eu toutes les raisons de te fermer et d'être dure avec les autres. Mais toi, tu as choisi la bonté. Et ça, je trouve ça énorme, parce que ça demande une force que beaucoup de gens n'ont pas.",
       "Je tenais à te l'écrire, parce que je ne sais pas si on te le dit assez. Et si personne ne te le dit assez, alors c'est moi qui te le dirai.",
-      "On a encore plein de choses à faire. Les nouveautés Kinder, c'est fait. Mais je te dois toujours le 129, et je compte bien tenir ma promesse.",
+      "On a encore plein de choses à faire. Goûter les nouveautés Kinder, déjà. Et je te dois toujours le 129, et je compte bien tenir ma promesse.",
       "Je ne sais pas ce que la suite nous réserve, et je ne vais rien précipiter. Mais j'ai hâte de te voir en vrai, de voir enfin la personne qu'il y a derrière les messages.",
       "Alors sache-le :",
       "Eiva, tu es une femme merveilleuse, qui a conquis mon cœur. Je ne te le cache pas.",

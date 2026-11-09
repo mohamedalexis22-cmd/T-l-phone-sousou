@@ -94,7 +94,7 @@
   const NOTES = [
     { t: "choses à faire avec nana 🌂", time: "23:12", prev: "goûter les nouveautés kinder", pin: true,
       body: () => `<h1>choses à faire avec nana 🌂</h1>
-        ${chk(true, "goûter les nouveautés kinder")}
+        ${chk(false, "goûter les nouveautés kinder (avec elle !)")}
         ${chk(false, `lui faire goûter le ${red()} (c'est un grec, elle va voir)`, true)}
         ${chk(false, "regarder NANA ensemble jusqu'au dernier épisode")}
         ${chk(false, "lui jouer le morceau")}
@@ -274,7 +274,7 @@
       { d: J, tm: "toute la journée", t: "🌂 elle le trouve ?" },
       { d: addDays(J, 1), tm: "20:00", t: "🥙 129 avec nana", hot: true },
       { d: addDays(J, 3), tm: "21:00", t: "📺 NANA ép. 1 → 47" },
-      { d: addDays(J, -2), tm: "16:00", t: "🍫 kinder (fait ✔︎)" },
+      { d: addDays(J, 2), tm: "16:00", t: "🍫 kinder avec nana" },
     ];
     const base = new Date(Math.min(+J, +dayStart(new Date())));
     ev.push({ d: new Date(base.getFullYear(), base.getMonth(), 7), tm: "07:07", t: "🙈 Masqués", n: "le code de l'album, c'est l'heure de cet événement." });
@@ -986,9 +986,9 @@
       case "letter":
         if (store.get("secretOpen", false)) go("secret");
         else askPassword(() => { store.set("secretOpen", true); go("secret"); setTimeout(() => hearts(innerWidth / 2, innerHeight * 0.4, 26), 350); }, {
-          title: "🔒 pour toi 🤍", text: "Dernière question : qu'est-ce qu'on a déjà goûté ensemble ? (un seul mot)", placeholder: "Réponse",
+          title: "🔒 pour toi 🤍", text: "Dernière question : à part le 129, qu'est-ce qu'on doit goûter ensemble ? (un seul mot)", placeholder: "Réponse",
           check: (v) => v.startsWith(C.secretAnswer), hint: "Non 😭 indice : 🍫 (et cette fois, c'est pas un piège)",
-          trolls: { "129": "Ça, on l'a PAS encore goûté. C'est la suite 😏", grec: "Pas encore ! C'est prévu 🥙", rose: "Ça c'était l'ancien mot de passe 😭" } });
+          trolls: { "129": "À part le 129, j'ai dit 😭", grec: "À part le grec 😭", rose: "Ça c'était l'ancien mot de passe 😭", haki: "On va pas goûter ton chat 😭" } });
         break;
       case "secretplay":
         if (!spAudio) {

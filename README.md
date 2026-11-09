@@ -19,7 +19,7 @@ Une chasse au trésor pour Nana : elle « trouve » le téléphone de sousou (un
 | 12 | Messages → « 129 🥙 » | Le ticket du grec | **129** |
 | 13 | Contacts → Nana 🌂 → gratter le ███ | La porte des deux Nana | **707** |
 | 14 | Téléphone → Clavier → appeler, puis décrocher | sousou : « … va voir dans mes Notes 🌂 » | **129707** |
-| 15 | Notes → « pour toi 🤍 » | Dernière question : « qu'est-ce qu'on a déjà goûté ensemble ? » | **kinder** |
+| 15 | Notes → « pour toi 🤍 » | Dernière question : « à part le 129, qu'est-ce qu'on doit goûter ensemble ? » | **kinder** |
 | 16 | La note | La lettre + le solo en pièce jointe audio, puis secouer le téléphone (ou double-taper) pour des cœurs | 🤍 |
 
 ## Les fausses pistes
@@ -35,7 +35,7 @@ Une chasse au trésor pour Nana : elle « trouve » le téléphone de sousou (un
 | Masqués `0312` | réflexe | « Pas le même code que le téléphone, faut pas abuser 😏 » |
 | Masqués `4321` | faux événement « 🔢 code : 4321 » du Calendrier (le 21) | « T'as vraiment cru que je notais mes codes ? 😭 » |
 | Shams : un autre prénom | — | « c'est pas son nom ça 😂 ». Au bout de 3 essais : « un pouvoir dans One Piece 👀 » |
-| note secrète `129` / `grec` / `rose` | — | « Ça, on l'a PAS encore goûté. C'est la suite 😏 »… |
+| note secrète `129` / `grec` / `rose` / `haki` | — | « À part le 129, j'ai dit 😭 », « On va pas goûter ton chat 😭 »… |
 
 ## Les effets
 - **Des cœurs** apparaissent au déverrouillage, à chaque code ou mot de passe trouvé, quand Shams valide, quand elle gratte la fiche et à l'ouverture de la note secrète.
@@ -48,7 +48,7 @@ Une chasse au trésor pour Nana : elle « trouve » le téléphone de sousou (un
 |---|---|
 | `hiddenCode` | le code de l'album Masqués (par défaut `0707`) |
 | `catName` | la réponse à la question de Shams (par défaut `haki`) |
-| `secretAnswer` | la réponse pour ouvrir « pour toi 🤍 » (par défaut `kinder`) |
+| `secretAnswer` | la réponse pour ouvrir « pour toi 🤍 » (par défaut `kinder` : ce qu'on doit goûter ensemble à part le 129) |
 | `lockCode` | le code de déverrouillage du téléphone (par défaut `0312`) |
 | `notesPassword` | le mot de passe de la note verrouillée (par défaut `rose`) |
 | `hiddenVideos` | les vidéos de l'album Masqués (mets ta vidéo ici) |
