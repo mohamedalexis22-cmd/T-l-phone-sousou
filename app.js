@@ -83,7 +83,7 @@
   ];
   // Album « Masqués » : déverrouillé avec le code du téléphone
   const HIDDEN = [
-    { src: "p-profil.jpg", th: "p-profil.jpg", d: "🙈 le mot de passe est là-dessus" },
+    { src: "p-profil.jpg", th: "p-profil.jpg", d: "🙈 le mot de passe ? Shams le connaît. Il le donne pas à n'importe qui." },
     ...(C.hiddenVideos || []).map((v) => ({ src: v, th: v.replace(/\.\w+$/, ".jpg"), v: true, d: "🙈 à ne montrer à personne" })),
   ];
   const album = () => (S.p.album === "hidden" ? HIDDEN : GALLERY);
@@ -102,7 +102,7 @@
     { t: "brouillon", time: "02:41", prev: "Dis, Nana…",
       body: () => `<h1>brouillon</h1>Dis, Nana…\n\n<span class="muted">(la suite je l'écris pas ici. elle est dans le piano.)</span>` },
     { t: "code ??", time: "01:58", prev: "6 chiffres.",
-      body: () => `<h1>code ??</h1>6 chiffres.\n\nje l'ai mis dans une <b>note verrouillée</b> 🔒, comme ça personne tombe dessus.\n\nle mot de passe ? rangé avec les photos que personne doit voir 🙈` },
+      body: () => `<h1>code ??</h1>6 chiffres.\n\nje l'ai mis dans une <b>note verrouillée</b> 🔒, comme ça personne tombe dessus.\n\nle mot de passe ? commence par les photos que personne doit voir 🙈\n(le code de cet album est noté quelque part dans mon <b>Calendrier</b>)` },
     { t: "piano", time: "hier", prev: "do ré mi fa sol la si",
       body: () => `<h1>piano</h1>do ré mi fa sol la si\nA B C D E F G…\n\nn = sol, a = la\n<b>nana = sol la sol la</b>\n\ns = mi, o = la, u = sol\n<b>sousou = mi la sol mi la sol</b>\n\n(personne va capter)` },
     { t: "phrases à arrêter de dire", time: "lundi", prev: "« j'arrive dans 5 min »",
@@ -111,7 +111,7 @@
       body: () => `<h1>courses</h1>${chk(true, "kinder (les nouveaux)")}${chk(false, "pain (sinon la madré me tue)")}${chk(false, "rendre son chargeur à sista")}${chk(false, "croquettes")}` },
     // dossier verrouillé
     { t: "le numéro 🌂", time: "03:07", prev: "Verrouillée", folder: "locked",
-      body: () => `<h1>le numéro 🌂</h1>6 chiffres, dans cet ordre :\n\n<b>1.</b> ce que je devais te faire goûter <span class="muted">(3 chiffres)</span>\n<b>2.</b> la porte derrière laquelle vivent les deux Nana <span class="muted">(3 chiffres)</span>\n\n→ <b>Téléphone</b>, clavier.\n\n<span class="muted">attention : mes potes t'ont menti. tous. enfin presque.</span>${opensAt ? `\n\n<span class="muted">et ça sonnera pas avant ${fmtLong(opensAt)}.</span>` : ""}` },
+      body: () => `<h1>le numéro 🌂</h1>6 chiffres, dans cet ordre :\n\n<b>1.</b> ce que je devais te faire goûter <span class="muted">(3 chiffres, la preuve est dans mes Messages)</span>\n<b>2.</b> la porte derrière laquelle vivent les deux Nana <span class="muted">(3 chiffres, gratte ta fiche dans mes Contacts)</span>\n\n→ <b>Téléphone</b>, clavier.\n\n<span class="muted">attention : mes potes t'ont menti. tous. enfin presque.</span>${opensAt ? `\n\n<span class="muted">et ça sonnera pas avant ${fmtLong(opensAt)}.</span>` : ""}` },
     // supprimés récemment (fausses pistes)
     { t: "VRAI CODE (à supprimer)", time: "il y a 2 j", prev: "424 242", folder: "deleted",
       body: () => `<h1>VRAI CODE</h1><b style="font-size:30px">424 242</b>\n\nà supprimer avant qu'elle tombe dessus !!` },
@@ -191,7 +191,7 @@
         { f: "Dadoum", t: "et le mot de passe de la note c'est « nana », trop facile", tm: "21:12" },
         { me: 1, t: "🤐", tm: "21:12" },
         { f: "Shams", t: "vous racontez que des dingueries", tm: "21:20" },
-        { f: "Shams", t: "moi je dis juste : le premier générique 🎤", tm: "21:20" },
+        { f: "Shams", t: "moi je dis rien ici. si elle veut la vérité, qu'elle vienne en privé 🤫", tm: "21:20" },
         { f: "Taytay", t: "et si elle trouve pas ?", tm: "21:30" },
         { me: 1, t: "elle trouvera. c'est nana.", tm: "21:31" },
         ...(ext.length ? [{ me: 1, t: "et si elle bloque, le reste est dehors 👀\n" + ext.join("\n"), tm: "21:40" }] : []),
@@ -218,18 +218,22 @@
     { id: "wiwi", name: "Wiwi", time: "hier", msgs: [
         { f: "Wiwi", vid: "v6.mp4", tm: "23:01" },
         { me: 1, t: "frère il est 23h", tm: "23:02" } ] },
-    { id: "shams", name: "Shams", time: "lundi", msgs: [
+    { id: "shams", name: "Shams", time: "22:58", unread: 1, quiz: true, msgs: [
         { f: "Shams", vid: "v7.mp4", tm: "02:13" },
         { f: "Shams", t: "tu dors ?", tm: "02:13" },
         { me: 1, t: "non je regarde nana", tm: "02:20" },
         { f: "Shams", t: "l'anime ou la fille 😭", tm: "02:20" },
-        { f: "Shams", t: "si elle connaît pas le numéro de l'appart des deux Nana, c'est qu'elle a jamais regardé 😤", tm: "02:22" } ] },
+        { f: "Shams", t: "si elle connaît pas le numéro de l'appart des deux Nana, c'est qu'elle a jamais regardé 😤", tm: "02:22" },
+        { sys: "Aujourd'hui" },
+        { f: "Shams", t: "nana c'est toi ? 👀", tm: "22:57" },
+        { f: "Shams", t: "si c'est vraiment toi, dis-moi comment s'appelle ton chat. après je te dis le mot de passe 😼", tm: "22:58" } ] },
   ];
 
   const secretLines = () => [
     "Si tu lis ça, c'est que t'as trouvé mon téléphone.",
     "Il y a un appel qui t'attend. Mais le numéro, je l'ai caché.",
     "Fouille. Et méfie-toi de mes potes : la moitié ment.",
+    "Commence par mes Notes 📝",
     ...(opensAt ? [`De toute façon ça ne sonnera pas avant ${fmtLong(opensAt)}.`] : []),
     "🌂",
   ];
@@ -238,7 +242,7 @@
     { id: "madre", name: "La madré", time: "19:48", unread: true, prev: "prends du pain", msgs: () => [{ t: "tu rentres à quelle heure ?" }, { me: 1, t: "tard" }, { t: "prends du pain" }] },
     { id: "sista", name: "Sista", time: "16:20", prev: "rends moi mon chargeur", msgs: () => [{ t: "rends moi mon chargeur" }, { t: "rends moi mon chargeur" }, { t: "RENDS MOI MON CHARGEUR" }, { me: 1, t: "quel chargeur" }] },
     { id: "mimine", name: "Mimine", time: "hier", prev: "chut", msgs: () => [{ t: "alors avec nana ?? 👀" }, { me: 1, t: "chut" }] },
-    { id: "129", name: "129 🥙", time: "samedi", prev: "Votre commande est prête !", msgs: () => [{ t: "Votre commande est prête ! Merci et à bientôt 🥙" }] },
+    { id: "129", name: "129 🥙", time: "samedi", prev: "Votre commande est prête !", msgs: () => [{ t: "Bienvenue au 129 🥙 Merci pour votre commande !" }, { t: "Votre commande est prête ! À très vite au 129." }, { me: 1, t: "la prochaine fois je viens avec quelqu'un 🌂" }] },
   ];
 
   const FACETIME = [
@@ -272,6 +276,9 @@
       { d: addDays(J, 3), tm: "21:00", t: "📺 NANA ép. 1 → 47" },
       { d: addDays(J, -2), tm: "16:00", t: "🍫 kinder (fait ✔︎)" },
     ];
+    const base = new Date(Math.min(+J, +dayStart(new Date())));
+    ev.push({ d: new Date(base.getFullYear(), base.getMonth(), 7), tm: "07:07", t: "🙈 Masqués", n: "le code de l'album, c'est l'heure de cet événement." });
+    ev.push({ d: new Date(base.getFullYear(), base.getMonth(), 21), tm: "12:00", t: "🔢 code : 4321", n: "(je note jamais mes vrais codes ici, t'es folle ?)" });
     if (C.insta) ev.push({ d: J, tm: "22:00", t: "📸 story insta" });
     if (C.snap) ev.push({ d: addDays(J, 1), tm: "09:00", t: "👻 snap" });
     if (opensAt) ev.push({ d: dayStart(opensAt), tm: hm(opensAt), t: "📞 l'appel", hot: true });
@@ -382,6 +389,7 @@
     return `<div class="scr notes-app">${statusBar()}<div class="nav">${backBtn("Notes", "open", 'data-v="notes"')}<span></span></div>
       <div class="scroll"><p class="note-date">${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()} à ${hm(d)}</p>
       <div class="note-body secret-body">${body}<button class="att" data-a="secretplay"><span class="att-pp">${playing ? svg.pause("#000", 18) : svg.play("#000", 18)}</span><span class="grow"><b>solo pour nana</b><small>Enregistrement audio · 3:28</small></span><span class="att-wave">${Array.from({ length: 22 }, (_, i) => `<i style="height:${6 + Math.round(14 * Math.abs(Math.sin(i * 1.7)))}px"></i>`).join("")}</span></button>
+      <p class="muted shake-tip">psst… secoue le téléphone 📳 (ou tape deux fois sur l'écran)</p>
       </div><div class="pad-bottom"></div></div>${homeBar()}</div>`;
   };
   V.note = () => {
@@ -416,7 +424,7 @@
       const d = new Date(S.calSheet);
       const es = ev.filter((e) => +dayStart(e.d) === +d);
       sheet = `<div class="sheet-bg" data-a="calclose"><div class="sheet" data-stop><div class="grab"></div><h3>${cap(DAYS[d.getDay()])} ${d.getDate()} ${MONTHS[d.getMonth()]}</h3>
-        ${es.length ? es.map((e) => `<div class="ev${e.hot ? " hot" : ""}"><i></i><div><b>${esc(e.t)}</b><small>${esc(e.tm)}</small></div></div>`).join("") : '<div class="ev"><i style="background:var(--fg3)"></i><div><b class="muted">Aucun événement</b></div></div>'}</div></div>`;
+        ${es.length ? es.map((e) => `<div class="ev${e.hot ? " hot" : ""}"><i></i><div><b>${esc(e.t)}</b><small>${esc(e.tm)}</small>${e.n ? `<small style="display:block;color:var(--fg);margin-top:4px">${esc(e.n)}</small>` : ""}</div></div>`).join("") : '<div class="ev"><i style="background:var(--fg3)"></i><div><b class="muted">Aucun événement</b></div></div>'}</div></div>`;
     }
     return `<div class="scr">${statusBar()}<div class="nav">${backBtn(String(base.getFullYear()))}<span></span></div>
       <div class="cal-dow">${["L", "M", "M", "J", "V", "S", "D"].map((x) => `<span>${x}</span>`).join("")}</div>
@@ -445,7 +453,7 @@
       <div class="scroll"><div class="ct-detail">${av(c, 110)}<h2>${esc(c.n)}</h2></div>
       <div class="ct-btns">${btn(svg.bubble("#0a84ff", 22), "message")}${btn(svg.phone("#0a84ff", 22), "appel")}${btn(svg.video("#0a84ff", 22), "vidéo")}${btn(svg.mail("#0a84ff"), "e-mail")}</div>
       <div class="card"><div class="ct-field"><small>mobile</small><div>${esc(c.phone || "—")}</div></div>
-      ${c.note ? `<div class="ct-field"><small>Notes</small><div class="plain">${esc(c.note).replace("███", '<span class="redact">000</span>')}</div></div>` : ""}</div>
+      ${c.note ? `<div class="ct-field"><small>Notes</small><div class="plain">${esc(c.note).replace("███", '<span class="scratch" data-a="scratch"><b>707</b><i></i></span>')}</div></div>` : ""}</div>
       <div class="pad-bottom"></div></div>${homeBar()}</div>`;
   };
 
@@ -533,8 +541,40 @@
     }).join("");
     return `<div class="scr wa-thread">${statusBar()}<div class="wa-head">${backBtn("", "open", 'data-v="whatsapp"')}${c.group ? '<span class="av t5" style="width:36px;height:36px;font-size:18px">🌂</span>' : av(c.name, 36)}
       <span style="min-width:0;flex:1"><b class="ellip">${esc(c.name)}</b><small>${esc(c.group ? c.sub : "en ligne")}</small></span><span class="wa-blue">${svg.video("#25d366", 24)}</span></div>
-      <div class="scroll" id="thread"><div class="wa-msgs">${msgs}</div></div><div class="wa-input"><span class="wa-blue" style="font-size:26px">+</span><div>Message</div></div>${homeBar()}</div>`;
+      <div class="scroll" id="thread"><div class="wa-msgs">${msgs}${c.quiz ? shamsExtra() : ""}</div></div>
+      ${c.quiz ? `<form class="wa-input" id="wa-form" autocomplete="off"><span class="wa-blue" style="font-size:26px">+</span><input id="wa-text" placeholder="Message" aria-label="Message à Shams" autocapitalize="off" autocorrect="off" spellcheck="false" /><button class="wa-send" aria-label="Envoyer">➤</button></form>` : '<div class="wa-input"><span class="wa-blue" style="font-size:26px">+</span><div>Message</div></div>'}${homeBar()}</div>`;
   };
+  // fil de discussion avec Shams (réponses de Nana + réponses de Shams), gardé dans le navigateur
+  S.shams = store.get("shams", []);
+  function shamsExtra() {
+    return S.shams.map((m) => `<div class="bub ${m.me ? "out" : "in"}">${esc(m.t)}<span class="tm">${m.tm}${m.me ? " ✓✓" : ""}</span></div>`).join("");
+  }
+  function shamsSay(lines, after) {
+    let k = 0;
+    const next = () => {
+      if (k >= lines.length) return after && after();
+      setTimeout(() => {
+        S.shams.push({ t: lines[k++], tm: hm() }); store.set("shams", S.shams);
+        if (S.view === "wa" && S.p.id === "shams") { render(false); document.getElementById("wa-text")?.focus(); }
+        next();
+      }, 1100);
+    };
+    next();
+  }
+  function shamsAnswer(raw) {
+    const v = raw.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    if (!v) return;
+    S.shams.push({ me: 1, t: raw.trim(), tm: hm() }); store.set("shams", S.shams);
+    render(false);
+    if (store.get("shamsOk", false)) return shamsSay(["je t'ai déjà tout dit 😭", "le titre du premier générique. vérifie dans sa playlist 🎤"]);
+    if (v.includes(C.catName)) {
+      store.set("shamsOk", true);
+      shamsSay(["ok c'est bien toi 😭", "le mot de passe de sa note, c'est le titre du premier générique de NANA 🎤", "si tu me crois pas, vérifie dans sa playlist Spotify"], () => hearts(innerWidth / 2, innerHeight / 2, 12));
+    } else {
+      const f = (S.shamsFails = (S.shamsFails || 0) + 1);
+      shamsSay([f >= 3 ? "indice : il porte le nom d'un pouvoir dans One Piece 👀" : f === 2 ? "toujours pas 😂 t'es sûre que c'est toi ?" : "c'est pas son nom ça 😂"]);
+    }
+  }
 
   // messages
   V.messages = () => {
@@ -551,7 +591,7 @@
     const c = IM.find((x) => x.id === S.p.id);
     const avatar = c.id === "secret" ? av({ n: C.owner, img: "p-bebe.jpg" }, 54) : av(c.name, 54);
     return `<div class="scr">${statusBar()}<div class="im-head">${backBtn("", "open", 'data-v="messages"')}${avatar}<small>${esc(c.name)} ›</small></div>
-      <div class="scroll" id="thread"><div class="im-msgs"><div class="ts">Aujourd'hui ${c.time || S.secretTime || hm()}</div>${c.msgs().map((m) => `<div class="ibub ${m.me ? "out" : "in"}">${esc(m.t)}</div>`).join("")}</div></div>
+      <div class="scroll" id="thread"><div class="im-msgs"><div class="ts">${/^\d/.test(c.time || "0") ? "Aujourd'hui " + (c.time || S.secretTime || hm()) : cap(c.time)}</div>${c.msgs().map((m) => `<div class="ibub ${m.me ? "out" : "in"}">${esc(m.t)}</div>`).join("")}</div></div>
       <div class="im-input"><span style="font-size:24px;color:var(--fg2)">+</span><div>iMessage</div></div>${homeBar()}</div>`;
   };
 
@@ -598,7 +638,11 @@
       cleanup.push(() => { window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", end); window.removeEventListener("pointercancel", end); });
       el.addEventListener("wheel", (e) => { if (e.deltaY > 30) unlock(); }, { passive: true });
     },
-    wa() { const t = document.getElementById("thread"); t.scrollTop = t.scrollHeight; },
+    wa() {
+      const t = document.getElementById("thread"); t.scrollTop = t.scrollHeight;
+      const f = document.getElementById("wa-form");
+      if (f) f.addEventListener("submit", (e) => { e.preventDefault(); const i = document.getElementById("wa-text"); const v = i.value; i.value = ""; shamsAnswer(v); });
+    },
     im() { const t = document.getElementById("thread"); t.scrollTop = t.scrollHeight; },
     camera() {
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
@@ -625,6 +669,7 @@
       askCode({
         sub: "Saisissez le code", hint: "indice : regarde tes Souvenirs 🍼",
         onOk: () => { S.asking = false; S.codeOk = true; doUnlock(); },
+        trolls: { "1234": "Sérieux ? 1234 ? 😭", "0000": "Non.", "0707": "Ça c'est pour plus tard 😏" },
         onCancel: () => { S.asking = false; go("lock", {}, false); },
       });
       return;
@@ -647,8 +692,8 @@
   }
 
   // Écran de code façon iPhone (déverrouillage + album Masqués)
-  function askCode({ sub, hint, onOk, onCancel }) {
-    const len = C.lockCode.length;
+  function askCode({ sub, hint, onOk, onCancel, code = C.lockCode, trolls = {} }) {
+    const len = code.length;
     let val = "", fails = 0;
     const el = document.createElement("div");
     el.className = "pc";
@@ -667,11 +712,12 @@
       if (val.length >= len) return;
       val += k; paint();
       if (val.length === len) setTimeout(() => {
-        if (val === C.lockCode) { close(); onOk(); return; }
+        if (val === code) { close(); hearts(innerWidth / 2, innerHeight / 2, 14); onOk(); return; }
+        const tr = trolls[val];
         fails++; val = "";
         dots.classList.remove("shake"); void dots.offsetWidth; dots.classList.add("shake");
         paint();
-        hintEl.textContent = fails >= 3 ? hint : fails === 2 ? "Toujours pas…" : "Code incorrect";
+        hintEl.textContent = tr || (fails >= 3 ? hint : fails === 2 ? "Toujours pas…" : "Code incorrect");
       }, 160);
     };
     const onKey = (e) => {
@@ -689,14 +735,16 @@
   }
 
   // Mot de passe de la note verrouillée
-  function askPassword(onOk) {
+  function askPassword(onOk, o = {}) {
+    const { title = "🔒 Note verrouillée", text = "Saisissez le mot de passe des notes pour voir « le numéro 🌂 ».", check = (v) => v === C.notesPassword.toLowerCase(),
+      trolls = PW_TROLL, hint = "Mot de passe incorrect. indice : 🎤 un seul pote dit la vérité.", placeholder = "Mot de passe" } = o;
     let fails = 0;
     const el = document.createElement("div");
     el.className = "sheet-bg";
     el.style.pointerEvents = "auto";
-    el.innerHTML = `<form class="sheet pw" autocomplete="off"><div class="grab"></div><h3>🔒 Note verrouillée</h3>
-      <p class="muted" style="margin:0 18px 12px">Saisissez le mot de passe des notes pour voir « le numéro 🌂 ».</p>
-      <input id="pw-input" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Mot de passe" aria-label="Mot de passe" />
+    el.innerHTML = `<form class="sheet pw" autocomplete="off"><div class="grab"></div><h3>${esc(title)}</h3>
+      <p class="muted" style="margin:0 18px 12px">${esc(text)}</p>
+      <input id="pw-input" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${esc(placeholder)}" aria-label="${esc(placeholder)}" />
       <p class="pw-msg" aria-live="polite"></p>
       <div class="pw-btns"><button type="button" data-p="cancel">Annuler</button><button type="submit">OK</button></div></form>`;
     $overlay.appendChild(el);
@@ -707,9 +755,9 @@
       e.preventDefault();
       const v = input.value.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
       if (!v) return;
-      if (v === C.notesPassword.toLowerCase()) { el.remove(); onOk(); return; }
+      if (check(v)) { el.remove(); hearts(innerWidth / 2, innerHeight / 2, 14); onOk(); return; }
       fails++;
-      msg.textContent = PW_TROLL[v] || (fails >= 3 ? "Mot de passe incorrect. indice : 🎤 un seul pote dit la vérité." : "Mot de passe incorrect.");
+      msg.textContent = trolls[v] || (fails >= 3 ? hint : "Mot de passe incorrect.");
       form.classList.remove("shake"); void form.offsetWidth; form.classList.add("shake");
       input.select();
     });
@@ -736,6 +784,62 @@
     $overlay.appendChild(el);
     setTimeout(() => el.remove(), ms);
   }
+
+  // ───────── effets : gratter, cœurs, secousse ─────────
+  function scratch(el, amount) {
+    const cover = el.querySelector("i");
+    const o = Math.max(0, (parseFloat(cover.style.opacity || "1")) - amount);
+    cover.style.opacity = o;
+    if (o === 0 && !el.dataset.done) { el.dataset.done = "1"; const r = el.getBoundingClientRect(); hearts(r.left + r.width / 2, r.top, 6); }
+  }
+  document.addEventListener("pointermove", (e) => {
+    const sc = e.target.closest && e.target.closest(".scratch");
+    if (sc && (e.buttons || e.pointerType === "touch")) scratch(sc, 0.04);
+  });
+
+  const HEARTS = ["🤍", "💗", "💕", "🩷", "💖", "🌸"];
+  function hearts(x, y, n = 18) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) n = Math.min(n, 4);
+    const box = $app.getBoundingClientRect();
+    for (let i = 0; i < n; i++) {
+      const h = document.createElement("span");
+      h.className = "heart";
+      h.textContent = HEARTS[i % HEARTS.length];
+      const dx = (Math.random() - 0.5) * 220, dy = -(160 + Math.random() * 320), rot = (Math.random() - 0.5) * 80;
+      h.style.left = (x - box.left) + "px"; h.style.top = (y - box.top) + "px";
+      h.style.fontSize = 18 + Math.random() * 22 + "px";
+      h.style.setProperty("--dx", dx + "px"); h.style.setProperty("--dy", dy + "px"); h.style.setProperty("--r", rot + "deg");
+      h.style.animationDelay = Math.random() * 0.25 + "s";
+      $overlay.appendChild(h);
+      setTimeout(() => h.remove(), 2200);
+    }
+  }
+  function heartRain() {
+    const box = $app.getBoundingClientRect();
+    for (let i = 0; i < 10; i++) setTimeout(() => hearts(box.left + Math.random() * box.width, box.top + box.height * (0.5 + Math.random() * 0.4), 4), i * 90);
+  }
+  // double-tap n'importe où → des cœurs (marche partout)
+  let lastTap = 0;
+  $app.addEventListener("pointerup", (e) => {
+    const t = performance.now();
+    if (t - lastTap < 300 && !e.target.closest("input, .pc-key, .key")) hearts(e.clientX, e.clientY, 10);
+    lastTap = t;
+  });
+  // secouer le téléphone → pluie de cœurs (iPhone : autorisation demandée au premier toucher)
+  let lastShake = 0, motionAsked = false, prev = null;
+  window.addEventListener("devicemotion", (e) => {
+    const a = e.accelerationIncludingGravity; if (!a || a.x == null) return;
+    if (prev) {
+      const d = Math.abs(a.x - prev.x) + Math.abs(a.y - prev.y) + Math.abs(a.z - prev.z);
+      const t = performance.now();
+      if (d > 32 && t - lastShake > 900) { lastShake = t; heartRain(); }
+    }
+    prev = { x: a.x, y: a.y, z: a.z };
+  });
+  document.addEventListener("click", () => {
+    if (motionAsked) return; motionAsked = true;
+    try { if (window.DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === "function") DeviceMotionEvent.requestPermission().catch(() => {}); } catch {}
+  }, { capture: true });
 
   // ───────── appels ─────────
   function callScreen(name, line, ms = 2600) {
@@ -845,7 +949,9 @@
       }
       case "hiddenalbum":
         if (S.hiddenOpen) go("gallery", { album: "hidden" });
-        else askCode({ sub: "Saisissez le code pour voir Masqués", hint: "c'est le même code que le téléphone 😉", onOk: () => { S.hiddenOpen = true; go("gallery", { album: "hidden" }); } });
+        else askCode({ sub: "Saisissez le code de Masqués", hint: "indice : regarde mon Calendrier 📅", code: C.hiddenCode,
+          trolls: { [C.lockCode]: "Pas le même code que le téléphone, faut pas abuser 😏", "4321": "T'as vraiment cru que je notais mes codes ? 😭", "1234": "Mdr. Non." },
+          onOk: () => { S.hiddenOpen = true; go("gallery", { album: "hidden" }); } });
         break;
       case "contact": go("contact", { n: d.n }); break;
       case "wa": S.readWa.add(d.id); go("wa", { id: d.id }); break;
@@ -868,7 +974,7 @@
           if (spAudio.paused) spAudio.play(); else spAudio.pause();
           render(false);
         } else {
-          toast(`Aperçu indisponible · ${t.t}`);
+          toast(t.t === "Rose" ? "🎤 « Rose » : générique d'ouverture n°1 de NANA" : `Aperçu indisponible · ${t.t}`);
         }
         break;
       }
@@ -876,7 +982,14 @@
         toast(S.done ? "Tu l'as déjà entendue… dans Spotify maintenant 🌂" : "🔒 Compose le bon numéro.");
         break;
       case "toast": toast(d.t); break;
-      case "letter": go("secret"); break;
+      case "scratch": scratch(b, 0.34); break;
+      case "letter":
+        if (store.get("secretOpen", false)) go("secret");
+        else askPassword(() => { store.set("secretOpen", true); go("secret"); setTimeout(() => hearts(innerWidth / 2, innerHeight * 0.4, 26), 350); }, {
+          title: "🔒 pour toi 🤍", text: "Dernière question : qu'est-ce qu'on a déjà goûté ensemble ? (un seul mot)", placeholder: "Réponse",
+          check: (v) => v.startsWith(C.secretAnswer), hint: "Non 😭 indice : 🍫 (et cette fois, c'est pas un piège)",
+          trolls: { "129": "Ça, on l'a PAS encore goûté. C'est la suite 😏", grec: "Pas encore ! C'est prévu 🥙", rose: "Ça c'était l'ancien mot de passe 😭" } });
+        break;
       case "secretplay":
         if (!spAudio) {
           spAudio = new Audio(M("piano.mp3"));

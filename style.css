@@ -483,3 +483,15 @@ img { max-width: 100%; }
 .att small { color: var(--fg2); font-size: 12.5px; }
 .att-wave { display: flex; align-items: center; gap: 2px; flex: none; }
 .att-wave i { width: 2px; border-radius: 1px; background: var(--fg3); }
+
+/* ── effets ── */
+.heart { position: absolute; z-index: 120; pointer-events: none; transform: translate(-50%, -50%); animation: heartUp 1.8s cubic-bezier(.2,.7,.3,1) forwards; text-shadow: 0 2px 8px rgba(0,0,0,.25); }
+@keyframes heartUp { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.3); } 15% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); } 100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(var(--r)) scale(.9); } }
+.scratch { position: relative; display: inline-block; padding: 0 6px; border-radius: 4px; touch-action: none; cursor: grab; }
+.scratch b { color: var(--yellow); }
+.scratch i { position: absolute; inset: 0; border-radius: 4px; background: repeating-linear-gradient(45deg, #b8b8be 0 4px, #9a9aa0 4px 8px); transition: opacity .2s; }
+.ct-field .scratch-tip { color: var(--fg2); font-size: 13px; }
+.wa-input input { flex: 1; min-width: 0; background: #1f2c34; border: 0; border-radius: 20px; padding: 9px 14px; font: inherit; font-size: 15px; color: var(--fg); user-select: text; -webkit-user-select: text; }
+.wa-input input:focus { outline: 2px solid var(--wa-green); }
+.wa-send { width: 38px; height: 38px; border-radius: 50%; background: var(--wa-green); color: #000; font-size: 16px; flex: none; }
+.shake-tip { text-align: center; font-size: 13px; margin-top: 20px !important; }

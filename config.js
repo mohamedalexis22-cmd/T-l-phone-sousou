@@ -12,6 +12,15 @@ window.CONFIG = {
   // 0312 = la date de la photo de toi bébé, montrée dans « Souvenirs » sur l'écran verrouillé.
   lockCode: "0312",
 
+  // Code de l'album « Masqués » : l'heure de l'événement 🙈 du Calendrier (07:07).
+  hiddenCode: "0707",
+
+  // Shams ne donne l'indice que si elle répond à sa question (le prénom de son chat).
+  catName: "haki",
+
+  // Question pour ouvrir la note secrète « pour toi 🤍 » : ce qu'on a déjà goûté ensemble.
+  secretAnswer: "kinder",
+
   // Mot de passe de la note verrouillée « le numéro ».
   // Indice réel : Shams dit « le premier générique » → Rose (+ la capture « Rose » dans Masqués).
   notesPassword: "rose",
