@@ -70,8 +70,12 @@ Ce code musical est expliqué dans la note « piano ».
 Les polices manuscrites sont Parisienne (le corps de la lettre) et Pinyon Script (« Nana, » et la signature). Elles sont sous licence OFL, rangées dans `fonts/`, et intégrées dans la page au moment de l'assemblage.
 
 ## Photos et vidéos
-Le dossier `media/` (photos, vidéos, `piano.mp3`) **n'est pas dans le repo**, parce que le repo est public. Il contient :
-`wallpaper.jpg`, `p-voiture.jpg`, `p-profil.jpg`, `p-equipe.jpg`, `p-cj.jpg`, `p-costard.jpg`, `p-bebe.jpg`, `p-maman.jpg`, `p-kais.jpg`, `v1.mp4` … `v7.mp4`, `piano.mp3`, plus des miniatures de 360 px dans `media/thumb/`.
+Les photos, les vidéos et `piano.mp3` sont dans `media/` (miniatures dans `media/thumb/`).
+
+## Mettre en ligne (GitHub Pages)
+À chaque push sur `main`, le site est publié automatiquement par `.github/workflows/pages.yml`.
+Il faut l'activer une fois : **Settings → Pages → Source : GitHub Actions**.
+Adresse : https://mohamedalexis22-cmd.github.io/T-l-phone-sousou/
 
 ## Lancer en local
 ```
