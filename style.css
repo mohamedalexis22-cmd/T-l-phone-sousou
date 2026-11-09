@@ -473,3 +473,13 @@ img { max-width: 100%; }
 .paper .ch.on.still { animation: none; }
 .secret-on b { color: var(--yellow); }
 .fin-say { margin-top: 26px !important; color: #fff !important; font-size: 21px; min-height: 60px; text-align: center; padding: 0 30px; line-height: 1.4; }
+
+/* ── note secrète (vraie note iPhone) ── */
+.secret-body p { margin: 0 0 14px; }
+.secret-body h1 { margin-bottom: 14px; }
+.att { display: flex; align-items: center; gap: 12px; width: 100%; margin-top: 18px; padding: 12px 14px; border-radius: 12px; background: var(--cell); text-align: left; white-space: normal; }
+.att-pp { width: 36px; height: 36px; border-radius: 50%; background: var(--yellow); display: grid; place-items: center; flex: none; }
+.att b { display: block; font-size: 15px; }
+.att small { color: var(--fg2); font-size: 12.5px; }
+.att-wave { display: flex; align-items: center; gap: 2px; flex: none; }
+.att-wave i { width: 2px; border-radius: 1px; background: var(--fg3); }

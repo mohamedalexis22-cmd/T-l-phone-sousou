@@ -374,6 +374,16 @@
     const i = NOTES.indexOf(n);
     return `<button class="row note-row" data-a="note" data-i="${i}"><div class="grow"><b class="ellip">${esc(n.t)}</b><small class="ellip">${esc(n.time)} <em>${esc(n.prev)}</em></small><span class="folder">${svg.folder} ${n.folder === "deleted" ? "Supprimés récemment" : "Notes"}</span></div></button>`;
   }
+  // la note secrète : une vraie note iPhone, avec le solo en pièce jointe audio
+  V.secret = () => {
+    const L = C.letter, d = new Date(store.get("secretAt", Date.now()));
+    const playing = spAudio && !spAudio.paused;
+    const body = [`<h1>pour toi 🤍</h1>`, `<p>${esc(L.greeting)}</p>`, ...L.paragraphs.map((p) => `<p>${esc(p)}</p>`), `<p>${esc(L.signature)}</p>`].join("");
+    return `<div class="scr notes-app">${statusBar()}<div class="nav">${backBtn("Notes", "open", 'data-v="notes"')}<span></span></div>
+      <div class="scroll"><p class="note-date">${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()} à ${hm(d)}</p>
+      <div class="note-body secret-body">${body}<button class="att" data-a="secretplay"><span class="att-pp">${playing ? svg.pause("#000", 18) : svg.play("#000", 18)}</span><span class="grow"><b>solo pour nana</b><small>Enregistrement audio · 3:28</small></span><span class="att-wave">${Array.from({ length: 22 }, (_, i) => `<i style="height:${6 + Math.round(14 * Math.abs(Math.sin(i * 1.7)))}px"></i>`).join("")}</span></button>
+      </div><div class="pad-bottom"></div></div>${homeBar()}</div>`;
+  };
   V.note = () => {
     const n = NOTES[S.p.i];
     const back = n.folder === "deleted" ? backBtn("Supprimés", "open", 'data-v="notes" data-folder="deleted"') : backBtn("Notes", "open", 'data-v="notes"');
@@ -806,88 +816,12 @@
           p.textContent = "Appel terminé";
           setTimeout(() => {
             el.remove(); S.dial = "";
-            S.done = true; store.set("done", true);
+            S.done = true; store.set("done", true); store.set("secretAt", Date.now());
             go("home", {}, false);
             setTimeout(() => notify("notes", "Notes", "Une note secrète vient d'être déverrouillée : « pour toi 🤍 »", () => go("notes")), 500);
           }, 1200);
         }
       }, 1400);
-    });
-  }
-
-  // 2) la note secrète : la lettre s'écrit au stylo plume avec le piano (en entier les fois suivantes)
-  function openLetter() {
-    const L = C.letter;
-    const fresh = !store.get("letterSeen", false);
-    const el = document.createElement("div");
-    el.className = "fin fin-letter";
-    const d = new Date();
-    const chars = (txt) => [...txt].map((c) => c === " " ? '<span class="ch gap"> </span>' : `<span class="ch">${esc(c)}</span>`).join("")
-      .replace(/((?:<span class="ch">[^<]*<\/span>)+)/g, '<span class="w">$1</span>');
-    const paras = [`<p class="l-date">${chars(`${L.place}, le ${d.getDate()} ${MONTHS[d.getMonth()]}`)}</p>`,
-      `<p class="l-hello">${chars(L.greeting)}</p>`,
-      ...L.paragraphs.map((p) => `<p>${chars(p)}</p>`),
-      `<p class="l-sign">${chars(L.signature)}</p>`];
-    el.innerHTML = `<div class="fin-bg" style="background-image:url('${M("wallpaper.jpg")}')"></div>${statusBar()}
-      <div class="nav l-nav"><button class="back" id="lback">${svg.back}<span>Notes</span></button><span class="l-title">pour toi 🤍</span><span style="width:60px"></span></div>
-      <div class="desk" id="desk"><article class="paper" id="paper">${paras.join("")}${PEN}</article></div>
-      <div class="l-ctrl"><button id="fpp" aria-label="Pause">${svg.pause("#3a2f22", 22)}</button><span class="l-prog"><i id="fbar"></i></span><span class="l-note">♪ solo pour nana</span></div>`;
-    $overlay.appendChild(el); el.style.pointerEvents = "auto";
-    const audio = new Audio(M("piano.mp3"));
-    const desk = el.querySelector("#desk"), paper = el.querySelector("#paper"), pen = paper.querySelector(".pen");
-    const cs = [...paper.querySelectorAll(".ch")];
-    // poids : la plume ralentit sur la ponctuation et entre les paragraphes
-    const wts = cs.map((c) => {
-      const t = c.textContent, last = c === c.parentElement.lastElementChild && c.closest("p").lastElementChild.contains(c);
-      let w = t === " " ? 0.55 : /[,;:]/.test(t) ? 4 : /[.!?…]/.test(t) ? 7 : 1;
-      if (last) w += 12;
-      return w;
-    });
-    const cum = []; wts.reduce((a, w, i) => (cum[i] = a + w), 0);
-    const W = cum[cum.length - 1];
-    let shown = 0, raf, writing = fresh, failed = false, userPaused = false, ft = 0, lastNow = performance.now();
-    const dur = () => (isFinite(audio.duration) && audio.duration > 20 ? audio.duration : 208);
-    const now = () => {
-      if (!failed) return audio.currentTime;
-      const n = performance.now(); if (!userPaused) ft += (n - lastNow) / 1000; lastNow = n; return ft;
-    };
-    const movePen = (c) => {
-      const r = c.getBoundingClientRect(), pr = paper.getBoundingClientRect();
-      pen.style.transform = `translate(${r.right - pr.left - 4}px, ${r.bottom - pr.top - 6}px) rotate(-38deg)`;
-      const y = r.bottom - desk.getBoundingClientRect().top;
-      if (y > desk.clientHeight * 0.62) desk.scrollTop += y - desk.clientHeight * 0.62;
-    };
-    const showAll = () => { writing = false; cs.forEach((c) => c.classList.add("on", "still")); pen.classList.add("lift"); store.set("letterSeen", true); };
-    const tick = () => {
-      const t = now(), D = dur();
-      el.querySelector("#fbar").style.width = Math.min(100, (t / D) * 100) + "%";
-      if (writing) {
-        const target = W * Math.min(1, Math.max(0, (t - 1.2) / (D - 10)));
-        while (shown < cs.length && cum[shown] <= target) cs[shown++].classList.add("on");
-        if (shown > 0) movePen(cs[shown - 1]);
-        if (shown >= cs.length) showAll();
-      }
-      if (failed && t >= D) return onEnd();
-      raf = requestAnimationFrame(tick);
-    };
-    const pp = el.querySelector("#fpp");
-    const setPP = (paused) => { pp.innerHTML = paused ? svg.play("#3a2f22", 22) : svg.pause("#3a2f22", 22); pp.setAttribute("aria-label", paused ? "Lecture" : "Pause"); };
-    if (!fresh) showAll();
-    audio.play().catch(() => { failed = true; lastNow = performance.now(); });
-    tick();
-    pp.addEventListener("click", () => {
-      if (pp.dataset.ended) { delete pp.dataset.ended; ft = 0; lastNow = performance.now(); audio.currentTime = 0; if (!failed) audio.play().catch(() => {}); userPaused = false; setPP(false); tick(); return; }
-      if (failed) { userPaused = !userPaused; lastNow = performance.now(); setPP(userPaused); return; }
-      if (audio.paused) audio.play(); else audio.pause();
-      setPP(audio.paused);
-    });
-    function onEnd() { cancelAnimationFrame(raf); showAll(); pp.dataset.ended = "1"; pp.innerHTML = "↻"; pp.setAttribute("aria-label", "Réécouter"); }
-    audio.addEventListener("ended", onEnd);
-    el.querySelector("#lback").addEventListener("click", () => {
-      cancelAnimationFrame(raf); audio.pause();
-      if (shown > 0 || !fresh) store.set("letterSeen", true);
-      el.remove(); go("notes", {}, false);
-      if (!store.get("spNotified", false)) { store.set("spNotified", true); setTimeout(() => notify("spotify", "Spotify", "« solo pour nana » a été ajouté à ta playlist 🌂", () => go("spotify")), 600); }
     });
   }
 
@@ -942,7 +876,15 @@
         toast(S.done ? "Tu l'as déjà entendue… dans Spotify maintenant 🌂" : "🔒 Compose le bon numéro.");
         break;
       case "toast": toast(d.t); break;
-      case "letter": openLetter(); break;
+      case "letter": go("secret"); break;
+      case "secretplay":
+        if (!spAudio) {
+          spAudio = new Audio(M("piano.mp3"));
+          spAudio.addEventListener("ended", () => { const pp = document.querySelector(".att-pp"); if (pp) pp.innerHTML = svg.play("#000", 18); if (S.view === "spotify") render(false); });
+        }
+        if (spAudio.paused) spAudio.play(); else spAudio.pause();
+        b.querySelector(".att-pp").innerHTML = spAudio.paused ? svg.play("#000", 18) : svg.pause("#000", 18);
+        break;
       case "ptab": if (d.t === "ct") { go("contacts"); break; } S.phoneTab = d.t; render(false); break;
       case "key":
         if (S.dial.length < 12) S.dial += d.k;
