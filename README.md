@@ -9,7 +9,7 @@ Une chasse au trésor pour Nana : elle « trouve » le téléphone de sousou (un
 4. **Note « code ?? ».** Le numéro est dans une note verrouillée, et le mot de passe est « rangé avec les photos que personne doit voir ».
 5. **Galerie → Masqués 🔒** (même code 0312). On y trouve la capture « Nom : Rose / ID : RRSDY2 » et les vidéos cachées.
 6. **Notes → Notes verrouillées → mot de passe `rose`** (« Rose » est le premier générique de NANA). La note donne l'énigme : ce que je devais te faire goûter (129), puis la porte des deux Nana (707).
-7. **Téléphone → Clavier → `129707`.** Elle décroche l'appel. Le piano joue et la lettre s'écrit au stylo plume, à la vitesse de la musique (la plume ralentit sur la ponctuation). À la fin, elle peut la relire.
+7. **Téléphone → Clavier → `129707`.** sousou appelle : « t'as trouvé… va voir dans mes Notes 🌂 ». La « 🔒 note secrète », épinglée et bloquée depuis le début, devient **« pour toi 🤍 »**. Quand elle l'ouvre, la lettre s'écrit au stylo plume avec le solo de piano. Ensuite, elle s'affiche en entier à chaque ouverture.
 
 ## Les fausses pistes
 | Piège | Où | Ce qui se passe |

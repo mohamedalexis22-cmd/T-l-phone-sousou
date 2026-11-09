@@ -357,14 +357,19 @@
       <div class="card">${NOTES.filter((n) => n.folder === "deleted").map(noteRow).join("")}</div><div class="pad-bottom"></div></div>${homeBar()}</div>`;
     }
     return `<div class="scr notes-app">${statusBar()}<div class="nav">${backBtn("Accueil")}<span></span></div>
-    <div class="scroll"><div class="big-title">iCloud (toutes)</div><div class="sub">${mine.length} notes</div>
-    <div class="sec">Épinglées</div><div class="card">${mine.filter((n) => n.pin).map(noteRow).join("")}</div>
+    <div class="scroll"><div class="big-title">iCloud (toutes)</div><div class="sub">${mine.length + 1} notes</div>
+    <div class="sec">Épinglées</div><div class="card">${secretRow()}${mine.filter((n) => n.pin).map(noteRow).join("")}</div>
     <div class="sec">Récentes</div><div class="card">${mine.filter((n) => !n.pin).map(noteRow).join("")}</div>
     <div class="sec">Dossiers</div><div class="card">
       <button class="row" data-a="note" data-i="${NOTES.findIndex((n) => n.folder === "locked")}"><span>🔒</span><span class="grow">Notes verrouillées</span><span class="muted">1</span><span class="chev">${svg.chev}</span></button>
       <button class="row" data-a="open" data-v="notes" data-folder="deleted"><span>🗑️</span><span class="grow">Supprimés récemment</span><span class="muted">${NOTES.filter((n) => n.folder === "deleted").length}</span><span class="chev">${svg.chev}</span></button></div>
     <div class="pad-bottom"></div></div>${homeBar()}</div>`;
   };
+  function secretRow() {
+    return S.done
+      ? `<button class="row note-row secret-on" data-a="letter"><div class="grow"><b class="ellip">pour toi 🤍</b><small class="ellip">maintenant <em>${esc(C.letter.greeting)}</em></small><span class="folder">${svg.folder} Notes</span></div></button>`
+      : `<button class="row note-row" data-a="toast" data-t="🔒 Cette note se déverrouille après un certain appel…"><div class="grow"><b class="ellip">🔒 note secrète</b><small class="ellip">Verrouillée <em>se déverrouille après un appel</em></small><span class="folder">${svg.folder} Notes</span></div></button>`;
+  }
   function noteRow(n) {
     const i = NOTES.indexOf(n);
     return `<button class="row note-row" data-a="note" data-i="${i}"><div class="grow"><b class="ellip">${esc(n.t)}</b><small class="ellip">${esc(n.time)} <em>${esc(n.prev)}</em></small><span class="folder">${svg.folder} ${n.folder === "deleted" ? "Supprimés récemment" : "Notes"}</span></div></button>`;
@@ -707,6 +712,7 @@
   }
 
   function notify(app, title, text, onTap) {
+    $overlay.querySelectorAll(".notif").forEach((o) => o.remove());
     const n = document.createElement("button");
     n.className = "notif";
     n.innerHTML = `${icon(app, 38)}<span class="grow"><span class="top"><b>${esc(title)}</b><span>maintenant</span></span><p>${esc(text)}</p></span>`;
@@ -769,8 +775,8 @@
     <rect x="10.5" y="16" width="13" height="10" rx="2" fill="#1a1a22"/><rect x="10" y="25" width="14" height="3" fill="url(#ng)"/>
     <rect x="9" y="28" width="16" height="90" rx="7" fill="url(#pg)"/><rect x="23.5" y="34" width="2.5" height="40" rx="1.2" fill="url(#ng)"/></svg>`;
 
+  // 1) l'appel : court, il l'envoie vers la note secrète
   function finale() {
-    const L = C.letter;
     const el = document.createElement("div");
     el.className = "fin";
     el.innerHTML = `<div class="fin-bg" style="background-image:url('${M("wallpaper.jpg")}')"></div>${statusBar()}
@@ -778,88 +784,111 @@
       <div class="acts"><button data-f="no"><span style="background:var(--red)">${svg.phone("#fff", 32).replace("<svg", '<svg style="transform:rotate(135deg)"')}</span>Refuser</button>
       <button data-f="yes"><span style="background:var(--green)">${svg.phone("#fff", 32)}</span>Accepter</button></div></div>`;
     $overlay.appendChild(el); el.style.pointerEvents = "auto";
-    const audio = new Audio(M("piano.mp3"));
-    audio.preload = "auto";
     el.querySelector('[data-f="no"]').addEventListener("click", () => {
       el.querySelector(".fin-start p").textContent = "t'es sûre ? 🥺";
       el.querySelector('[data-f="no"]').style.visibility = "hidden";
     });
-    el.querySelector('[data-f="yes"]').addEventListener("click", () => start());
+    el.querySelector('[data-f="yes"]').addEventListener("click", () => {
+      const box = el.querySelector(".fin-start");
+      box.querySelector(".acts").remove();
+      box.querySelector(".av").style.animation = "none";
+      const p = box.querySelector("p");
+      p.textContent = "00:00";
+      const lines = ["…", "allô ?", "t'as trouvé. je savais que t'allais trouver.", "je t'ai laissé quelque chose.", "va voir dans mes Notes 🌂"];
+      let s = 0;
+      box.insertAdjacentHTML("beforeend", '<p class="fin-say" aria-live="polite"></p>');
+      const say = box.querySelector(".fin-say");
+      const iv = setInterval(() => {
+        s++; p.textContent = `00:${pad(s)}`;
+        if (s <= lines.length) say.textContent = lines[s - 1];
+        if (s === lines.length + 2) {
+          clearInterval(iv);
+          p.textContent = "Appel terminé";
+          setTimeout(() => {
+            el.remove(); S.dial = "";
+            S.done = true; store.set("done", true);
+            go("home", {}, false);
+            setTimeout(() => notify("notes", "Notes", "Une note secrète vient d'être déverrouillée : « pour toi 🤍 »", () => go("notes")), 500);
+          }, 1200);
+        }
+      }, 1400);
+    });
+  }
 
-    function start() {
-      const d = new Date();
-      // chaque caractère dans un <span>, les mots insécables : la mise en page est fixée dès le départ
-      const chars = (txt) => [...txt].map((c) => c === " " ? '<span class="ch gap"> </span>' : `<span class="ch">${esc(c)}</span>`).join("")
-        .replace(/((?:<span class="ch">[^<]*<\/span>)+)/g, '<span class="w">$1</span>');
-      const paras = [`<p class="l-date">${chars(`${L.place}, le ${d.getDate()} ${MONTHS[d.getMonth()]}`)}</p>`,
-        `<p class="l-hello">${chars(L.greeting)}</p>`,
-        ...L.paragraphs.map((p) => `<p>${chars(p)}</p>`),
-        `<p class="l-sign">${chars(L.signature)}</p>`];
-      el.querySelector(".fin-start").remove();
-      el.classList.add("fin-letter");
-      el.insertAdjacentHTML("beforeend", `<div class="desk" id="desk"><article class="paper" id="paper">${paras.join("")}${PEN}</article></div>
-        <div class="l-ctrl"><button id="fpp" aria-label="Pause">${svg.pause("#3a2f22", 22)}</button><span class="l-prog"><i id="fbar"></i></span><button id="fend" aria-label="Fermer la lettre">✕</button></div>`);
-      const desk = el.querySelector("#desk"), paper = el.querySelector("#paper"), pen = paper.querySelector(".pen");
-      const cs = [...paper.querySelectorAll(".ch")];
-      // poids : la plume ralentit sur la ponctuation et entre les paragraphes
-      const wts = cs.map((c) => {
-        const t = c.textContent, last = c === c.parentElement.lastElementChild && c.closest("p").lastElementChild.contains(c);
-        let w = t === " " ? 0.55 : /[,;:]/.test(t) ? 4 : /[.!?…]/.test(t) ? 7 : 1;
-        if (last) w += 12;
-        return w;
-      });
-      const cum = []; wts.reduce((a, w, i) => (cum[i] = a + w), 0);
-      const W = cum[cum.length - 1];
-      let shown = 0, raf, ended = false, failed = false, t0 = performance.now(), userPaused = false, ft = 0, lastNow = performance.now();
-      const dur = () => (isFinite(audio.duration) && audio.duration > 20 ? audio.duration : 119);
-      const now = () => {
-        if (!failed) return audio.currentTime;
-        const n = performance.now(); if (!userPaused) ft += (n - lastNow) / 1000; lastNow = n; return ft;
-      };
-      const movePen = (c) => {
-        const r = c.getBoundingClientRect(), pr = paper.getBoundingClientRect();
-        pen.style.transform = `translate(${r.right - pr.left - 4}px, ${r.bottom - pr.top - 6}px) rotate(-38deg)`;
-        const y = r.bottom - desk.getBoundingClientRect().top;
-        if (y > desk.clientHeight * 0.62) desk.scrollTop += y - desk.clientHeight * 0.62;
-      };
-      const tick = () => {
-        const t = now(), D = dur();
-        const prog = Math.min(1, Math.max(0, (t - 1.2) / (D - 10)));
-        const target = W * prog;
+  // 2) la note secrète : la lettre s'écrit au stylo plume avec le piano (en entier les fois suivantes)
+  function openLetter() {
+    const L = C.letter;
+    const fresh = !store.get("letterSeen", false);
+    const el = document.createElement("div");
+    el.className = "fin fin-letter";
+    const d = new Date();
+    const chars = (txt) => [...txt].map((c) => c === " " ? '<span class="ch gap"> </span>' : `<span class="ch">${esc(c)}</span>`).join("")
+      .replace(/((?:<span class="ch">[^<]*<\/span>)+)/g, '<span class="w">$1</span>');
+    const paras = [`<p class="l-date">${chars(`${L.place}, le ${d.getDate()} ${MONTHS[d.getMonth()]}`)}</p>`,
+      `<p class="l-hello">${chars(L.greeting)}</p>`,
+      ...L.paragraphs.map((p) => `<p>${chars(p)}</p>`),
+      `<p class="l-sign">${chars(L.signature)}</p>`];
+    el.innerHTML = `<div class="fin-bg" style="background-image:url('${M("wallpaper.jpg")}')"></div>${statusBar()}
+      <div class="nav l-nav"><button class="back" id="lback">${svg.back}<span>Notes</span></button><span class="l-title">pour toi 🤍</span><span style="width:60px"></span></div>
+      <div class="desk" id="desk"><article class="paper" id="paper">${paras.join("")}${PEN}</article></div>
+      <div class="l-ctrl"><button id="fpp" aria-label="Pause">${svg.pause("#3a2f22", 22)}</button><span class="l-prog"><i id="fbar"></i></span><span class="l-note">♪ solo pour nana</span></div>`;
+    $overlay.appendChild(el); el.style.pointerEvents = "auto";
+    const audio = new Audio(M("piano.mp3"));
+    const desk = el.querySelector("#desk"), paper = el.querySelector("#paper"), pen = paper.querySelector(".pen");
+    const cs = [...paper.querySelectorAll(".ch")];
+    // poids : la plume ralentit sur la ponctuation et entre les paragraphes
+    const wts = cs.map((c) => {
+      const t = c.textContent, last = c === c.parentElement.lastElementChild && c.closest("p").lastElementChild.contains(c);
+      let w = t === " " ? 0.55 : /[,;:]/.test(t) ? 4 : /[.!?…]/.test(t) ? 7 : 1;
+      if (last) w += 12;
+      return w;
+    });
+    const cum = []; wts.reduce((a, w, i) => (cum[i] = a + w), 0);
+    const W = cum[cum.length - 1];
+    let shown = 0, raf, writing = fresh, failed = false, userPaused = false, ft = 0, lastNow = performance.now();
+    const dur = () => (isFinite(audio.duration) && audio.duration > 20 ? audio.duration : 208);
+    const now = () => {
+      if (!failed) return audio.currentTime;
+      const n = performance.now(); if (!userPaused) ft += (n - lastNow) / 1000; lastNow = n; return ft;
+    };
+    const movePen = (c) => {
+      const r = c.getBoundingClientRect(), pr = paper.getBoundingClientRect();
+      pen.style.transform = `translate(${r.right - pr.left - 4}px, ${r.bottom - pr.top - 6}px) rotate(-38deg)`;
+      const y = r.bottom - desk.getBoundingClientRect().top;
+      if (y > desk.clientHeight * 0.62) desk.scrollTop += y - desk.clientHeight * 0.62;
+    };
+    const showAll = () => { writing = false; cs.forEach((c) => c.classList.add("on", "still")); pen.classList.add("lift"); store.set("letterSeen", true); };
+    const tick = () => {
+      const t = now(), D = dur();
+      el.querySelector("#fbar").style.width = Math.min(100, (t / D) * 100) + "%";
+      if (writing) {
+        const target = W * Math.min(1, Math.max(0, (t - 1.2) / (D - 10)));
         while (shown < cs.length && cum[shown] <= target) cs[shown++].classList.add("on");
         if (shown > 0) movePen(cs[shown - 1]);
-        el.querySelector("#fbar").style.width = Math.min(100, (t / D) * 100) + "%";
-        if (shown >= cs.length) { pen.classList.add("lift"); S.done = true; store.set("done", true); }
-        if (failed && t >= D) { ended = true; return onEnd(); }
-        raf = requestAnimationFrame(tick);
-      };
-      audio.play().catch(() => { failed = true; lastNow = performance.now(); });
-      tick();
-      const pp = el.querySelector("#fpp");
-      const setPP = (paused) => { pp.innerHTML = paused ? svg.play("#3a2f22", 22) : svg.pause("#3a2f22", 22); pp.setAttribute("aria-label", paused ? "Lecture" : "Pause"); };
-      pp.addEventListener("click", () => {
-        if (ended) { // relire depuis le début
-          ended = false; shown = 0; cs.forEach((c) => c.classList.remove("on")); pen.classList.remove("lift"); desk.scrollTop = 0;
-          ft = 0; lastNow = performance.now(); audio.currentTime = 0; if (!failed) audio.play().catch(() => {}); userPaused = false; setPP(false); tick(); return;
-        }
-        if (failed) { userPaused = !userPaused; lastNow = performance.now(); setPP(userPaused); return; }
-        if (audio.paused) audio.play(); else audio.pause();
-        setPP(audio.paused);
-      });
-      function onEnd() {
-        cancelAnimationFrame(raf); ended = true;
-        cs.forEach((c) => c.classList.add("on")); pen.classList.add("lift");
-        S.done = true; store.set("done", true);
-        pp.innerHTML = "↻"; pp.setAttribute("aria-label", "Relire");
+        if (shown >= cs.length) showAll();
       }
-      audio.addEventListener("ended", onEnd);
-      el.querySelector("#fend").addEventListener("click", () => {
-        cancelAnimationFrame(raf); audio.pause();
-        S.done = true; store.set("done", true);
-        el.remove(); S.dial = ""; go("home", {}, false);
-        setTimeout(() => notify("spotify", "Spotify", "« solo pour nana » a été ajouté à ta playlist 🌂", () => go("spotify")), 600);
-      });
-    }
+      if (failed && t >= D) return onEnd();
+      raf = requestAnimationFrame(tick);
+    };
+    const pp = el.querySelector("#fpp");
+    const setPP = (paused) => { pp.innerHTML = paused ? svg.play("#3a2f22", 22) : svg.pause("#3a2f22", 22); pp.setAttribute("aria-label", paused ? "Lecture" : "Pause"); };
+    if (!fresh) showAll();
+    audio.play().catch(() => { failed = true; lastNow = performance.now(); });
+    tick();
+    pp.addEventListener("click", () => {
+      if (pp.dataset.ended) { delete pp.dataset.ended; ft = 0; lastNow = performance.now(); audio.currentTime = 0; if (!failed) audio.play().catch(() => {}); userPaused = false; setPP(false); tick(); return; }
+      if (failed) { userPaused = !userPaused; lastNow = performance.now(); setPP(userPaused); return; }
+      if (audio.paused) audio.play(); else audio.pause();
+      setPP(audio.paused);
+    });
+    function onEnd() { cancelAnimationFrame(raf); showAll(); pp.dataset.ended = "1"; pp.innerHTML = "↻"; pp.setAttribute("aria-label", "Réécouter"); }
+    audio.addEventListener("ended", onEnd);
+    el.querySelector("#lback").addEventListener("click", () => {
+      cancelAnimationFrame(raf); audio.pause();
+      if (shown > 0 || !fresh) store.set("letterSeen", true);
+      el.remove(); go("notes", {}, false);
+      if (!store.get("spNotified", false)) { store.set("spNotified", true); setTimeout(() => notify("spotify", "Spotify", "« solo pour nana » a été ajouté à ta playlist 🌂", () => go("spotify")), 600); }
+    });
   }
 
   // ───────── événements ─────────
@@ -900,7 +929,7 @@
       case "sp": {
         const t = TRACKS[+d.i];
         if (t.solo) {
-          if (!S.done) { toast("🔒 Ce titre se débloque après un certain appel…"); break; }
+          if (!S.done) { toast("🔒 Ce titre se débloque avec la note secrète…"); break; }
           if (!spAudio) { spAudio = new Audio(M("piano.mp3")); spAudio.addEventListener("ended", () => S.view === "spotify" && render(false)); }
           if (spAudio.paused) spAudio.play(); else spAudio.pause();
           render(false);
@@ -913,6 +942,7 @@
         toast(S.done ? "Tu l'as déjà entendue… dans Spotify maintenant 🌂" : "🔒 Compose le bon numéro.");
         break;
       case "toast": toast(d.t); break;
+      case "letter": openLetter(); break;
       case "ptab": if (d.t === "ct") { go("contacts"); break; } S.phoneTab = d.t; render(false); break;
       case "key":
         if (S.dial.length < 12) S.dial += d.k;
