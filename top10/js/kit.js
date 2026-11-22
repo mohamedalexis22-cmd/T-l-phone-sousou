@@ -1,5 +1,5 @@
 /* =========================================================
-   TOP 10 — moteur des scènes
+   TOPSIDE — moteur des scènes
    Lit MARQUE, JOUEURS, EPISODES, construit le déroulé de
    l'épisode et affiche chaque étape en 1920×1080.
    ========================================================= */
@@ -47,12 +47,6 @@
   }
   const infoLigne = (j) => (j ? [j.poste, j.nation, periode(j)].filter(Boolean).join(" · ") : "");
 
-  function portrait(j, extra = "") {
-    const img = j && j.photo ? `<img src="${esc(j.photo)}" alt="">` : "";
-    const flag = j && j.nation ? `<span class="drapeau">${esc(j.nation)}</span>` : "";
-    return `<div class="portrait ${extra}"><span class="initiales">${esc(initiales(j))}</span>${img}${flag}</div>`;
-  }
-
   function compteur(v, delai) {
     if (v == null) return `<span>—</span>`;
     const n = Number(String(v).replace(/\s/g, ""));
@@ -60,166 +54,186 @@
     return `<span data-compte="${n}" data-delai="${delai}">0</span>`;
   }
 
-  const fond = (halo = { x: 1100, y: -300 }) =>
-    `<div class="fond"><div class="halo" style="left:${halo.x}px;top:${halo.y}px"></div></div><div class="cadre"><i></i><i></i><i></i><i></i></div>`;
+  /* ---------- Éléments de décor ---------- */
+  const ardoise = () => `<div class="ardoise">
+      <i class="effacee" style="left:180px;top:140px;width:620px;height:260px"></i>
+      <i class="effacee" style="left:1180px;top:620px;width:560px;height:220px"></i>
+      <i class="effacee" style="left:860px;top:80px;width:380px;height:160px"></i></div>`;
+  const sticker = () => `<div class="sticker a a-pose" ${d(100)} style="--r:-8deg"><img src="${esc(M.logo)}" alt=""></div>`;
+  const etiquette = (ep) => `<div class="etiquette-ep a a-fondu" ${d(300)}>${esc(M.nom)} · ${esc(ep.titre)}</div>`;
+  const scotch = (cls, ms, r = 0) => `<div class="scotch ${cls} a a-scotch" style="animation-delay:${ms}ms;--r:${r}deg"></div>`;
+  const souligne = (ms) => `<svg class="trait" viewBox="0 0 800 40" preserveAspectRatio="none"><path style="animation-delay:${ms}ms" d="M12 26 C 160 6, 300 38, 450 18 S 690 8, 788 24"/></svg>`;
 
-  function entete(ep, droite) {
-    return `<div class="entete a a-descend" ${d(150)}>
-      <div class="gauche"><img src="${esc(M.logo)}" alt=""><span>${esc(M.nom)} · ${esc(ep.titre)}</span></div>
-      <div><span class="point"></span>${esc(droite || "")}</div></div>`;
+  function photo(j, style, ms, extra = "") {
+    const img = j && j.photo ? `<img src="${esc(j.photo)}" alt="">` : "";
+    const nat = j && j.nation ? `<span class="nat">${esc(j.nation)}</span>` : "";
+    return `<div class="photo a a-pose" style="${style};animation-delay:${ms}ms">${nat}
+      <div class="img"><span class="ini">${esc(initiales(j))}</span>${img}</div>
+      <div class="legende">${esc(nomCourt(j))}</div>${extra}</div>`;
   }
 
-  function ticker(ep) {
-    const items = [M.nom, ep.titre, M.signature].filter(Boolean);
-    let s = "";
-    for (let k = 0; k < 8; k++) items.forEach((t, i) => (s += `<span class="${i % 2 ? "l" : ""}">${esc(t)}</span><span>/</span>`));
-    return `<div class="ticker a a-monte" ${d(600)}><div class="piste">${s}${s}</div></div>`;
+  // Taille du nom écrit au feutre sur la tablette (selon le mot le plus long)
+  function tailleFeutre(texte, largeur, max) {
+    const mot = Math.max(...String(texte).split(/\s+/).map((m) => m.length), 1);
+    const lignes = String(texte).split(/\s+/).length;
+    return Math.round(Math.min(max, largeur / (mot * 0.62), lignes > 2 ? max * 0.75 : max));
+  }
+
+  function tablette(j, r, cls, style, ms, largeur = 620, max = 120) {
+    const n = j ? nomComplet(j) : "?";
+    return `<div class="tablette ${cls} a a-tombe" style="${style};animation-delay:${ms}ms">
+      <div class="ecran">
+        ${r ? `<div class="rangt a a-fondu" ${d(ms + 500)}>#${r}</div>` : ""}
+        <div class="nomt a a-ecrit" style="font-size:${tailleFeutre(n, largeur, max)}px;animation-delay:${ms + 650}ms">${esc(n)}</div>
+        ${souligne(ms + 1550)}
+      </div></div>`;
   }
 
   /* ---------- Scènes ---------- */
   const SCENES = {
     intro(ep) {
-      const lettres = [...M.nom].map((c, i) => `<span style="animation-delay:${200 + i * 70}ms">${c === " " ? "&nbsp;" : esc(c)}</span>`).join("");
-      return `<div class="scene intro">${fond({ x: 260, y: -160 })}
-        <div class="balayage"></div>
-        <div class="geant t-xxl t-contour">${lettres}</div>
-        <div class="logo"><img src="${esc(M.logo)}" alt=""></div>
-        <div class="bas">
-          <div class="titre a a-masque" ${d(1900)}>${esc(ep.titre)}</div>
-          <div class="sous a a-monte" ${d(2300)}><span class="pastille">${ep.numero ? "Épisode " + deux(ep.numero) : esc(M.signature)}</span></div>
-        </div>${ticker(ep)}</div>`;
+      return `<div class="scene intro sur-ardoise">${ardoise()}
+        <div class="nom titre craie-texture a a-fondu" ${d(0)}>${esc(M.nom)}</div>
+        <div class="logo a a-tombe" ${d(200)}><img src="${esc(M.logo)}" alt=""></div>
+        <div class="feuille papier a a-pose" ${d(1100)}>
+          ${scotch("", 1400, 0)}
+          <div class="t titre">${esc(ep.titre)}</div>
+          <div class="s feutre a a-ecrit" ${d(1600)}>${ep.numero ? "Épisode " + deux(ep.numero) : esc(M.signature)}</div>
+        </div></div>`;
     },
 
     chapitre(ep, p) {
-      return `<div class="scene chapitre">${fond({ x: 900, y: 200 })}${entete(ep, `Partie ${deux(p.n)}`)}
-        <div class="num t-xxl t-contour lila a a-zoom" ${d(100)}>${deux(p.n)}</div>
-        <div class="bloc">
-          <div class="trait a a-trait" ${d(300)}></div>
-          <div class="titre t-xxl a a-masque" ${d(450)}>${esc(p.titre)}</div>
-          ${p.sous ? `<div class="sous a a-monte" ${d(800)}>${esc(p.sous)}</div>` : ""}
-        </div>${ticker(ep)}</div>`;
+      return `<div class="scene chapitre sur-ardoise">${ardoise()}${sticker()}${etiquette(ep)}
+        <div class="feuille papier lignes a a-tombe" ${d(100)}>
+          ${scotch("g", 750, -38)}${scotch("d", 850, 38)}
+          <div class="num a a-ecrit" ${d(800)}>Partie ${deux(p.n)}</div>
+          <div class="t titre a a-monte" ${d(900)}><span class="surligne anim" style="animation-delay:1300ms">${esc(p.titre)}</span></div>
+          ${p.sous ? `<div class="s a a-ecrit" ${d(1500)}>${esc(p.sous)}</div>` : ""}
+        </div></div>`;
+    },
+
+    "lt-nom"(ep, p) {
+      const a = animateur(ep, p.a);
+      return `<div class="scene overlay"><div class="bande papier a a-glisse-g" ${d(0)}>
+        ${scotch("", 350, -30)}
+        <div class="n titre">${esc(a.nom)}</div>
+        <div class="s a a-ecrit" ${d(500)}>${esc(p.sous || M.nom)}</div></div></div>`;
     },
 
     objectifs(ep) {
-      const cols = ep.animateurs.map((a, i) => {
+      const n = ep.animateurs.length;
+      const notes = ep.animateurs.map((a, i) => {
         const items = ((ep.objectifs || {})[a.id] || []).filter(Boolean);
-        const lis = items.map((t, k) => `<li class="a a-gauche" ${d(700 + i * 250 + k * 220)}><span class="case" ${d(1100 + i * 250 + k * 220)}></span><span>${esc(t)}</span></li>`).join("");
-        return `<div class="panneau a a-monte" ${d(300 + i * 250)}>
-          <span class="pastille">Objectifs</span><h3>${esc(a.nom)}</h3><ul>${lis || `<li class="a a-fondu" ${d(700)}><span class="case"></span><span>—</span></li>`}</ul></div>`;
+        const pos = n === 1 ? "left:80px" : i === 0 ? "left:80px" : i === n - 1 ? "right:80px" : `left:${650 + (i - 1) * 40}px`;
+        const r = [-2.5, 2, -1][i % 3];
+        const lis = (items.length ? items : ["—"]).map((t, k) => `<li class="a a-ecrit" ${d(700 + i * 300 + k * 450)}>
+          <span class="case"><svg viewBox="0 0 54 54"><path style="animation-delay:${1100 + i * 300 + k * 450}ms" d="M6 28 L21 42 L50 4"/></svg></span>${esc(t)}</li>`).join("");
+        return `<div class="note papier lignes a a-pose" style="${pos};bottom:80px;--r:${r}deg;animation-delay:${250 + i * 200}ms">
+          ${scotch("", 450 + i * 200)}
+          <div class="sous">Les objectifs de</div><h3>${esc(a.nom)}</h3><ul>${lis}</ul></div>`;
       }).join("");
       return `<div class="scene objectifs overlay">
-        <div class="titre-haut lt-nom" style="position:absolute;left:80px;top:70px;bottom:auto">
-          <div class="barre a a-trait" ${d(0)}></div>
-          <div class="n a a-masque" ${d(150)}>Objectifs de la semaine</div></div>
-        <div class="colonnes">${cols}</div></div>`;
+        <div class="titre-o papier a a-glisse-g" ${d(0)}><div class="n titre"><span class="surligne anim" style="animation-delay:400ms">Objectifs</span> de la semaine</div></div>
+        ${notes}</div>`;
     },
 
     mentions(ep) {
-      const cartes = (ep.mentions || []).map(([id, aid], i) => {
+      const liste = ep.mentions || [];
+      const n = liste.length, W = 430, G = 90;
+      const x0 = (1920 - n * W - (n - 1) * G) / 2;
+      const rots = [-5, 3, -2, 4];
+      const ph = liste.map(([id, aid], i) => {
         const j = joueur(id);
-        return `<div class="carte a a-flip" ${d(700 + i * 280)}>${portrait(j)}
-          <div class="corps"><div class="nom">${esc(nomCourt(j))}</div>
-          <div class="info">${esc(infoLigne(j) || nomComplet(j))}</div>
-          <div class="par">Proposé par ${esc(animateur(ep, aid).nom)}</div></div></div>`;
+        return photo(j, `left:${x0 + i * (W + G)}px;--r:${rots[i % 4]}deg`, 700 + i * 350,
+          `${scotch("", 1000 + i * 350)}<div class="par">par ${esc(animateur(ep, aid).nom)}</div>`);
       }).join("");
-      return `<div class="scene mentions">${fond({ x: 1200, y: -500 })}${entete(ep, "Mentions honorables")}
-        <div class="tete"><span class="pastille a a-gauche" ${d(200)}>Ils auraient pu y être</span>
-          <h2 class="t-xxl a a-masque" ${d(350)}>Mentions <span class="lila">honorables</span></h2></div>
-        <div class="cartes">${cartes}</div>${ticker(ep)}</div>`;
-    },
-
-    rang(ep, p) {
-      const a = animateur(ep, p.a);
-      const j = joueur((ep.classements[p.a] || [])[p.r - 1]);
-      const stats = (ep.stats || []).slice(0, 4).map((s, i) =>
-        `<div class="stat ${s.accent ? "accent" : ""} a a-monte" ${d(1500 + i * 120)}><div class="v">${compteur(valeurStat(ep, j, s.cle), 1600 + i * 120)}</div><div class="l">${esc(labelStat(s))}</div></div>`).join("");
-      const clubs = (j && j.clubs || []).slice(0, 6).map((c, i) => `<span class="a a-fondu" ${d(1250 + i * 60)}>${esc(c[0])}<b>${esc(c[1] || "")}</b></span>`).join("");
-      const arg = j && ep.arguments && ep.arguments[`${p.a}:${j.id || nomComplet(j)}`];
-      const fam = nomCourt(j);
-      const taille = Math.round(Math.min(108, 600 / Math.max(1, fam.length * 0.46)));
-      return `<div class="scene rang">${fond({ x: -300, y: 100 })}${entete(ep, `Top 10 · le choix de ${a.nom}`)}
-        <div class="chiffre ${p.r < 10 ? "un" : ""} t-xxl t-contour a a-gauche" ${d(0)}><span class="diese">#</span>${p.r}<span class="plein"><span class="diese">#</span>${p.r}</span></div>
-        <div class="choix a a-gauche" ${d(400)}><span class="pastille pleine">Le choix de ${esc(a.nom)}</span></div>
-        <div class="fiche a a-droite" ${d(700)}>
-          ${portrait(j, "a a-fondu")}
-          <div class="droite">
-            <div class="poste a a-monte" ${d(950)}>${esc(infoLigne(j) || "Hors banque")}</div>
-            <div class="nom a a-masque" ${d(1050)}><span class="prenom">${esc(j ? (j.surnom ? [j.prenom, j.nom].filter(Boolean).join(" ") : j.prenom) : "")}</span><span class="famille" style="font-size:${taille}px">${esc(fam)}</span></div>
-            <div class="clubs">${clubs}</div>
-            ${stats ? `<div class="stats a a-fondu" ${d(1450)}>${stats}</div>` : ""}
-            ${arg ? `<div class="argument a a-monte" ${d(2100)}>${esc(arg)}</div>` : ""}
-          </div></div>${ticker(ep)}</div>`;
+      return `<div class="scene mentions sur-ardoise">${ardoise()}${sticker()}
+        <div class="tete"><div class="t titre craie-texture a a-monte" ${d(150)}>Mentions honorables</div>
+          <div class="s feutre a a-ecrit" ${d(500)}>Ils auraient pu y être…</div></div>
+        ${ph}</div>`;
     },
 
     "lt-rang"(ep, p) {
       const a = animateur(ep, p.a);
       const j = joueur((ep.classements[p.a] || [])[p.r - 1]);
-      const mini = (ep.stats || []).slice(0, 3).map((s, i) => `<div class="a a-fondu" ${d(900 + i * 120)}><b>${compteur(valeurStat(ep, j, s.cle), 950 + i * 120)}</b>${esc(labelStat(s))}</div>`).join("");
-      return `<div class="scene overlay"><div class="lt">
-        <div class="rk a a-zoom" ${d(0)}><span><small>#</small>${p.r}</span></div>
-        <div class="bd a a-masque" ${d(250)}>
-          <div class="q">Le choix de ${esc(a.nom)}</div>
-          <div class="n">${esc(nomComplet(j))}</div>
-          <div class="mini">${mini}</div></div></div></div>`;
+      const mini = (ep.stats || []).slice(0, 3).map((s, i) => `<div class="a a-fondu" ${d(900 + i * 150)}><b>${compteur(valeurStat(ep, j, s.cle), 950 + i * 150)}</b>${esc(labelStat(s))}</div>`).join("");
+      return `<div class="scene overlay lt-rang"><div class="bloc">
+        <div class="num a a-pose" ${d(0)}><span><small>#</small>${p.r}</span></div>
+        <div class="bande2 papier a a-glisse-g" ${d(250)}>
+          <div class="q a a-ecrit" ${d(500)}>Le choix de ${esc(a.nom)}</div>
+          <div class="n titre">${esc(nomComplet(j))}</div>
+          ${j && !j.libre ? `<div class="mini">${mini}</div>` : ""}</div></div></div>`;
+    },
+
+    rang(ep, p) {
+      const a = animateur(ep, p.a);
+      const j = joueur((ep.classements[p.a] || [])[p.r - 1]);
+      const lignes = (ep.stats || []).slice(0, 4).map((s, i) => {
+        const v = compteur(valeurStat(ep, j, s.cle), 1900 + i * 160);
+        return `<div class="l a a-monte" ${d(1800 + i * 160)}><span class="lab">${esc(labelStat(s))}</span>
+          <span class="val">${s.accent ? `<span class="surligne anim" style="animation-delay:${2200 + i * 160}ms">${v}</span>` : v}</span></div>`;
+      }).join("");
+      const clubs = (j && j.clubs || []).map((c) => c[0]).filter((c, i, t) => t.indexOf(c) === i).slice(0, 6).join(" · ");
+      const arg = j && ep.arguments && ep.arguments[`${p.a}:${j.id || nomComplet(j)}`];
+      const nomA = nomCourt(j);
+      const taille = Math.round(Math.min(116, 520 / Math.max(1, nomA.length * 0.45)));
+      const prenom = j ? (j.surnom ? [j.prenom, j.nom].filter(Boolean).join(" ") : j.prenom) : "";
+      return `<div class="scene rang sur-ardoise">${ardoise()}${etiquette(ep)}
+        <div class="chiffre titre craie-texture a a-pose" ${d(0)}><span>#</span>${p.r}</div>
+        ${tablette(j, null, "", "", 150, 620, 120)}
+        <div class="feuille papier a a-glisse-d" ${d(800)}>
+          ${scotch("", 1150)}
+          ${photo(j, "--r:-6deg", 1200)}
+          <div class="haut-f">
+          <div class="prenom a a-fondu" ${d(1300)}>${esc(prenom)}</div>
+          <div class="nom titre a a-monte" ${d(1350)} style="font-size:${taille}px">${esc(nomA)}</div>
+          <div class="ligne-info a a-fondu" ${d(1500)}>${esc(infoLigne(j) || "Joueur hors banque")}</div>
+          ${clubs ? `<div class="clubs a a-ecrit" ${d(1600)}>${esc(clubs)}</div>` : ""}
+          </div>
+          ${lignes && j && !j.libre ? `<div class="bulletin">${lignes}</div>` : ""}
+          ${arg ? `<div class="argument a a-ecrit-lisse" ${d(2700)}>« ${esc(arg)} »</div>` : ""}
+          <div class="tampon a a-tampon" ${d(2400)}>Choix de ${esc(a.nom)}</div>
+        </div></div>`;
     },
 
     duo(ep, p) {
-      const js = ep.animateurs.map((a) => joueur((ep.classements[a.id] || [])[p.r - 1]));
+      const js = ep.animateurs.slice(0, 2).map((a) => joueur((ep.classements[a.id] || [])[p.r - 1]));
       const noms = js.map(nomComplet);
-      const cols = ep.animateurs.map((a, i) => {
-        const j = js[i];
-        const meme = noms.filter((n) => n === noms[i]).length > 1 && j;
-        return `<div class="col ${meme ? "meme" : ""} a a-monte" ${d(500 + i * 220)}>${portrait(j)}
-          <div class="txt"><div class="qui">${esc(a.nom)}</div><div class="nom">${esc(nomComplet(j))}</div>
-          <div class="info">${esc(infoLigne(j))}</div></div></div>`;
-      }).join("");
-      const accord = new Set(noms).size === 1 && js[0];
-      return `<div class="scene duo">${fond({ x: 260, y: -700 })}${entete(ep, `Top 10 · rang ${p.r}`)}
-        <div class="centre"><span class="pastille ${accord ? "pleine" : ""} a a-descend" ${d(100)}>${accord ? "Même choix !" : "Vos choix"}</span>
-          <div class="n t-xxl a a-zoom" ${d(200)}><span class="lila">#</span>${p.r}</div></div>
-        <div class="colonnes">${cols}</div>${ticker(ep)}</div>`;
+      const meme = js[0] && noms[0] === noms[1];
+      const t = ep.animateurs.slice(0, 2).map((a, i) =>
+        tablette(js[i], null, i ? "d" : "g", "", 300 + i * 450, 640, 110) +
+        `<div class="qui a a-ecrit" style="${i ? "right:150px" : "left:150px"};top:${i ? 290 : 300}px;animation-delay:${700 + i * 450}ms">${esc(a.nom)}</div>`).join("");
+      return `<div class="scene duo sur-ardoise">${ardoise()}${sticker()}${etiquette(ep)}
+        <div class="tete"><div class="t titre craie-texture a a-pose" ${d(0)}><span>#</span>${p.r}</div></div>
+        ${t}
+        ${meme ? `<div class="tampon clair a a-tampon" ${d(2600)}>Même choix !</div>` : ""}</div>`;
     },
 
     recap(ep) {
-      const listes = ep.animateurs.map((a) => (ep.classements[a.id] || []).map((r) => nomComplet(joueur(r))));
+      const listes = ep.animateurs.slice(0, 2).map((a) => (ep.classements[a.id] || []).map((r) => nomComplet(joueur(r))));
       const compte = {};
       listes.forEach((l) => new Set(l.filter((n) => n !== "À dévoiler")).forEach((n) => (compte[n] = (compte[n] || 0) + 1)));
       const communs = Object.values(compte).filter((c) => c > 1).length;
-      const cols = ep.animateurs.map((a, i) => {
-        const lignes = [];
-        for (let r = 1; r <= 10; r++) {
-          const ref = (ep.classements[a.id] || [])[r - 1];
-          const j = joueur(ref);
-          const n = nomComplet(j);
-          const s = ep.stats && ep.stats[0] ? valeurStat(ep, j, ep.stats.find((x) => x.accent)?.cle || ep.stats[0].cle) : null;
-          lignes.push(`<div class="ligne ${compte[n] > 1 ? "commun" : ""} ${r <= 3 ? "top" : ""} a a-gauche" ${d(600 + i * 120 + (10 - r) * 110)}>
-            <span class="r">${r}</span><span class="n">${esc(n)}</span>${s != null ? `<span class="s">${esc(s)}</span>` : ""}</div>`);
-        }
-        return `<div class="col"><h3 class="a a-masque" ${d(300 + i * 150)}>${esc(a.nom)}</h3>${lignes.join("")}</div>`;
+      const f = ep.animateurs.slice(0, 2).map((a, i) => {
+        const lignes = listes[i].map((n, k) => `<div class="ligne ${k < 3 ? "top" : ""} a a-glisse-g" ${d(800 + i * 150 + (9 - k) * 120)}>
+          <span class="r">${k + 1}</span><span class="n">${compte[n] > 1 ? `<span class="surligne">${esc(n)}</span>` : esc(n)}</span></div>`).join("");
+        return `<div class="feuille papier lignes ${i ? "d" : "g"} a a-tombe" style="--r:${i ? 1.5 : -1.5}deg;animation-delay:${200 + i * 250}ms">
+          ${scotch("", 600 + i * 250)}<h3>${esc(a.nom)}</h3>${lignes}</div>`;
       }).join("");
-      const lab = ep.stats && ep.stats.length ? labelStat(ep.stats.find((x) => x.accent) || ep.stats[0]) : "";
-      return `<div class="scene recap">${fond({ x: 1000, y: 300 })}${entete(ep, "Le récap")}
-        <div class="tete"><h2 class="t-xxl a a-masque" ${d(150)}>Nos <span class="lila">classements</span></h2></div>
-        <div class="legende a a-fondu" ${d(2200)}><span class="pastille">${communs} joueur${communs > 1 ? "s" : ""} en commun</span>${lab ? `<span class="pastille">Chiffre : ${esc(lab)}</span>` : ""}</div>
-        <div class="colonnes">${cols}</div>${ticker(ep)}</div>`;
+      return `<div class="scene recap sur-ardoise">${ardoise()}${sticker()}
+        <div class="tete"><div class="t titre craie-texture a a-monte" ${d(0)}>Nos classements</div></div>
+        ${f}
+        <div class="bas a a-ecrit" ${d(2400)}>Surligné = ${communs} joueur${communs > 1 ? "s" : ""} dans nos deux tops</div></div>`;
     },
 
     outro(ep) {
-      return `<div class="scene outro">${fond({ x: 260, y: -160 })}
-        <div class="milieu">
-          <img class="a a-zoom" ${d(100)} src="${esc(M.logo)}" alt="">
-          <div class="q t-xxl a a-masque" ${d(500)}>Et <span class="lila">ton</span> top 10 ?</div>
-          <div class="s a a-monte" ${d(900)}>Dis-nous en commentaire qui on a oublié.</div>
-          <div class="r a a-monte" ${d(1200)}>${(M.reseaux || []).map((r) => `<span class="pastille">${esc(r)}</span>`).join("")}<span class="pastille pleine">Abonne-toi</span></div>
-        </div>${ticker(ep)}</div>`;
-    },
-
-    "lt-nom"(ep, p) {
-      const a = animateur(ep, p.a);
-      return `<div class="scene overlay"><div class="lt-nom">
-        <div class="barre a a-trait" ${d(0)}></div>
-        <div class="n a a-masque" ${d(150)}>${esc(a.nom)}</div><br>
-        <div class="s a a-masque" ${d(400)}>${esc(p.sous || M.nom)}</div></div></div>`;
+      return `<div class="scene outro sur-ardoise">${ardoise()}
+        <div class="logo a a-tombe" ${d(100)}><img src="${esc(M.logo)}" alt=""></div>
+        <div class="q titre craie-texture a a-monte" ${d(700)}>Et ton top 10 ?</div>
+        <div class="s a a-ecrit" ${d(1100)}>Dis-nous en commentaire qui on a oublié.</div>
+        <div class="feuille papier a a-pose" ${d(1700)}>${scotch("", 1950, -30)}
+          <div class="t titre"><span class="surligne anim" style="animation-delay:2100ms">Abonne-toi</span></div>
+          <div class="r">${(M.reseaux || []).map(esc).join(" · ")}</div></div></div>`;
     },
   };
 

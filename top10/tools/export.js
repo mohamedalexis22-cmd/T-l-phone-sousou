@@ -73,7 +73,10 @@ function ffmpeg(sortie, alpha) {
     await page.evaluate(() => document.fonts.ready);
     await page.evaluate(() => Promise.all([...document.images].map((im) => im.complete || new Promise((r) => (im.onload = im.onerror = r)))));
     const duree = DUREES[s.type] || 4;
-    const shot = (ms) => page.evaluate((t) => window.__seek(t), ms).then(() => page.screenshot({ omitBackground: s.overlay, type: "png" }));
+    const shot = async (ms) => {
+      await page.evaluate((t) => { window.__seek(t); return new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); }, ms);
+      return page.screenshot({ omitBackground: s.overlay, type: "png" });
+    };
 
     if (!pngSeul) {
       const ff = ffmpeg(base + (s.overlay ? ".mov" : ".mp4"), s.overlay);

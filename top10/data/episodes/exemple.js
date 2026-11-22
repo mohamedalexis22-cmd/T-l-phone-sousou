@@ -46,7 +46,7 @@ EPISODES.exemple = {
   // Un nom absent de la banque peut être écrit tel quel : "Pavel Nedvěd".
   classements: {
     a1: ["zidane", "ronaldinho", "r9", "henry", "xavi", "iniesta", "kaka", "pirlo", "buffon", "drogba"],
-    a2: ["ronaldinho", "zidane", "henry", "r9", "kaka", "iniesta", "xavi", "maldini", "pirlo", "Pavel Nedvěd"],
+    a2: ["ronaldinho", "zidane", "henry", "r9", "kaka", "iniesta", "xavi", "maldini", "pirlo", "nedved"],
   },
 
   // Arguments affichés sous la fiche : "idAnimateur:idJoueur": "texte"

@@ -1,6 +1,6 @@
-# Kit graphique Top 10 foot
+# TOPSIDE — kit graphique Top 10
 
-Une charte graphique complète et réutilisable pour **tous** vos Top 10 : noir et blanc, touche lila, des écrans animés en 1920×1080, une banque de joueurs et une régie pour piloter le tournage.
+La charte de l'émission, réutilisable pour **tous** les Top 10. Esprit plateau : ardoise noire, papier blanc, scotch et surligneur lila, la tablette avec le nom écrit au feutre, des photos tirées façon polaroid. Écrans animés en 1920×1080, banque de joueurs reliée à Transfermarkt et régie pour piloter le tournage.
 
 ![Aperçu](apercu.jpg)
 
@@ -48,13 +48,27 @@ statsEpisode: { maldini: { matchsCapitaine: 0 /* le chiffre trouvé */ } },
 
 Un joueur absent de la banque peut être écrit en toutes lettres dans un classement (`"Pavel Nedvěd"`) : sa fiche s'affiche sans stats.
 
+## Importer des joueurs depuis Transfermarkt
+
+```bash
+node tools/transfermarkt.js "Carles Puyol" "Sergio Ramos"
+```
+
+On peut donner un nom, un lien Transfermarkt ou une liste (`--fichier joueurs.txt`, un par ligne). Si la recherche par nom tombe sur un homonyme, collez le lien du profil. Pour choisir l'identifiant court : `--id puyol` (un seul joueur à la fois).
+
+L'outil récupère sur la page profil : prénom, nom, **photo**, date de naissance, nationalité, poste, sélections et buts en sélection, et les clubs avec leurs années. Les fiches vont dans `data/joueurs-transfermarkt.js`, les photos dans `assets/joueurs/`.
+
+Les matchs et buts en club, ou les stats propres à un thème (matchs comme capitaine…), ne sont pas sur cette page : mettez-les dans `data/joueurs.js` ou dans `statsEpisode` de l'épisode. Ce que vous écrivez à la main passe toujours devant Transfermarkt.
+
+Il faut Node.js 18 ou plus récent.
+
 ## Banque de joueurs
 
 `data/joueurs.js` est commun à tous les épisodes : un joueur ajouté une fois sert pour tous les Top 10. Chaque fiche a un `source` (d'où viennent les chiffres) et un `verifie` (passez à `true` une fois vérifié).
 
-> ⚠ Les 11 fiches fournies sont des exemples saisis de mémoire, **non vérifiés**. Contrôlez les chiffres avant de les utiliser à l'écran.
+> ⚠ Les fiches d'exemple de `data/joueurs.js` ont été saisies de mémoire : contrôlez-les avant de les utiliser à l'écran. Les sélections, buts en sélection, clubs et photos viennent de Transfermarkt.
 
-**Photos** : déposez un PNG détouré dans `assets/joueurs/` et indiquez `photo: "assets/joueurs/zidane.png"`. Il passe automatiquement en noir et blanc avec un voile lila. Sans photo, les initiales s'affichent.
+**Photos** : importées automatiquement depuis Transfermarkt. Vous pouvez aussi déposer votre propre image dans `assets/joueurs/` et indiquer `photo: "assets/joueurs/zidane.png"`. Elle s'affiche en noir et blanc dans un cadre polaroid.
 
 ## Changer le logo et le nom
 
@@ -84,10 +98,12 @@ top10/
   scene.html            scène 1920×1080 (OBS / plein écran)
   da/marque.js          nom, logo, réseaux
   da/kit.css            charte (couleurs, typos, animations)
-  data/joueurs.js       banque de joueurs
+  data/joueurs.js       banque de joueurs (saisie à la main)
+  data/joueurs-transfermarkt.js  fiches importées
   data/episodes/        un fichier par Top 10
   js/kit.js             moteur des écrans
   tools/export.js       export vidéo
+  tools/transfermarkt.js  import Transfermarkt
 ```
 
-Polices embarquées : Anton, Inter et JetBrains Mono (licence SIL OFL, dans `fonts/`).
+Polices embarquées : Anton, Permanent Marker (feutre), Inter et JetBrains Mono (licences libres, dans `fonts/`).
