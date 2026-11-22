@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <!-- Logo provisoire : remplacez ce fichier par votre logo (même nom). -->
+  <circle cx="200" cy="200" r="186" stroke="#F4F3F7" stroke-width="10"/>
+  <circle cx="200" cy="200" r="160" stroke="#C4A7FF" stroke-width="3" stroke-dasharray="6 10"/>
+  <text x="200" y="232" text-anchor="middle" font-family="Anton, Impact, sans-serif" font-size="120" fill="#F4F3F7" letter-spacing="4">T10</text>
+  <path d="M120 270 L280 270" stroke="#C4A7FF" stroke-width="8" stroke-linecap="round"/>
+</svg>

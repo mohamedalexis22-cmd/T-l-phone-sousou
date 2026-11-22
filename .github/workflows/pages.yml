@@ -25,7 +25,7 @@ jobs:
       - name: Préparer le site
         run: |
           mkdir _site
-          cp -r index.html style.css app.js config.js fonts media _site/
+          cp -r index.html style.css app.js config.js fonts media top10 _site/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
