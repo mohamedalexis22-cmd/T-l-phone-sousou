@@ -10,8 +10,8 @@ EPISODES.exemple = {
 
   // Présentateurs (2 ou 3 conseillés). `id` court, `nom` affiché.
   animateurs: [
-    { id: "a1", nom: "Animateur 1" },
-    { id: "a2", nom: "Animateur 2" },
+    { id: "a1", nom: "Sulayman" },
+    { id: "a2", nom: "Mosses" },
   ],
 
   // Textes des parties (facultatifs — sinon textes par défaut)

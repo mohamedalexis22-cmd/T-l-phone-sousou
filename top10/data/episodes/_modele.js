@@ -11,8 +11,8 @@ EPISODES._modele = {
   date: "",
 
   animateurs: [
-    { id: "a1", nom: "Prénom 1" },
-    { id: "a2", nom: "Prénom 2" },
+    { id: "a1", nom: "Sulayman" },
+    { id: "a2", nom: "Mosses" },
   ],
 
   journee: "Comment s'est passée la journée ?",
