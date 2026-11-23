@@ -290,9 +290,19 @@
     document.addEventListener("fullscreenchange", () => { if (!document.fullscreenElement) { if (!voirRecap) onglet = sel.h; rendreOnglets(); rendreSlots(); } });
 
     /* ---------- Sauvegarde ---------- */
-    $("#dl").onclick = () => {
+    $("#dl").onclick = async () => {
+      const contenu = JSON.stringify(ep, null, 1);
+      // En ligne (claude.ai) : passer par la fenêtre d'enregistrement du site
+      let dlCap = null;
+      try { dlCap = window.claude && window.claude.use ? await window.claude.use("downloads") : null; } catch (e) { dlCap = null; }
+      if (dlCap) {
+        try { await dlCap.save({ filename: "topside-sauvegarde.json", data: contenu }); }
+        catch (e) { if (e && e.code !== "declined") alert("Téléchargement impossible ici (" + (e.code || "erreur") + ")."); }
+        return;
+      }
+      // Fichier ouvert sur l'ordinateur : lien de téléchargement classique
       const a = document.createElement("a");
-      a.href = URL.createObjectURL(new Blob([JSON.stringify(ep, null, 1)], { type: "application/json" }));
+      a.href = URL.createObjectURL(new Blob([contenu], { type: "application/json" }));
       a.download = "topside-sauvegarde.json"; a.click();
     };
     $("#ul").onchange = (e) => {
