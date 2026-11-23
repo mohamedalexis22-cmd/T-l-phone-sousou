@@ -1,0 +1,12 @@
+/* TOPSIDE — tchat. Onglet CSS. Les messages montent depuis le bas. */
+:root { --lila: #c4a7ff; --blanc: #f4f3f7; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: transparent; overflow: hidden; height: 100%; }
+#tchat { position: absolute; left: 0; right: 0; bottom: 0; top: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; padding: 12px; font-family: "Inter", Arial, sans-serif; overflow: hidden; }
+.m { padding: 8px 12px 9px; border-radius: 8px; background: rgba(255,255,255,.05); color: var(--blanc); font-weight: 500; font-size: 19px; line-height: 1.35; word-wrap: break-word; animation: entre .35s cubic-bezier(.22,1,.36,1) both; }
+.m.sort { animation: sort .4s ease both; }
+.m .n { display: block; font-weight: 700; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--lila); margin-bottom: 2px; }
+.m.modo .n::after { content: " · modo"; color: #8d8b95; }
+.m .emote { height: 1.4em; vertical-align: middle; margin: -2px 1px 0; }
+@keyframes entre { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes sort { to { opacity: 0; } }

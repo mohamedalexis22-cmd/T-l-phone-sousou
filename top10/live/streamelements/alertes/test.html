@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Test alertes</title>
+<link rel="stylesheet" href="alertes.css"></head><body>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+
+<div id="scene"></div>
+
+<script src="alertes.js"></script>
+<script>
+const evs=[["follower-latest",{name:"Kylian_93"}],["subscriber-latest",{name:"LeBossDuFoot",amount:6,message:"6 mois déjà, force à vous les gars"}],["cheer-latest",{name:"Mosses_Fan",amount:500,message:"Maldini numéro 1 !"}],["subscriber-latest",{sender:"Zizou10",bulkGifted:true,amount:5}],["raid-latest",{name:"TopFootTV",amount:84}]];
+let k=0;function go(){const[l,e]=evs[k++%evs.length];window.dispatchEvent(new CustomEvent("onEventReceived",{detail:{listener:l,event:e}}));}
+window.dispatchEvent(new CustomEvent("onWidgetLoad",{detail:{fieldData:{duree:4,logo:"../../../assets/logo.png"},session:{data:{}}}}));
+go();setInterval(go,5500);</script>
+</body></html>

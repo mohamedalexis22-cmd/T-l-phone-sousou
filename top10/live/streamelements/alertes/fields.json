@@ -1,0 +1,12 @@
+{
+  "logo": { "type": "image-input", "label": "Logo (PNG transparent)", "value": "" },
+  "duree": { "type": "number", "label": "Durée d'une alerte (secondes)", "value": 6, "min": 2, "max": 30 },
+  "son": { "type": "sound-input", "label": "Son de l'alerte (facultatif)", "value": "" },
+  "volume": { "type": "slider", "label": "Volume du son", "value": 50, "min": 0, "max": 100, "step": 1 },
+  "messages": { "type": "checkbox", "label": "Afficher le message du viewer", "value": true },
+  "follow": { "type": "checkbox", "label": "Alertes follows", "value": true },
+  "sub": { "type": "checkbox", "label": "Alertes subs", "value": true },
+  "bits": { "type": "checkbox", "label": "Alertes bits", "value": true },
+  "raid": { "type": "checkbox", "label": "Alertes raids", "value": true },
+  "don": { "type": "checkbox", "label": "Alertes dons", "value": true }
+}

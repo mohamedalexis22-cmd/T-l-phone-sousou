@@ -1,0 +1,6 @@
+{
+  "max": { "type": "number", "label": "Nombre de messages affichés", "value": 12, "min": 3, "max": 40 },
+  "duree": { "type": "number", "label": "Disparition après (secondes, 0 = jamais)", "value": 0, "min": 0, "max": 600 },
+  "ignorer": { "type": "text", "label": "Comptes ignorés (bots), séparés par des virgules", "value": "Nightbot,StreamElements,Streamlabs,Moobot" },
+  "commandes": { "type": "checkbox", "label": "Cacher les commandes (!...)", "value": true }
+}

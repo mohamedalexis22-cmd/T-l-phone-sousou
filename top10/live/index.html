@@ -44,8 +44,6 @@
     <div><label for="sujet">Sujet du live</label><input id="sujet" value="On réagit à l'actu foot"></div>
     <div><label for="heure">Heure de début (attente)</label><input id="heure" placeholder="21:00"></div>
     <div><label for="prochain">Prochain live (écran de fin)</label><input id="prochain" placeholder="Mercredi 21h : tier list"></div>
-    <div><label for="cams">Caméras</label><select id="cams"><option value="2">2 caméras (une chacun)</option><option value="1">1 caméra pour les deux</option></select></div>
-    <div><label for="noms">Prénoms (séparés par une virgule)</label><input id="noms" value="Sulayman, Mosses"></div>
     <div><label for="tiers">Lignes de la tier list</label><input id="tiers" value="S, A, B, C, D"></div>
     <div><label for="reseaux">Réseaux (écrans attente / fin)</label><input id="reseaux" placeholder="@topside"></div>
   </div>
@@ -57,15 +55,19 @@
     <ol>
       <li>Créez une scène par écran (Attente, Réaction, Tweets, Tier list, Discussion, Pause, Fin).</li>
       <li>Dans chaque scène, ajoutez d'abord vos sources (caméras, capture de la vidéo, tchat), puis en dernier une source <b>Navigateur</b> : collez le lien, largeur <b>1920</b>, hauteur <b>1080</b>. Elle doit être tout en haut de la liste des sources.</li>
-      <li>Placez et redimensionnez caméras, vidéo et tchat dans les trous (l'aperçu ici montre où).</li>
+      <li>Placez et redimensionnez la caméra, la vidéo et le tchat dans les cadres (l'aperçu ici montre où).</li>
       <li><b>Tier list</b> : clic droit sur la source Navigateur → <b>Interagir</b>. Tapez un nom, « Ajouter », puis glissez les photos dans les lignes. Le classement reste enregistré.</li>
       <li>Après avoir changé un réglage ici, recopiez le lien dans la source (ou clic droit → Propriétés → coller).</li>
     </ol>
-    <h3>Le tchat dans la DA</h3>
+    <h3>Alertes Twitch, derniers events et tchat (StreamElements)</h3>
+    <p style="color:var(--gris)">Twitch n'envoie les follows, subs et bits qu'à des services comme StreamElements. On y colle trois widgets dans la DA.
+      <a class="btn" href="streamelements/test.html" target="_blank" style="padding:3px 8px">Voir les alertes en test</a></p>
     <ol>
-      <li>Ajoutez une source Navigateur avec l'adresse <code>https://www.youtube.com/live_chat?v=ID_DE_VOTRE_LIVE&amp;is_popout=1</code> (l'ID est la fin du lien de votre live).</li>
-      <li>Dans « CSS personnalisé », collez le contenu du fichier <code>live/tchat-youtube.css</code> <button class="btn" id="copierCss" style="padding:3px 8px">Copier le CSS</button><span class="ok" id="okCss"></span></li>
-      <li>Redimensionnez-la dans le trou « Le tchat ».</li>
+      <li>Créez un compte sur <b>streamelements.com</b> avec Twitch, puis <b>Streaming tools → Overlays → New overlay</b> (1920×1080).</li>
+      <li>Ajoutez <b>+ → Static/Custom → Custom widget</b>, puis <b>Open editor</b>. Dans les onglets <b>HTML</b>, <b>CSS</b>, <b>JS</b> et <b>Fields</b>, collez les 4 fichiers du dossier <code>live/streamelements/alertes/</code>. Enregistrez.</li>
+      <li>Faites pareil avec <code>streamelements/evenements/</code> (ligne « dernier follow / sub / bits ») et <code>streamelements/tchat/</code> (tchat).</li>
+      <li>Placez les widgets (tchat dans le cadre « Tchat »), enregistrez, copiez le lien de l'overlay StreamElements et ajoutez-le dans OBS en source <b>Navigateur</b> 1920×1080, au-dessus de tout.</li>
+      <li>Testez avec le bouton <b>Emulate</b> de StreamElements (simule un follow, un sub, des bits…).</li>
     </ol>
   </div>
 </div>
@@ -74,15 +76,15 @@
 (function () {
   const ECRANS = [
     ["attente", "Le live commence", "Compte à rebours, sujet du jour et tchat."],
-    ["reaction", "Réaction vidéo", "Grand cadre pour la vidéo YouTube, vos caméras et le tchat."],
-    ["tweets", "Réaction tweets", "Cadre pour les tweets (capture du navigateur), caméras, tchat."],
+    ["reaction", "Réaction vidéo", "Grand cadre pour la vidéo, votre caméra et le tchat."],
+    ["tweets", "Réaction tweets", "Cadre pour les tweets, grande caméra, tchat."],
     ["tierlist", "Tier list", "Tableau S/A/B/C/D interactif avec les joueurs de la banque."],
     ["discussion", "Discussion", "Caméra plein cadre : bandeau du sujet + tchat."],
     ["pause", "Pause", "« On revient tout de suite » avec le tchat."],
     ["fin", "Fin du live", "Merci + prochain live + réseaux."],
   ];
   const $ = (s) => document.querySelector(s);
-  const champs = ["sujet", "heure", "prochain", "cams", "noms", "tiers", "reseaux"];
+  const champs = ["sujet", "heure", "prochain", "tiers", "reseaux"];
   try { const s = JSON.parse(localStorage.getItem("topside-live") || "{}"); champs.forEach((c) => { if (s[c] != null) $("#" + c).value = s[c]; }); } catch (e) {}
   const base = new URL("overlay.html", location.href).href;
   function params(ecran, apercu) {
@@ -114,10 +116,6 @@
     setTimeout(() => (ok.textContent = ""), 2000);
   }
   document.querySelectorAll(".carte").forEach((c) => c.querySelector(".copier").addEventListener("click", () => copier(base + "?" + params(c.dataset.id, false), c.querySelector(".ok"))));
-  $("#copierCss").addEventListener("click", async () => {
-    try { const r = await fetch("tchat-youtube.css"); copier(await r.text(), $("#okCss")); }
-    catch (e) { $("#okCss").textContent = "Ouvrez le fichier live/tchat-youtube.css et copiez son contenu."; }
-  });
   addEventListener("resize", ajusterVues);
   maj(); ajusterVues();
 })();

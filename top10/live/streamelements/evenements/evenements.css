@@ -1,0 +1,11 @@
+/* TOPSIDE — derniers événements. Onglet CSS. */
+:root { --lila: #c4a7ff; --blanc: #f4f3f7; --gris: #8d8b95; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: transparent; overflow: hidden; }
+#ligne { display: flex; align-items: baseline; gap: 34px; padding: 10px 4px; font-family: "Inter", Arial, sans-serif; color: var(--blanc); white-space: nowrap; }
+.ev { display: flex; align-items: baseline; gap: 10px; }
+.ev + .ev::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--lila); align-self: center; margin-right: 24px; }
+.lab { font-weight: 600; font-size: 14px; letter-spacing: .22em; text-transform: uppercase; color: var(--gris); }
+.nom { font-family: "Anton", Impact, sans-serif; font-size: 28px; text-transform: uppercase; }
+.nom.neuf { animation: flash 1.2s ease-out; }
+@keyframes flash { 0% { color: var(--lila); } 100% { color: var(--blanc); } }

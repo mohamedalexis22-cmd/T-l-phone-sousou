@@ -1,0 +1,26 @@
+/* TOPSIDE — alertes. Onglet CSS du Custom widget StreamElements. */
+:root { --lila: #c4a7ff; --fond: rgba(12,12,13,.94); --blanc: #f4f3f7; --gris: #8d8b95; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: transparent; overflow: hidden; }
+#scene { position: absolute; inset: 0; display: flex; justify-content: center; align-items: flex-start; padding-top: 40px; }
+
+.alerte {
+  position: relative; display: flex; align-items: center; gap: 22px;
+  min-width: 520px; max-width: 900px; padding: 22px 34px 22px 26px;
+  background: var(--fond); border-radius: 10px; overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,.5);
+  color: var(--blanc); font-family: "Inter", Arial, sans-serif;
+  animation: entre .7s cubic-bezier(.22,1,.36,1) both;
+}
+.alerte.sort { animation: sort .5s cubic-bezier(.64,0,.78,0) both; }
+.alerte::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--lila); transform-origin: top; animation: barre .6s .2s cubic-bezier(.22,1,.36,1) both; }
+.alerte .logo { width: 60px; height: 60px; flex: none; object-fit: contain; }
+.alerte .txt { min-width: 0; }
+.alerte .type { font-weight: 600; font-size: 15px; letter-spacing: .24em; text-transform: uppercase; color: var(--gris); }
+.alerte .nom { font-family: "Anton", Impact, sans-serif; font-size: 58px; line-height: 1.05; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.alerte .detail { font-weight: 700; font-size: 20px; color: var(--lila); margin-top: 2px; }
+.alerte .msg { font-weight: 500; font-size: 19px; color: #d6d4dc; margin-top: 8px; max-width: 760px; line-height: 1.35; }
+
+@keyframes entre { from { opacity: 0; transform: translateY(-30px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes sort { to { opacity: 0; transform: translateY(-20px); } }
+@keyframes barre { from { transform: scaleY(0); } to { transform: scaleY(1); } }

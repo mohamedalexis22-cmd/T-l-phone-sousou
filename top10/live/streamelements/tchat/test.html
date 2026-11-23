@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Test tchat</title>
+<link rel="stylesheet" href="tchat.css"></head><body>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+
+<div id="tchat"></div>
+
+<script src="tchat.js"></script>
+<script>
+window.dispatchEvent(new CustomEvent("onWidgetLoad",{detail:{fieldData:{max:10,duree:0},session:{data:{}}}}));
+const m=[["Kylian_93","Maldini il est pas dans le top 3 ?? 😭"],["LeBossDuFoot","Puyol meilleur capitaine, débat terminé"],["Mosses_Fan","la tier list est trop bien faite"],["Zizou10","on veut un top 10 des gardiens"],["Pirlo21","Cannavaro ballon d'or 2006 faut le respecter"],["TopFootTV","GG les gars"]];
+let k=0;function go(){const[a,t]=m[k++%m.length];window.dispatchEvent(new CustomEvent("onEventReceived",{detail:{listener:"message",event:{data:{displayName:a,nick:a.toLowerCase(),text:t,msgId:"m"+k,userId:a,badges:k%5==0?[{type:"moderator"}]:[],emotes:[]}}}}));}
+for(let i=0;i<5;i++)go();setInterval(go,1800);</script>
+</body></html>

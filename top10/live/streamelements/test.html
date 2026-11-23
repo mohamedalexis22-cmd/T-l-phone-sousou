@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test alertes TOPSIDE</title>
+<style>
+  html,body{margin:0;height:100%;background:#111;overflow:hidden}
+  #stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:linear-gradient(135deg,#3b4048,#23262b)}
+  iframe{position:absolute;border:0;background:transparent}
+  .info{position:absolute;left:40px;top:860px;color:#8d8b95;font:600 16px Inter,Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase}
+</style></head><body>
+<div id="stage">
+  <iframe src="../overlay.html?ecran=reaction&sujet=Test%20des%20alertes" style="left:0;top:0;width:1920px;height:1080px"></iframe>
+  <iframe src="tchat/test.html" style="left:1350px;top:378px;width:530px;height:662px"></iframe>
+  <iframe src="evenements/test.html" style="left:140px;top:890px;width:1180px;height:60px"></iframe>
+  <iframe src="alertes/test.html" style="left:40px;top:40px;width:1280px;height:300px"></iframe>
+</div>
+<script>
+function aj(){const s=document.getElementById("stage"),k=Math.min(innerWidth/1920,innerHeight/1080);s.style.transform=`translate(${(innerWidth-1920*k)/2}px,${(innerHeight-1080*k)/2}px) scale(${k})`;}
+aj();addEventListener("resize",aj);
+</script></body></html>
