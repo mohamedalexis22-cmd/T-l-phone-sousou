@@ -97,3 +97,11 @@ Dossier `live/streamelements/` : trois widgets à coller dans des « Custom widg
 3. Choisir la webcam dans « Caméra », la fenêtre du navigateur dans « Vidéo à regarder », puis sur un overlay : Interagir → double-clic → nom de la chaîne Twitch et sujet.
 
 Le tchat (`live/tchat.html`) et les alertes subs / bits / raids (`live/alertes.html`) lisent directement le tchat public de la chaîne : aucun compte à brancher. Seuls les follows demandent StreamElements.
+
+### Tout modifier soi-même dans OBS
+
+Clic droit sur un overlay → **Interagir** → **double-clic** :
+- réglages : nom de l'émission, couleur, chaîne Twitch, sujet, heure ou compte à rebours en minutes, prochain live, réseaux, lignes de la tier list ;
+- **Modifier la disposition et les textes de cet écran** : glisser les cadres, le logo, le bandeau ; coin en bas à droite pour la taille ; cliquer sur un texte pour le réécrire ; **Enregistrer** (ou « Disposition d'origine » pour revenir en arrière).
+
+Si vous déplacez un cadre (caméra, vidéo, tchat), déplacez aussi la source correspondante dans OBS pour qu'elle tombe dedans.

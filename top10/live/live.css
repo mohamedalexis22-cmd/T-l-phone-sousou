@@ -79,3 +79,19 @@ body.apercu .trou-vue { display: grid; position: absolute; place-items: center; 
 .tl-ajout { position: absolute; display: flex; gap: 8px; }
 .tl-ajout input { flex: 1; font: 600 18px Inter, sans-serif; padding: 10px 14px; border: 1px solid rgba(255,255,255,.2); border-radius: 6px; background: rgba(255,255,255,.06); color: var(--blanc); }
 .tl-ajout button { font: 400 20px Anton, sans-serif; text-transform: uppercase; padding: 8px 18px; border: 0; border-radius: 6px; background: var(--lila); color: var(--encre); cursor: pointer; }
+
+/* Mode édition (Interagir → double-clic → Modifier la disposition) */
+body.edition .fond-live { -webkit-mask: none !important; mask: none !important; opacity: .9; }
+body.edition .trou-vue { z-index: 1; }
+body.edition .editable { pointer-events: auto !important; cursor: move; outline: 2px dashed var(--lila) !important; outline-offset: 2px; z-index: 5; }
+body.edition .editable:hover { background-color: rgba(196,167,255,.08); }
+body.edition [data-texte] { cursor: text; outline: 1px dotted rgba(255,255,255,.5); outline-offset: 3px; border-radius: 3px; }
+body.edition [data-texte]:focus { outline: 2px solid var(--lila); background: rgba(196,167,255,.12); }
+.etiq-edit, .poignee { display: none; }
+body.edition .etiq-edit { display: block; position: absolute; left: 0; top: -30px; background: var(--lila); color: var(--encre); font: 700 14px Inter, sans-serif; padding: 4px 10px; border-radius: 4px; white-space: nowrap; pointer-events: none; }
+body.edition .poignee { display: block; position: absolute; right: -10px; bottom: -10px; width: 22px; height: 22px; background: var(--lila); border: 3px solid var(--encre); border-radius: 50%; cursor: nwse-resize; }
+#outils-edition { position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 9999; display: flex; align-items: center; gap: 10px; background: #141416; border: 1px solid #2a2a30; border-radius: 12px; padding: 10px 12px 10px 16px; font: 14px Inter, sans-serif; color: #f4f3f7; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
+#outils-edition b { font: 400 20px Anton, sans-serif; text-transform: uppercase; color: var(--lila); }
+#outils-edition span { color: #8d8b95; font-size: 13px; }
+#outils-edition button { border: 0; border-radius: 8px; padding: 9px 14px; font: 700 13px Inter, sans-serif; cursor: pointer; background: #1d1d21; color: #f4f3f7; }
+#outils-edition .ok { background: var(--lila); color: var(--encre); }

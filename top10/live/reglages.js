@@ -12,8 +12,10 @@
     ["chaine", "Nom de votre chaîne Twitch", "ex. topside"],
     ["sujet", "Sujet du live", "ex. On réagit à l'actu foot"],
     ["heure", "Heure de début (écran d'attente)", "ex. 21:00"],
+    ["minutes", "… ou compte à rebours en minutes (relancé à chaque enregistrement)", "ex. 10"],
     ["prochain", "Prochain live (écran de fin)", "ex. Mercredi 21h : tier list"],
     ["reseaux", "Réseaux (séparés par des virgules)", "ex. @topside"],
+    ["tiers", "Lignes de la tier list", "ex. S, A, B, C, D"],
   ];
   function lire() { try { return JSON.parse(localStorage.getItem(CLE) || "{}"); } catch (e) { return {}; } }
   function ecrire(v) { try { localStorage.setItem(CLE, JSON.stringify(v)); } catch (e) {} }
@@ -44,23 +46,29 @@
       #topside-reglages input[type=color]{width:70px;height:44px;padding:3px;cursor:pointer}
       #topside-reglages .defaut{background:#1d1d21;color:#f4f3f7;font-weight:600}
       #topside-reglages .ok{background:#c4a7ff;color:#0b0b0c} #topside-reglages .non{background:#1d1d21;color:#f4f3f7}
+      #topside-reglages .edit{width:100%;margin:14px 0 2px;background:#c4a7ff;color:#0b0b0c;font-size:15px;padding:12px}
+      #topside-reglages .p{max-height:92vh;overflow:auto}
     </style><form class="p"><h3>Réglages <b>TOPSIDE</b></h3><small>Valables pour tous les overlays de ce PC.</small>
+      ${window.TOPSIDE_EDITEUR ? '<button type="button" class="edit">✎ Modifier la disposition et les textes de cet écran</button>' : ""}
       ${CHAMPS.map(([k, l, ph, type]) => type === "color"
         ? `<label>${l}</label><div class="coul"><input type="color" name="${k}" value="${r[k] || "#c4a7ff"}"><button type="button" class="defaut">Lila d'origine</button></div>`
         : `<label>${l}</label><input name="${k}" placeholder="${ph}" value="${String(r[k] || "").replace(/"/g, "&quot;")}">`).join("")}
       <div class="b"><button type="button" class="non">Annuler</button><button class="ok">Enregistrer</button></div></form>`;
     document.body.appendChild(d);
     d.querySelector(".non").onclick = () => d.remove();
+    const be = d.querySelector(".edit"); if (be) be.onclick = () => { d.remove(); window.TOPSIDE_EDITEUR(); };
     d.querySelector(".defaut").onclick = () => { d.querySelector("input[type=color]").value = "#c4a7ff"; };
     d.querySelector("form").onsubmit = (e) => {
       e.preventDefault();
       const v = Object.assign(lire(), Object.fromEntries(new FormData(e.target)));
+      const mn = Number(String(v.minutes || "").replace(",", "."));
+      if (mn > 0) v.finChrono = Date.now() + mn * 60000; else delete v.finChrono;
       v.maj = Date.now();
       ecrire(v); d.remove(); location.reload();
     };
   }
 
-  addEventListener("dblclick", (e) => { if (!e.target.closest("input, button, .tuile, #topside-reglages")) panneau(); });
+  addEventListener("dblclick", (e) => { if (!e.target.closest("input, button, .tuile, #topside-reglages, #outils-edition") && !document.body.classList.contains("edition")) panneau(); });
   // Les autres sources se rechargent quand les réglages changent
   let derniere = lire().maj || 0;
   setInterval(() => { const m = lire().maj || 0; if (m !== derniere) { derniere = m; location.reload(); } }, 2000);
