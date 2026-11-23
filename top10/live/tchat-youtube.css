@@ -1,0 +1,50 @@
+/* =========================================================
+   TCHAT YOUTUBE dans la DA TOPSIDE
+   À coller dans OBS : source « Navigateur » →
+   URL  https://www.youtube.com/live_chat?v=ID_DU_LIVE&is_popout=1
+   → champ « CSS personnalisé ».
+   (Pour Twitch : https://www.twitch.tv/popout/NOM/chat?popout= —
+   le style de base ci-dessous ne s'applique qu'à YouTube.)
+   ========================================================= */
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@500;600&family=Permanent+Marker&display=swap");
+
+html, body, yt-live-chat-app, yt-live-chat-renderer, #item-scroller, #items, #contents, #chat {
+  background: transparent !important;
+  overflow: hidden !important;
+}
+/* On cache tout sauf les messages */
+yt-live-chat-header-renderer, yt-live-chat-message-input-renderer, #panel-pages,
+yt-live-chat-ticker-renderer, #ticker, yt-live-chat-banner-manager, #chat-messages > #contents > #ticker,
+yt-live-chat-viewer-engagement-message-renderer, #show-more, yt-live-chat-restricted-participation-renderer {
+  display: none !important;
+}
+/* Un message = une petite note de papier */
+yt-live-chat-text-message-renderer, yt-live-chat-paid-message-renderer, yt-live-chat-membership-item-renderer {
+  background: #f3f1ec !important;
+  margin: 8px 10px !important;
+  padding: 8px 12px 8px 10px !important;
+  border-radius: 2px !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,.45) !important;
+  animation: topside-pose .45s cubic-bezier(.34,1.56,.64,1) both;
+}
+yt-live-chat-text-message-renderer:nth-child(odd) { transform: rotate(-.6deg); }
+yt-live-chat-text-message-renderer:nth-child(even) { transform: rotate(.5deg); }
+@keyframes topside-pose { from { opacity: 0; transform: translateX(40px) rotate(3deg); } to { opacity: 1; } }
+
+#author-photo { width: 28px !important; height: 28px !important; margin-right: 10px !important; filter: grayscale(1) contrast(1.1); }
+#author-photo img { border-radius: 2px !important; }
+#timestamp { display: none !important; }
+#author-name {
+  font-family: "Permanent Marker", cursive !important; font-size: 15px !important;
+  color: #9b6bff !important; background: none !important; padding: 0 !important;
+}
+#author-name.moderator, #author-name.owner { color: #0b0b0c !important; background: #c4a7ff !important; padding: 0 6px !important; }
+#message {
+  font-family: "Inter", sans-serif !important; font-weight: 600 !important; font-size: 17px !important;
+  color: #0b0b0c !important; line-height: 1.3 !important;
+}
+#message img.emoji { width: 20px !important; height: 20px !important; }
+/* Super Chats : surlignés en lila */
+yt-live-chat-paid-message-renderer { background: #c4a7ff !important; }
+yt-live-chat-paid-message-renderer #header, yt-live-chat-paid-message-renderer #content { background: transparent !important; color: #0b0b0c !important; }
+yt-live-chat-paid-message-renderer #purchase-amount { font-family: "Anton", sans-serif !important; font-size: 22px !important; color: #0b0b0c !important; }

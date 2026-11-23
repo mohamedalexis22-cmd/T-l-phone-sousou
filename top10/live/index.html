@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Overlays live TOPSIDE</title>
+  <link rel="stylesheet" href="../da/polices.css">
+  <style>
+    :root { --noir:#0b0b0c; --n2:#121214; --n3:#1b1b1f; --bord:#2a2a30; --gris:#8a8994; --blanc:#f4f3f7; --lila:#c4a7ff; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--noir); color: var(--blanc); font: 14px/1.45 Inter, system-ui, sans-serif; padding: 24px 16px 60px; }
+    .wrap { max-width: 1200px; margin: 0 auto; }
+    h1 { font: 400 40px Anton, Impact, sans-serif; text-transform: uppercase; }
+    h1 b { color: var(--lila); font-weight: 400; }
+    .intro { color: var(--gris); margin: 6px 0 20px; max-width: 760px; }
+    .reglages { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; background: var(--n2); border: 1px solid var(--bord); border-radius: 12px; padding: 16px; }
+    label { display: block; font-size: 12px; color: var(--gris); margin-bottom: 4px; }
+    input, select { width: 100%; background: var(--n3); color: var(--blanc); border: 1px solid var(--bord); border-radius: 8px; padding: 9px 11px; font: inherit; }
+    input:focus, select:focus { outline: none; border-color: var(--lila); }
+    .grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; margin-top: 22px; }
+    .carte { background: var(--n2); border: 1px solid var(--bord); border-radius: 12px; overflow: hidden; }
+    .vue { position: relative; aspect-ratio: 16/9; background: linear-gradient(135deg, #2f3a30, #1d241e); }
+    .vue iframe { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; border: 0; transform-origin: 0 0; pointer-events: none; }
+    .txt { padding: 12px 14px 14px; }
+    .txt h2 { font: 400 22px Anton, Impact, sans-serif; text-transform: uppercase; }
+    .txt p { color: var(--gris); font-size: 13px; margin-top: 2px; min-height: 38px; }
+    .btns { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    .btn { background: var(--n3); border: 1px solid var(--bord); color: var(--blanc); padding: 8px 12px; border-radius: 8px; font: 600 13px Inter, sans-serif; cursor: pointer; text-decoration: none; }
+    .btn.p { background: var(--lila); color: var(--noir); border-color: var(--lila); }
+    .aide { margin-top: 28px; background: var(--n2); border: 1px solid var(--bord); border-radius: 12px; padding: 18px 20px; }
+    .aide h3 { font: 400 22px Anton, Impact, sans-serif; text-transform: uppercase; margin: 14px 0 6px; }
+    .aide h3:first-child { margin-top: 0; }
+    .aide ol { margin-left: 20px; } .aide li { margin: 3px 0; }
+    code { background: var(--n3); padding: 1px 6px; border-radius: 4px; font-size: 12px; word-break: break-all; }
+    .ok { color: var(--lila); font-size: 12px; margin-left: 6px; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Overlays live <b>TOPSIDE</b></h1>
+  <p class="intro">Réglez le sujet et l'heure, puis pour chaque écran cliquez « Copier le lien OBS » et collez-le dans une source Navigateur d'OBS (1920×1080). Les zones rayées sont transparentes : mettez-y vos caméras, la vidéo et le tchat.</p>
+
+  <div class="reglages">
+    <div><label for="sujet">Sujet du live</label><input id="sujet" value="On réagit à l'actu foot"></div>
+    <div><label for="heure">Heure de début (attente)</label><input id="heure" placeholder="21:00"></div>
+    <div><label for="prochain">Prochain live (écran de fin)</label><input id="prochain" placeholder="Mercredi 21h : tier list"></div>
+    <div><label for="cams">Caméras</label><select id="cams"><option value="2">2 caméras (une chacun)</option><option value="1">1 caméra pour les deux</option></select></div>
+    <div><label for="noms">Prénoms (séparés par une virgule)</label><input id="noms" value="Sulayman, Mosses"></div>
+    <div><label for="tiers">Lignes de la tier list</label><input id="tiers" value="S, A, B, C, D"></div>
+    <div><label for="reseaux">Réseaux (écrans attente / fin)</label><input id="reseaux" placeholder="@topside"></div>
+  </div>
+
+  <div class="grille" id="grille"></div>
+
+  <div class="aide">
+    <h3>Dans OBS</h3>
+    <ol>
+      <li>Créez une scène par écran (Attente, Réaction, Tweets, Tier list, Discussion, Pause, Fin).</li>
+      <li>Dans chaque scène, ajoutez d'abord vos sources (caméras, capture de la vidéo, tchat), puis en dernier une source <b>Navigateur</b> : collez le lien, largeur <b>1920</b>, hauteur <b>1080</b>. Elle doit être tout en haut de la liste des sources.</li>
+      <li>Placez et redimensionnez caméras, vidéo et tchat dans les trous (l'aperçu ici montre où).</li>
+      <li><b>Tier list</b> : clic droit sur la source Navigateur → <b>Interagir</b>. Tapez un nom, « Ajouter », puis glissez les photos dans les lignes. Le classement reste enregistré.</li>
+      <li>Après avoir changé un réglage ici, recopiez le lien dans la source (ou clic droit → Propriétés → coller).</li>
+    </ol>
+    <h3>Le tchat dans la DA</h3>
+    <ol>
+      <li>Ajoutez une source Navigateur avec l'adresse <code>https://www.youtube.com/live_chat?v=ID_DE_VOTRE_LIVE&amp;is_popout=1</code> (l'ID est la fin du lien de votre live).</li>
+      <li>Dans « CSS personnalisé », collez le contenu du fichier <code>live/tchat-youtube.css</code> <button class="btn" id="copierCss" style="padding:3px 8px">Copier le CSS</button><span class="ok" id="okCss"></span></li>
+      <li>Redimensionnez-la dans le trou « Le tchat ».</li>
+    </ol>
+  </div>
+</div>
+
+<script>
+(function () {
+  const ECRANS = [
+    ["attente", "Le live commence", "Compte à rebours, sujet du jour et tchat."],
+    ["reaction", "Réaction vidéo", "Grand cadre pour la vidéo YouTube, vos caméras et le tchat."],
+    ["tweets", "Réaction tweets", "Cadre pour les tweets (capture du navigateur), caméras, tchat."],
+    ["tierlist", "Tier list", "Tableau S/A/B/C/D interactif avec les joueurs de la banque."],
+    ["discussion", "Discussion", "Caméra plein cadre : bandeau du sujet + tchat."],
+    ["pause", "Pause", "« On revient tout de suite » avec le tchat."],
+    ["fin", "Fin du live", "Merci + prochain live + réseaux."],
+  ];
+  const $ = (s) => document.querySelector(s);
+  const champs = ["sujet", "heure", "prochain", "cams", "noms", "tiers", "reseaux"];
+  try { const s = JSON.parse(localStorage.getItem("topside-live") || "{}"); champs.forEach((c) => { if (s[c] != null) $("#" + c).value = s[c]; }); } catch (e) {}
+  const base = new URL("overlay.html", location.href).href;
+  function params(ecran, apercu) {
+    const p = new URLSearchParams({ ecran });
+    champs.forEach((c) => { const v = $("#" + c).value.trim(); if (v) p.set(c, v.replace(/\s*,\s*/g, ",")); });
+    if (apercu) p.set("apercu", "1");
+    return p.toString();
+  }
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  $("#grille").innerHTML = ECRANS.map(([id, t, d]) => `<div class="carte" data-id="${id}">
+    <div class="vue"><iframe title="${esc(t)}" loading="lazy"></iframe></div>
+    <div class="txt"><h2>${esc(t)}</h2><p>${esc(d)}</p>
+      <div class="btns"><button class="btn p copier">Copier le lien OBS</button><a class="btn ouvrir" target="_blank">Ouvrir</a><span class="ok"></span></div></div></div>`).join("");
+
+  function ajusterVues() { document.querySelectorAll(".vue").forEach((v) => { v.querySelector("iframe").style.transform = `scale(${v.clientWidth / 1920})`; }); }
+  let t;
+  function maj() {
+    try { localStorage.setItem("topside-live", JSON.stringify(Object.fromEntries(champs.map((c) => [c, $("#" + c).value])))); } catch (e) {}
+    document.querySelectorAll(".carte").forEach((c) => {
+      const id = c.dataset.id;
+      c.querySelector("iframe").src = "overlay.html?" + params(id, true);
+      c.querySelector(".ouvrir").href = "overlay.html?" + params(id, true);
+    });
+  }
+  champs.forEach((c) => $("#" + c).addEventListener("input", () => { clearTimeout(t); t = setTimeout(maj, 500); }));
+  async function copier(txt, ok) {
+    try { await navigator.clipboard.writeText(txt); ok.textContent = "Copié !"; }
+    catch (e) { window.prompt("Copiez ce lien :", txt); }
+    setTimeout(() => (ok.textContent = ""), 2000);
+  }
+  document.querySelectorAll(".carte").forEach((c) => c.querySelector(".copier").addEventListener("click", () => copier(base + "?" + params(c.dataset.id, false), c.querySelector(".ok"))));
+  $("#copierCss").addEventListener("click", async () => {
+    try { const r = await fetch("tchat-youtube.css"); copier(await r.text(), $("#okCss")); }
+    catch (e) { $("#okCss").textContent = "Ouvrez le fichier live/tchat-youtube.css et copiez son contenu."; }
+  });
+  addEventListener("resize", ajusterVues);
+  maj(); ajusterVues();
+})();
+</script>
+</body>
+</html>

@@ -66,3 +66,16 @@ top10/
 ```
 
 Polices embarquées : Anton, Permanent Marker, Inter et JetBrains Mono (licences libres, dans `fonts/`).
+
+## Overlays de live (OBS)
+
+Ouvrez `live/index.html` : réglez le sujet, l'heure, les prénoms, puis copiez le lien de chaque écran dans une source **Navigateur** d'OBS (1920×1080, tout en haut de la liste des sources).
+
+- **Le live commence** : compte à rebours, sujet du jour, tchat.
+- **Réaction vidéo** : grand cadre pour la vidéo, caméras, tchat.
+- **Réaction tweets** : cadre pour les tweets, caméras, tchat.
+- **Tier list** : tableau interactif (clic droit sur la source → Interagir) avec les joueurs de la banque.
+- **Discussion** : caméra plein cadre avec bandeau et tchat.
+- **Pause** et **Fin du live**.
+
+Les zones vides sont transparentes : placez-y vos caméras, la capture de la vidéo et le tchat. Pour le tchat YouTube dans la DA, collez le contenu de `live/tchat-youtube.css` dans le champ « CSS personnalisé » de la source du tchat.
