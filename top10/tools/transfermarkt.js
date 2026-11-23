@@ -30,6 +30,7 @@ const PHOTOS = path.join(RACINE, "assets", "joueurs");
 const BASE = "https://www.transfermarkt.fr";
 const UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36";
 const pause = (ms) => new Promise((r) => setTimeout(r, ms));
+const DELAI = Number(process.env.TM_DELAI || 4000);
 
 const MOIS = { janv: 1, févr: 2, fevr: 2, mars: 3, avr: 4, mai: 5, juin: 6, juil: 7, août: 8, aout: 8, sept: 9, oct: 10, nov: 11, déc: 12, dec: 12 };
 const PAYS = {
@@ -45,7 +46,7 @@ const PAYS = {
   Géorgie: "GEO", Finlande: "FIN", Islande: "ISL", "Burkina Faso": "BFA", Togo: "TOG", Liberia: "LBR",
 };
 
-const texte = (s) => s.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&#0?39;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/\s+/g, " ").trim();
+const texte = (s) => s.replace(/[\u200b-\u200f\u202a-\u202e\u2060\ufeff]/g, "").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&#0?39;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/\s+/g, " ").trim();
 const slugId = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 async function get(url, json = false) {
@@ -110,7 +111,7 @@ async function importer(entree, idForce) {
 
   const h1 = (h.match(/<h1 class="data-header__headline-wrapper">([\s\S]*?)<\/h1>/) || [])[1] || "";
   const nom = texte((h1.match(/<strong>([\s\S]*?)<\/strong>/) || [])[1] || "");
-  const prenom = texte(h1.replace(/<span[\s\S]*?<\/span>/g, "").replace(/<strong>[\s\S]*?<\/strong>/, ""));
+  const prenom = texte(h1.replace(/<span[\s\S]*?<\/span>/g, "").replace(/<strong>[\s\S]*?<\/strong>/, "")).replace(/^Sir\s+/, "");
   const photoUrl = (h.match(/<img src="([^"]+)"[^>]*class="data-header__profile-image"/) || [])[1] || "";
   const ne = dateISO(texte((h.match(/itemprop="birthDate"[^>]*>([\s\S]*?)<\/span>/) || [])[1] || ""));
   const natTxt = texte((h.match(/itemprop="nationality"[^>]*>([\s\S]*?)<\/span>/) || [])[1] || "");
@@ -120,7 +121,9 @@ async function importer(entree, idForce) {
   let clubs = [];
   try { clubs = clubsDepuisTransferts((await get(`${BASE}/ceapi/transferHistory/list/${tmId}`, true)).transfers || []); } catch (e) { console.warn("  (historique des clubs indisponible)"); }
 
-  const id = idForce || slugId(nom || prenom) || String(tmId);
+  // id : celui d'une fiche saisie à la main s'il existe (même nom), sinon prénom-nom
+  const manuels = lireManuels();
+  const id = idForce || (manuels.has(slugId(nom || prenom)) ? slugId(nom || prenom) : slugId([prenom, nom].filter(Boolean).join(" "))) || String(tmId);
   const photo = photoUrl ? await telechargerPhoto(photoUrl, id) : "";
   const stats = {};
   if (sel) { stats.selections = Number(sel[1]); stats.butsSelection = Number(sel[2]); }
@@ -130,6 +133,14 @@ async function importer(entree, idForce) {
     transfermarkt: `${BASE}/-/profil/spieler/${tmId}`,
     source: "Transfermarkt", verifie: false, maj: new Date().toISOString().slice(0, 10),
   };
+}
+
+function lireManuels() {
+  try {
+    const ctx = {};
+    new Function("window", fs.readFileSync(path.join(RACINE, "data", "joueurs.js"), "utf8"))(ctx);
+    return new Set((ctx.JOUEURS || []).map((j) => j.id));
+  } catch (e) { return new Set(); }
 }
 
 function lireExistants() {
@@ -175,7 +186,7 @@ ${corps}
       if (k >= 0) liste[k] = j; else liste.push(j);
       console.log(`✓ ${j.prenom} ${j.nom} (${j.id}) · ${j.nation} · ${j.poste} · ${j.clubs.length} clubs · sél. ${j.stats.selections ?? "—"}${j.photo ? " · photo" : ""}`);
     } catch (err) { console.log(`✗ ${e} : ${err.message}`); }
-    await pause(1500); // on reste poli avec le site
+    await pause(DELAI); // on reste poli avec le site (il bloque si on va trop vite)
   }
   ecrire(liste);
   console.log(`\n${liste.length} joueur(s) dans data/joueurs-transfermarkt.js`);

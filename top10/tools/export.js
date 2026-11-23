@@ -2,14 +2,15 @@
 /* =========================================================
    EXPORT DES SCÈNES EN VIDÉO / IMAGE pour le montage.
 
-   node tools/export.js [episode] [options]
+   node tools/export.js [sauvegarde.json] [options]
 
-     episode        nom du fichier dans data/episodes (défaut : exemple)
+     sauvegarde.json  le fichier « Télécharger la sauvegarde » du studio
+                      (sans fichier : l'exemple)
      --etapes 0,5-9 n'exporter que certaines étapes (numéros de la régie − 1)
      --png          seulement une image fixe par étape (rapide)
      --fps 30       images par seconde (défaut 30)
 
-   Résultat dans top10/export/<episode>/ :
+   Résultat dans top10/export/<nom de la sauvegarde>/ :
      NN-nom.mp4    scènes plein écran (H.264, 1920×1080)
      NN-nom.mov    incrustations avec TRANSPARENCE (ProRes 4444)
      NN-nom.png    dernière image de chaque étape
@@ -25,13 +26,15 @@ const { chromium } = require("playwright");
 
 const args = process.argv.slice(2);
 const opt = (k, def) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : def; };
-const ep = args.find((a, i) => !a.startsWith("--") && !(args[i - 1] || "").startsWith("--")) || "exemple";
+const fichier = args.find((a, i) => !a.startsWith("--") && !(args[i - 1] || "").startsWith("--"));
+const ep = fichier ? path.basename(fichier, ".json") : "exemple";
+const donnees = fichier ? JSON.parse(fs.readFileSync(fichier, "utf8")) : null;
 const fps = Number(opt("--fps", 30));
 const pngSeul = args.includes("--png");
 const filtre = opt("--etapes", null);
 
 // Durée de chaque type de scène (secondes) — la dernière image se prolonge au montage
-const DUREES = { intro: 4.5, chapitre: 3.5, "lt-nom": 3, objectifs: 4, mentions: 4, "lt-rang": 3, rang: 5, duo: 3.5, recap: 5, outro: 4 };
+const DUREES = { fiche: 5, recap: 5 };
 
 function choix(n) {
   if (!filtre) return () => true;
@@ -55,15 +58,16 @@ function ffmpeg(sortie, alpha) {
   const racine = path.resolve(__dirname, "..");
   const dossier = path.join(racine, "export", ep);
   fs.mkdirSync(dossier, { recursive: true });
-  const url = (i) => "file://" + path.join(racine, "scene.html") + `?ep=${encodeURIComponent(ep)}&i=${i}`;
+  const url = (i) => "file://" + path.join(racine, "scene.html") + `?i=${i}`;
 
   const nav = await chromium.launch();
   const page = await nav.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
+  if (donnees) await page.addInitScript((d) => { window.EPISODE_EXPORT = d; }, donnees);
   await page.goto(url(0));
   await page.waitForFunction(() => window.__pret);
   const steps = await page.evaluate(() => KIT.steps.map((s) => ({ type: s.type, label: s.label, overlay: s.overlay })));
   const garder = choix(steps.length);
-  console.log(`Épisode « ${ep} » : ${steps.length} étapes`);
+  console.log(`« ${ep} » : ${steps.length} étapes`);
 
   for (let i = 0; i < steps.length; i++) {
     if (!garder(i)) continue;

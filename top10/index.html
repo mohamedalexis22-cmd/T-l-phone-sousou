@@ -3,160 +3,312 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Régie TOPSIDE</title>
+  <title>Studio TOPSIDE</title>
   <link rel="stylesheet" href="da/polices.css">
   <style>
-    :root { --noir:#070708; --n2:#0f0f12; --n3:#17171c; --bord:#26252d; --gris:#8a8994; --blanc:#f4f3f7; --lila:#c4a7ff; --orange:#ffb86b; }
+    :root { --noir:#0b0b0c; --n2:#121214; --n3:#1b1b1f; --bord:#2a2a30; --gris:#8a8994; --blanc:#f4f3f7; --lila:#c4a7ff; --lila-f:#9b6bff; --orange:#ffb86b; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--noir); color: var(--blanc); font: 14px/1.4 Inter, system-ui, sans-serif; height: 100vh; display: grid; grid-template-columns: 380px 1fr; overflow: hidden; }
-    aside { border-right: 1px solid var(--bord); display: flex; flex-direction: column; min-height: 0; background: var(--n2); }
-    .haut { padding: 20px; border-bottom: 1px solid var(--bord); }
-    .marque { font-family: Anton, Impact, sans-serif; font-size: 30px; letter-spacing: .02em; text-transform: uppercase; display: flex; align-items: center; gap: 12px; }
-    .marque img { height: 36px; }
-    .marque b { color: var(--lila); font-weight: 400; }
-    label { display: block; margin-top: 14px; font: 11px "JetBrains Mono", monospace; letter-spacing: .16em; text-transform: uppercase; color: var(--gris); }
-    select { margin-top: 6px; width: 100%; background: var(--n3); color: var(--blanc); border: 1px solid var(--bord); padding: 9px 10px; font: inherit; border-radius: 6px; }
-    .onglets { display: flex; border-bottom: 1px solid var(--bord); }
-    .onglets button { flex: 1; background: none; border: 0; color: var(--gris); padding: 12px; font: 600 13px Inter, sans-serif; cursor: pointer; border-bottom: 2px solid transparent; }
-    .onglets button.on { color: var(--blanc); border-color: var(--lila); }
-    .liste { overflow: auto; flex: 1; padding: 8px 0; }
-    .etape { display: flex; gap: 10px; align-items: baseline; padding: 8px 20px; cursor: pointer; color: #cfcdd8; }
-    .etape:hover { background: var(--n3); }
-    .etape.on { background: rgba(196,167,255,.12); color: var(--blanc); box-shadow: inset 3px 0 var(--lila); }
-    .etape .k { font: 11px "JetBrains Mono", monospace; color: var(--gris); width: 26px; flex: none; }
-    .etape .tag { margin-left: auto; font: 10px "JetBrains Mono", monospace; letter-spacing: .1em; color: var(--lila); border: 1px solid rgba(196,167,255,.4); padding: 1px 5px; border-radius: 4px; flex: none; }
-    .alerte { margin: 10px 16px; padding: 10px 12px; border: 1px solid rgba(255,184,107,.35); background: rgba(255,184,107,.08); border-radius: 8px; color: #ffd9ad; font-size: 13px; }
-    .alerte b { color: var(--orange); }
-    .alerte ul { margin: 6px 0 0 16px; }
-    .ok { margin: 10px 16px; padding: 10px 12px; border: 1px solid rgba(196,167,255,.35); border-radius: 8px; color: var(--lila); font-size: 13px; }
-    .j { padding: 10px 20px; border-bottom: 1px solid var(--bord); }
-    .j .nm { font-weight: 700; display: flex; gap: 8px; align-items: center; }
-    .j .nm small { font: 10px "JetBrains Mono", monospace; color: var(--gris); }
-    .j .st { color: var(--gris); font-size: 12px; margin-top: 3px; }
-    .pt { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex: none; }
-    .pt.v { background: var(--lila); }
-    main { display: flex; flex-direction: column; min-width: 0; min-height: 0; padding: 22px; gap: 16px; }
-    .ecran { position: relative; flex: 1; min-height: 0; display: grid; place-items: center; }
-    .cadre16 { position: relative; aspect-ratio: 16/9; width: 100%; max-height: 100%; max-width: calc((100vh - 140px) * 16 / 9); border: 1px solid var(--bord); border-radius: 6px; overflow: hidden;
-      background: radial-gradient(ellipse at 40% 40%, #3b3546, #121116 70%); }
-    .cadre16.camera::before { content: "CAMÉRA"; position: absolute; left: 50%; top: 42%; transform: translate(-50%,-50%); font: 2.4vw Anton, sans-serif; letter-spacing: .3em; color: rgba(255,255,255,.08); }
-    iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; }
-    .barre { display: flex; gap: 10px; align-items: center; }
-    .barre button, .barre a { background: var(--n3); color: var(--blanc); border: 1px solid var(--bord); padding: 10px 16px; border-radius: 8px; font: 600 14px Inter, sans-serif; cursor: pointer; text-decoration: none; }
-    .barre button.p { background: var(--lila); color: var(--noir); border-color: var(--lila); }
-    .barre .titre { margin-left: 8px; font-weight: 600; color: #cfcdd8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .barre .aide { margin-left: auto; color: var(--gris); font-size: 12px; white-space: nowrap; }
-    kbd { font: 11px "JetBrains Mono", monospace; border: 1px solid var(--bord); padding: 1px 5px; border-radius: 4px; }
+    html, body { height: 100%; }
+    body { background: var(--noir); color: var(--blanc); font: 14px/1.4 Inter, system-ui, sans-serif; display: grid; grid-template-columns: minmax(380px, 520px) 1fr; overflow: hidden; }
+    aside { border-right: 1px solid var(--bord); background: var(--n2); display: flex; flex-direction: column; min-height: 0; }
+    .tete { padding: 16px 20px; border-bottom: 1px solid var(--bord); display: flex; align-items: center; gap: 12px; }
+    .tete img { height: 42px; }
+    .tete h1 { font: 400 28px Anton, Impact, sans-serif; text-transform: uppercase; letter-spacing: .02em; }
+    .tete h1 b { color: var(--lila); font-weight: 400; }
+    .defile { overflow: auto; flex: 1; padding: 8px 20px 30px; }
+    details { border-bottom: 1px solid var(--bord); padding: 12px 0; }
+    summary { cursor: pointer; font: 400 18px Anton, Impact, sans-serif; text-transform: uppercase; letter-spacing: .03em; list-style: none; display: flex; justify-content: space-between; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; color: var(--gris); }
+    details[open] summary::after { content: "–"; }
+    .champ { margin-top: 10px; }
+    label, .lbl { display: block; font-size: 12px; color: var(--gris); margin-bottom: 4px; }
+    input[type=text], textarea, select { width: 100%; background: var(--n3); color: var(--blanc); border: 1px solid var(--bord); border-radius: 8px; padding: 9px 11px; font: inherit; }
+    input:focus, textarea:focus, select:focus { outline: none; border-color: var(--lila); }
+    textarea { resize: vertical; min-height: 40px; }
+    .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .stat-l { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; margin-top: 8px; }
+    .stat-l small { color: var(--gris); font-size: 12px; white-space: nowrap; display: flex; align-items: center; gap: 4px; }
+    .seg { display: flex; border: 1px solid var(--bord); border-radius: 8px; overflow: hidden; }
+    .seg button { flex: 1; background: var(--n3); color: var(--gris); border: 0; padding: 9px; font: 600 13px Inter, sans-serif; cursor: pointer; }
+    .seg button.on { background: var(--lila); color: var(--noir); }
+    .onglets { display: flex; gap: 6px; margin: 14px 0 6px; }
+    .onglets button { flex: 1; background: var(--n3); border: 1px solid var(--bord); color: var(--gris); padding: 10px; border-radius: 8px; font: 400 18px Anton, Impact, sans-serif; text-transform: uppercase; cursor: pointer; }
+    .onglets button.on { color: var(--noir); background: var(--lila); border-color: var(--lila); }
+    .cacher { background: none; border: 0; color: var(--gris); font-size: 12px; cursor: pointer; text-decoration: underline; margin-bottom: 6px; }
+    .slots.flou .slot { filter: blur(7px); pointer-events: none; user-select: none; }
+    .slot { border: 1px solid var(--bord); border-radius: 10px; padding: 10px 12px 12px; margin-top: 8px; background: var(--n3); cursor: pointer; }
+    .slot.on { border-color: var(--lila); box-shadow: 0 0 0 1px var(--lila); }
+    .slot .h { display: flex; align-items: center; gap: 10px; }
+    .slot .rk { font: 400 26px Anton, Impact, sans-serif; color: var(--lila); width: 40px; flex: none; }
+    .slot .h input { flex: 1; min-width: 0; }
+    .slot .vu { width: 34px; height: 42px; border-radius: 4px; background: #2a2a30 center/cover; flex: none; }
+    .slot .det { display: none; margin-top: 10px; }
+    .slot.on .det { display: block; }
+    .vals { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .ph { display: flex; gap: 8px; align-items: center; margin-top: 8px; font-size: 12px; color: var(--gris); }
+    .ph button, .ph label { margin: 0; display: inline-block; background: none; border: 1px solid var(--bord); color: var(--blanc); padding: 6px 10px; border-radius: 6px; cursor: pointer; font: 600 12px Inter, sans-serif; }
+    .ph input { display: none; }
+    .info { font-size: 12px; color: var(--gris); margin-top: 6px; }
+    .info.ok { color: var(--lila); }
+    .bandeau { margin: 12px 0 0; padding: 10px 12px; border: 1px solid rgba(255,184,107,.4); background: rgba(255,184,107,.08); color: #ffd9ad; border-radius: 8px; font-size: 13px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .btn { background: var(--n3); border: 1px solid var(--bord); color: var(--blanc); padding: 9px 13px; border-radius: 8px; font: 600 13px Inter, sans-serif; cursor: pointer; }
+    .btn.p { background: var(--lila); color: var(--noir); border-color: var(--lila); }
+    .btn.danger { color: #ff9b9b; }
+    main { display: flex; flex-direction: column; min-width: 0; min-height: 0; padding: 20px; gap: 14px; }
+    .ecran { flex: 1; min-height: 0; display: grid; place-items: center; }
+    .cadre { position: relative; aspect-ratio: 16/9; width: 100%; max-height: 100%; max-width: calc((100vh - 130px) * 16 / 9); border-radius: 8px; overflow: hidden; border: 1px solid var(--bord);
+      background: linear-gradient(135deg, #3f3a36, #26221f 60%, #1b1816); }
+    .cadre.cam::before { content: "VOTRE CAMÉRA"; position: absolute; left: 30%; top: 45%; transform: translate(-50%,-50%); font: 400 clamp(16px, 2.4vw, 40px) Anton, sans-serif; letter-spacing: .3em; color: rgba(255,255,255,.1); }
+    .cadre:fullscreen { border: 0; border-radius: 0; max-width: none; }
+    .cadre iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; }
+    .barre { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .barre .t { color: #cfcdd8; font-weight: 600; margin-left: 6px; }
+    .barre .aide { margin-left: auto; color: var(--gris); font-size: 12px; }
+    @media (max-width: 900px) {
+      body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; overflow: auto; height: auto; }
+      main { order: -1; padding: 12px 16px; } .ecran { flex: none; } .cadre { max-width: 100%; }
+      aside { border-right: 0; } .defile { overflow: visible; padding: 8px 16px 30px; } .barre .aide { display: none; }
+    }
   </style>
 </head>
 <body>
   <aside>
-    <div class="haut">
-      <div class="marque"><img id="logo" alt=""><span>Régie <b>TOPSIDE</b></span></div>
-      <label for="ep">Épisode</label>
-      <select id="ep"></select>
+    <div class="tete"><img id="logo" alt=""><h1>Studio <b>TOPSIDE</b></h1></div>
+    <div class="defile">
+      <div class="bandeau" id="bandeau" hidden>Ceci est un <b>exemple</b>. Ouvrez « Sauvegarde » en bas et cliquez « Nouveau top 10 » pour partir d'une page vide.</div>
+
+      <details open>
+        <summary>Réglages</summary>
+        <div class="champ deux">
+          <div><label for="n1">Présentateur 1</label><input type="text" id="n1"></div>
+          <div><label for="n2">Présentateur 2</label><input type="text" id="n2"></div>
+        </div>
+        <div class="champ"><label for="titreRecap">Titre du récap</label><input type="text" id="titreRecap"></div>
+        <div class="champ deux">
+          <div><span class="lbl">Carte joueur</span><div class="seg" id="cote"><button data-v="gauche">À gauche</button><button data-v="droite">À droite</button></div></div>
+          <div><span class="lbl">Fond derrière la carte</span><div class="seg" id="fond"><button data-v="transparent">Caméra</button><button data-v="vert">Fond vert</button></div></div>
+        </div>
+      </details>
+
+      <details open>
+        <summary>Les 4 stats de la carte</summary>
+        <div class="info">Le nom de chaque ligne de stats (ex. Matchs, Matchs capitaine…). La case cochée est surlignée en lila. Laissez vide pour masquer une ligne.</div>
+        <div id="stats"></div>
+      </details>
+
+      <div class="onglets" id="onglets"></div>
+      <button class="cacher" id="cacher"></button>
+      <div class="slots" id="slots"></div>
+
+      <details>
+        <summary>Sauvegarde</summary>
+        <div class="info">Tout est enregistré automatiquement dans ce navigateur, sur cet appareil. Pour changer d'appareil ou garder une copie, téléchargez le fichier.</div>
+        <div class="actions">
+          <button class="btn" id="dl">Télécharger la sauvegarde</button>
+          <label class="btn" for="ul" style="margin:0">Ouvrir une sauvegarde</label><input type="file" id="ul" accept=".json,application/json" hidden>
+          <button class="btn danger" id="neuf">Nouveau top 10</button>
+        </div>
+      </details>
     </div>
-    <div class="onglets"><button class="on" data-o="deroule">Déroulé</button><button data-o="banque">Banque de joueurs</button></div>
-    <div class="liste" id="liste"></div>
   </aside>
+
   <main>
-    <div class="ecran"><div class="cadre16" id="cadre"><iframe id="scene" title="Aperçu de la scène"></iframe></div></div>
+    <div class="ecran"><div class="cadre cam" id="cadre"><iframe id="scene" src="scene.html" title="Aperçu"></iframe></div></div>
     <div class="barre">
-      <button id="prec">← Précédent</button>
-      <button id="suiv" class="p">Suivant →</button>
-      <button id="rej">↻ Rejouer</button>
-      <a id="ouvrir" target="_blank">Ouvrir la scène seule</a>
-      <span class="titre" id="titre"></span>
-      <span class="aide"><kbd>→</kbd> <kbd>←</kbd> <kbd>R</kbd> · incrustations sur fond transparent</span>
+      <button class="btn p" id="rejouer">↻ Rejouer l'animation</button>
+      <button class="btn" id="plein">⛶ Plein écran (pour enregistrer)</button>
+      <button class="btn" id="voirRecap">Voir le récap</button>
+      <span class="t" id="titre"></span>
+      <span class="aide">En plein écran : clic = rejouer · ← → = précédent / suivant · Échap = sortir</span>
     </div>
   </main>
 
   <script src="da/marque.js"></script>
   <script src="data/joueurs.js"></script>
   <script src="data/joueurs-transfermarkt.js"></script>
-  <script src="data/episodes/liste.js"></script>
+  <script src="data/demo.js"></script>
   <script>
+  (function () {
+    const CLE = "topside-studio";
     const $ = (s) => document.querySelector(s);
     const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     const frame = $("#scene");
-    let steps = [], cur = 0, onglet = "deroule", epNom = new URLSearchParams(location.search).get("ep") || LISTE_EPISODES[0];
-    const BANQUE = Object.fromEntries(JOUEURS.map((j) => [j.id, j]));
     $("#logo").src = MARQUE.logo;
+    const lire = (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+    const ecrire = (k, v) => { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } };
 
-    $("#ep").innerHTML = LISTE_EPISODES.map((n) => `<option value="${esc(n)}">${esc(n)}</option>`).join("");
-    $("#ep").value = epNom;
-    $("#ep").onchange = () => { epNom = $("#ep").value; history.replaceState(null, "", "?ep=" + encodeURIComponent(epNom)); charger(0); };
+    /* ---------- Banque : recherche ---------- */
+    const BANQUE = JOUEURS.slice().sort((a, b) => (a.nom || "").localeCompare(b.nom || ""));
+    const nomJ = (j) => j.surnom || [j.prenom, j.nom].filter(Boolean).join(" ");
+    const etiquette = (j) => `${nomJ(j)} (${[j.nation, (j.ne || "").slice(0, 4)].filter(Boolean).join(", ")})`;
+    const parEtiquette = Object.fromEntries(BANQUE.map((j) => [etiquette(j).toLowerCase(), j]));
+    const parNom = {};
+    const sansAccent = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+    const ajouteNom = (k, j) => { k = sansAccent(k); if (!k) return; parNom[k] = k in parNom && parNom[k] !== j ? null : j; };
+    BANQUE.forEach((j) => { ajouteNom(nomJ(j), j); ajouteNom(j.nom || "", j); if (j.surnom) ajouteNom(j.surnom, j); });
+    const dl = document.createElement("datalist"); dl.id = "banque";
+    dl.innerHTML = BANQUE.map((j) => `<option value="${esc(etiquette(j))}">`).join("");
+    document.body.appendChild(dl);
+    const AUTO = { "sélections": "selections", "selections": "selections", "buts en sélection": "butsSelection", "buts en selection": "butsSelection" };
 
-    function charger(i) {
-      frame.src = `scene.html?ep=${encodeURIComponent(epNom)}&i=${i}`;
-      if (!EPISODES[epNom]) { const s = document.createElement("script"); s.src = `data/episodes/${epNom}.js`; s.onload = rendreListe; document.head.appendChild(s); }
-    }
-    const envoyer = (m) => frame.contentWindow.postMessage(m, "*");
-    $("#prec").onclick = () => envoyer({ kit: "precedent" });
-    $("#suiv").onclick = () => envoyer({ kit: "suivant" });
-    $("#rej").onclick = () => envoyer({ kit: "rejouer" });
-    addEventListener("keydown", (e) => {
-      if (e.target.tagName === "SELECT") return;
-      if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); envoyer({ kit: "suivant" }); }
-      else if (e.key === "ArrowLeft") envoyer({ kit: "precedent" });
-      else if (e.key === "r" || e.key === "R") envoyer({ kit: "rejouer" });
+    /* ---------- État ---------- */
+    const vide = () => ({ joueur: "", nomLibre: "", valeurs: ["", "", "", ""], argument: "", photo: "" });
+    const neuf = () => ({
+      titreRecap: "Nos classements", cote: "droite",
+      animateurs: [{ id: "a1", nom: "Sulayman" }, { id: "a2", nom: "Mosses" }],
+      stats: [{ label: "Matchs" }, { label: "Buts" }, { label: "Sélections" }, { label: "Trophées", accent: true }],
+      classements: { a1: Array.from({ length: 10 }, vide), a2: Array.from({ length: 10 }, vide) },
     });
-    document.querySelectorAll(".onglets button").forEach((b) => (b.onclick = () => {
-      onglet = b.dataset.o; document.querySelectorAll(".onglets button").forEach((x) => x.classList.toggle("on", x === b)); rendreListe();
-    }));
+    let ep = null, fond = lire(CLE + "-fond") || "transparent", onglet = 0, sel = { h: 0, r: 10 }, voirRecap = false, flou = false;
+    try { ep = JSON.parse(lire(CLE) || "null"); } catch (e) { ep = null; }
+    if (!ep) ep = JSON.parse(JSON.stringify(window.EPISODE_DEMO || neuf()));
 
+    function sauver() {
+      if (!ecrire(CLE, JSON.stringify(ep)) && !sauver.alerte) { sauver.alerte = true; alert("Impossible d'enregistrer dans ce navigateur. Téléchargez une sauvegarde pour ne rien perdre."); }
+      ecrire(CLE + "-fond", fond);
+    }
+    const index = () => voirRecap ? ep.animateurs.length * 10 : (10 - sel.r) * ep.animateurs.length + sel.h;
+    function majTitre() { $("#titre").textContent = voirRecap ? "Récap" : `#${sel.r} · choix de ${ep.animateurs[sel.h].nom}`; }
+    function envoyer() {
+      sauver();
+      if (frame.contentWindow) frame.contentWindow.postMessage({ kit: "etat", ep, fond, i: index() }, "*");
+      $("#cadre").classList.toggle("cam", !voirRecap && fond === "transparent");
+      $("#bandeau").hidden = !ep.exemple;
+      majTitre();
+    }
+    let minuterie;
+    const envoyerPlusTard = () => { clearTimeout(minuterie); minuterie = setTimeout(envoyer, 400); };
+    frame.addEventListener("load", envoyer);
+
+    /* ---------- Réglages ---------- */
+    function seg(id, val, set) {
+      document.querySelectorAll(`#${id} button`).forEach((b) => {
+        b.classList.toggle("on", b.dataset.v === val);
+        b.onclick = () => { set(b.dataset.v); seg(id, b.dataset.v, set); envoyer(); };
+      });
+    }
+    function rendreReglages() {
+      $("#n1").value = ep.animateurs[0].nom; $("#n2").value = ep.animateurs[1].nom;
+      $("#titreRecap").value = ep.titreRecap || "";
+      seg("cote", ep.cote || "droite", (v) => (ep.cote = v));
+      seg("fond", fond, (v) => (fond = v));
+      $("#stats").innerHTML = ep.stats.map((s, i) => `<div class="stat-l"><input type="text" data-i="${i}" value="${esc(s.label)}" placeholder="Stat ${i + 1} (vide = masquée)">
+        <small><input type="radio" name="accent" data-i="${i}" ${s.accent ? "checked" : ""}> surligner</small></div>`).join("");
+      document.querySelectorAll("#stats input[type=text]").forEach((el) => (el.oninput = () => { ep.stats[el.dataset.i].label = el.value; rendreSlots(); envoyerPlusTard(); }));
+      document.querySelectorAll("#stats input[type=radio]").forEach((el) => (el.onchange = () => { ep.stats.forEach((s, k) => (s.accent = k === Number(el.dataset.i))); envoyer(); }));
+    }
+    $("#n1").oninput = () => { ep.animateurs[0].nom = $("#n1").value; rendreOnglets(); envoyerPlusTard(); };
+    $("#n2").oninput = () => { ep.animateurs[1].nom = $("#n2").value; rendreOnglets(); envoyerPlusTard(); };
+    $("#titreRecap").oninput = () => { ep.titreRecap = $("#titreRecap").value; envoyerPlusTard(); };
+
+    /* ---------- Onglets + emplacements ---------- */
+    function rendreOnglets() {
+      $("#onglets").innerHTML = ep.animateurs.map((a, i) => `<button class="${i === onglet ? "on" : ""}" data-i="${i}">Top de ${esc(a.nom)}</button>`).join("");
+      document.querySelectorAll("#onglets button").forEach((b) => (b.onclick = () => { onglet = Number(b.dataset.i); sel = { h: onglet, r: sel.r }; voirRecap = false; rendreOnglets(); rendreSlots(); envoyer(); }));
+    }
+    const trouver = (id) => JOUEURS.find((x) => x.id === id);
+    const valeurAffichee = (s) => (s.joueur ? (trouver(s.joueur) ? etiquette(trouver(s.joueur)) : s.joueur) : s.nomLibre || "");
+
+    function rendreSlots() {
+      const liste = ep.classements[ep.animateurs[onglet].id];
+      $("#slots").classList.toggle("flou", flou);
+      $("#cacher").textContent = flou ? "Afficher ce top" : "Cacher ce top (pour que l'autre ne le voie pas)";
+      $("#slots").innerHTML = liste.map((s, k) => {
+        const r = k + 1, j = s.joueur && trouver(s.joueur);
+        const ph = s.photo || (j && j.photo) || "";
+        const on = !voirRecap && sel.h === onglet && sel.r === r;
+        return `<div class="slot ${on ? "on" : ""}" data-r="${r}">
+          <div class="h"><span class="rk">#${r}</span>
+            <input type="text" list="banque" class="joueur" value="${esc(valeurAffichee(s))}" placeholder="Tapez un nom de joueur…">
+            <span class="vu" style="${ph ? `background-image:url('${esc(ph)}')` : ""}"></span></div>
+          <div class="det">
+            <div class="info ${j ? "ok" : ""}">${j ? "Trouvé dans la banque : photo, poste et clubs remplis tout seuls." : s.nomLibre ? "Pas dans la banque : le nom s'affiche, ajoutez une photo si vous voulez." : "Choisissez dans la liste qui s'ouvre quand vous tapez."}</div>
+            <div class="vals" style="margin-top:8px">${ep.stats.map((st, i) => st.label.trim() ? `<div><label>${esc(st.label)}</label><input type="text" class="val" data-i="${i}" value="${esc(s.valeurs[i] || "")}" inputmode="decimal"></div>` : "").join("")}</div>
+            <div class="champ"><label>Argument (facultatif, 3 lignes max)</label><textarea class="arg" rows="2">${esc(s.argument || "")}</textarea></div>
+            <div class="ph"><label>Photo perso<input type="file" accept="image/*" class="up"></label>${s.photo ? `<button class="rm">Retirer la photo perso</button>` : ""}</div>
+          </div></div>`;
+      }).join("");
+      document.querySelectorAll(".slot").forEach((el) => {
+        const r = Number(el.dataset.r), s = liste[r - 1];
+        const choisir = () => {
+          if (sel.h === onglet && sel.r === r && !voirRecap) return;
+          sel = { h: onglet, r }; voirRecap = false;
+          document.querySelectorAll(".slot").forEach((x) => x.classList.toggle("on", x === el));
+          envoyer();
+        };
+        el.addEventListener("click", choisir);
+        const inp = el.querySelector(".joueur");
+        inp.addEventListener("focus", choisir);
+        inp.addEventListener("change", () => {
+          const v = inp.value.trim();
+          const j = parEtiquette[v.toLowerCase()] || parNom[sansAccent(v)];
+          const avant = s.joueur || s.nomLibre;
+          if (j) { if (s.joueur === j.id) return; s.joueur = j.id; s.nomLibre = ""; }
+          else { if (s.nomLibre === v && !s.joueur) return; s.joueur = ""; s.nomLibre = v; }
+          if (avant) { s.valeurs = ["", "", "", ""]; s.argument = ""; s.photo = ""; }
+          if (j) ep.stats.forEach((st, i) => { const cle = AUTO[st.label.trim().toLowerCase()]; if (cle && j.stats && j.stats[cle] != null) s.valeurs[i] = String(j.stats[cle]); });
+          delete ep.exemple; rendreSlots(); envoyer();
+        });
+        el.querySelectorAll(".val").forEach((v) => (v.oninput = () => { s.valeurs[v.dataset.i] = v.value; delete ep.exemple; envoyerPlusTard(); }));
+        el.querySelector(".arg").oninput = (e) => { s.argument = e.target.value; delete ep.exemple; envoyerPlusTard(); };
+        el.querySelector(".up").onchange = (e) => {
+          const f = e.target.files[0]; if (!f) return;
+          const img = new Image(), rd = new FileReader();
+          rd.onload = () => { img.onload = () => {
+            const c = document.createElement("canvas"), k = Math.min(1, 600 / Math.max(img.width, img.height));
+            c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+            c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+            s.photo = c.toDataURL("image/jpeg", 0.85); rendreSlots(); envoyer();
+          }; img.src = rd.result; };
+          rd.readAsDataURL(f);
+        };
+        const rm = el.querySelector(".rm");
+        if (rm) rm.onclick = (e) => { e.stopPropagation(); s.photo = ""; rendreSlots(); envoyer(); };
+      });
+    }
+    $("#cacher").onclick = () => { flou = !flou; rendreSlots(); };
+
+    /* ---------- Aperçu ---------- */
+    const rejouer = () => frame.contentWindow.postMessage({ kit: "rejouer" }, "*");
+    $("#rejouer").onclick = rejouer;
+    $("#voirRecap").onclick = () => { voirRecap = true; rendreSlots(); envoyer(); };
+    $("#plein").onclick = () => {
+      const c = $("#cadre"), f = c.requestFullscreen || c.webkitRequestFullscreen;
+      if (f) Promise.resolve(f.call(c)).then(() => { frame.focus(); setTimeout(rejouer, 300); });
+    };
     addEventListener("message", (e) => {
       const m = e.data || {};
-      if (m.kit === "pret") { steps = m.steps; rendreListe(); }
-      if (m.kit === "etape") { cur = m.i; majEtape(); }
-    });
-
-    function majEtape() {
-      document.querySelectorAll(".etape").forEach((el) => el.classList.toggle("on", Number(el.dataset.i) === cur));
-      document.querySelector(".etape.on")?.scrollIntoView({ block: "nearest" });
-      const s = steps[cur];
-      $("#titre").textContent = s ? `${cur + 1}/${steps.length} · ${s.label}` : "";
-      $("#cadre").classList.toggle("camera", !!(s && s.overlay));
-      $("#ouvrir").href = `scene.html?ep=${encodeURIComponent(epNom)}#${cur}`;
-    }
-
-    function controles(ep) {
-      if (!ep) return "";
-      const refs = new Set();
-      Object.values(ep.classements || {}).forEach((l) => l.forEach((r) => r && refs.add(r)));
-      (ep.mentions || []).forEach(([r]) => r && refs.add(r));
-      const libres = [], nonVerif = [], manques = [];
-      refs.forEach((r) => {
-        const j = BANQUE[r];
-        if (!j) return libres.push(r);
-        if (!j.verifie) nonVerif.push(`${j.prenom} ${j.nom}`);
-        const vides = (ep.stats || []).filter((s) => {
-          const ov = ep.statsEpisode && ep.statsEpisode[r];
-          return (ov?.[s.cle] ?? j.stats?.[s.cle]) == null;
-        }).map((s) => s.label || STATS_LABELS[s.cle] || s.cle);
-        if (vides.length) manques.push(`${j.surnom || j.nom} : ${vides.join(", ")}`);
-      });
-      const vides = Object.values(ep.classements || {}).flat().filter((r) => !r).length;
-      let h = "";
-      if (vides) h += `<div class="alerte"><b>${vides} place(s) vide(s)</b> dans les classements.</div>`;
-      if (libres.length) h += `<div class="alerte"><b>Hors banque</b> (pas de stats affichées) :<ul>${libres.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>`;
-      if (manques.length) h += `<div class="alerte"><b>Stats manquantes</b> (affichées « — ») :<ul>${manques.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>`;
-      if (nonVerif.length) h += `<div class="alerte"><b>${nonVerif.length} fiche(s) non vérifiée(s)</b> — à contrôler avant tournage.</div>`;
-      return h || `<div class="ok">Tout est rempli et vérifié.</div>`;
-    }
-
-    function rendreListe() {
-      const ep = EPISODES[epNom];
-      if (onglet === "banque") {
-        $("#liste").innerHTML = JOUEURS.map((j) => `<div class="j"><div class="nm"><span class="pt ${j.verifie ? "v" : ""}" title="${j.verifie ? "Vérifié" : "À vérifier"}"></span>${esc(j.prenom)} ${esc(j.nom)} <small>${esc(j.id)} · ${esc(j.nation)}</small></div>
-          <div class="st">${Object.entries(j.stats || {}).map(([k, v]) => `${esc(STATS_LABELS[k] || k)} ${esc(v)}`).join(" · ") || "aucune stat"}</div></div>`).join("");
-        return;
+      if (m.kit === "pret") envoyer();
+      if (m.kit === "etape") {
+        const n = ep.animateurs.length;
+        if (m.i >= n * 10) voirRecap = true; else { voirRecap = false; sel = { h: m.i % n, r: 10 - Math.floor(m.i / n) }; }
+        majTitre();
       }
-      $("#liste").innerHTML = controles(ep) + steps.map((s, i) => `<div class="etape" data-i="${i}"><span class="k">${i + 1}</span><span>${esc(s.label)}</span>${s.overlay ? `<span class="tag">INCRUST.</span>` : ""}</div>`).join("");
-      document.querySelectorAll(".etape").forEach((el) => (el.onclick = () => envoyer({ kit: "aller", i: Number(el.dataset.i) })));
-      majEtape();
-    }
-    charger(0);
+    });
+    document.addEventListener("fullscreenchange", () => { if (!document.fullscreenElement) { if (!voirRecap) onglet = sel.h; rendreOnglets(); rendreSlots(); } });
+
+    /* ---------- Sauvegarde ---------- */
+    $("#dl").onclick = () => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(ep, null, 1)], { type: "application/json" }));
+      a.download = "topside-sauvegarde.json"; a.click();
+    };
+    $("#ul").onchange = (e) => {
+      const f = e.target.files[0]; if (!f) return;
+      f.text().then((t) => { try { ep = JSON.parse(t); toutRendre(); envoyer(); } catch (err) { alert("Fichier illisible."); } });
+    };
+    $("#neuf").onclick = () => {
+      if (!confirm("Effacer les deux tops et repartir de zéro ? (Téléchargez une sauvegarde avant si besoin.)")) return;
+      const noms = ep.animateurs.map((a) => a.nom), stats = ep.exemple ? null : ep.stats;
+      ep = neuf(); ep.animateurs.forEach((a, i) => (a.nom = noms[i] || a.nom)); if (stats) ep.stats = stats;
+      sel = { h: 0, r: 10 }; onglet = 0; voirRecap = false; flou = false; toutRendre(); envoyer();
+    };
+
+    function toutRendre() { rendreReglages(); rendreOnglets(); rendreSlots(); }
+    toutRendre();
+  })();
   </script>
 </body>
 </html>
