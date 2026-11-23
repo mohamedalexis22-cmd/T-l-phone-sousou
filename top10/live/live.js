@@ -13,14 +13,15 @@
   const M = window.MARQUE;
   const q = new URLSearchParams(location.search);
   const liste = (v) => String(v || "").split(",").map((s) => s.trim()).filter(Boolean);
+  const R = window.TOPSIDE_REGLAGES || { valeur: (k) => q.get(k) || "" };
   const P = {
     ecran: q.get("ecran") || "attente",
-    sujet: q.get("sujet") || "",
-    heure: q.get("heure") || "",
+    sujet: R.valeur("sujet"),
+    heure: R.valeur("heure"),
     min: Number(q.get("min") || 0),
-    prochain: q.get("prochain") || "",
+    prochain: R.valeur("prochain"),
     tiers: liste(q.get("tiers") || "S,A,B,C,D").slice(0, 7),
-    reseaux: liste(q.get("reseaux") || (M.reseaux || []).join(",")),
+    reseaux: liste(R.valeur("reseaux") || (M.reseaux || []).join(",")),
     apercu: q.get("apercu") === "1",
   };
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));

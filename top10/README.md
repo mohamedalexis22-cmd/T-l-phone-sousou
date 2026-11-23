@@ -89,3 +89,11 @@ Dossier `live/streamelements/` : trois widgets à coller dans des « Custom widg
 - `tchat/` : le tchat Twitch dans la DA (bots et commandes masqués).
 
 `live/streamelements/test.html` montre le tout en action avec de faux événements.
+
+### OBS en un clic (Windows)
+
+1. Dossier dans `C:\TOPSIDE`.
+2. OBS → Collection de scènes → Importer → `C:\TOPSIDE\obs\TOPSIDE-scenes.json`.
+3. Choisir la webcam dans « Caméra », la fenêtre du navigateur dans « Vidéo à regarder », puis sur un overlay : Interagir → double-clic → nom de la chaîne Twitch et sujet.
+
+Le tchat (`live/tchat.html`) et les alertes subs / bits / raids (`live/alertes.html`) lisent directement le tchat public de la chaîne : aucun compte à brancher. Seuls les follows demandent StreamElements.

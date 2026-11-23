@@ -17,6 +17,11 @@ a.carte:hover{border-color:var(--lila)}
 a.carte .t{font:400 28px Anton,Impact,sans-serif;text-transform:uppercase}
 a.carte .t span{color:var(--lila)}
 a.carte p{color:var(--gris);margin-top:6px;font-size:15px}
+.etapes{display:grid;gap:12px}
+.et{display:flex;gap:16px;background:var(--n2);border:1px solid var(--bord);border-radius:14px;padding:18px 20px}
+.et>span{flex:none;width:40px;height:40px;border-radius:50%;background:var(--lila);color:var(--noir);display:grid;place-items:center;font:400 22px Anton,Impact,sans-serif}
+.et b{font-size:17px} .et p{color:#cfcdd8;margin-top:4px;font-size:15px}
+code{background:var(--n3);padding:1px 6px;border-radius:4px;font-size:14px}
 a.carte .go{display:inline-block;margin-top:14px;background:var(--lila);color:var(--noir);font-weight:700;font-size:14px;padding:8px 14px;border-radius:8px}
 ol{margin-left:22px;color:#d6d4dc} li{margin:6px 0}
 .widget{background:var(--n2);border:1px solid var(--bord);border-radius:14px;margin-top:12px;overflow:hidden}
@@ -33,6 +38,13 @@ textarea{width:100%;height:150px;background:#0f0f11;color:#cfcdd8;border:0;paddi
 </style></head><body><div class="w">
 <div class="tete"><img src="assets/logo.png" alt=""><div><h1>Kit <b>TOPSIDE</b></h1><div class="sous">Tout est ici. Cliquez sur ce que vous voulez ouvrir.</div></div></div>
 
+<h2>Installer les lives dans OBS (5 minutes)</h2>
+<div class="etapes">
+  <div class="et"><span>1</span><div><b>Ranger le dossier</b><p>Mettez ce dossier <b>TOPSIDE</b> directement dans le disque <b>C:</b> : il doit s'appeler exactement <code>C:\TOPSIDE</code> (clic droit sur le zip → Extraire tout… → tapez <code>C:\</code>).</p></div></div>
+  <div class="et"><span>2</span><div><b>Importer les scènes</b><p>Dans OBS : menu <b>Collection de scènes → Importer</b> → bouton « … » → choisissez <code>C:\TOPSIDE\obs\TOPSIDE-scenes.json</code> → <b>Importer</b>. Puis menu <b>Collection de scènes → TOPSIDE</b>. Les 7 scènes apparaissent.</p></div></div>
+  <div class="et"><span>3</span><div><b>Brancher la caméra, la vidéo et Twitch</b><p>Double-clic sur la source <b>Caméra</b> → choisissez votre webcam. Dans « Réaction vidéo », double-clic sur <b>Vidéo à regarder</b> → choisissez la fenêtre de votre navigateur. Enfin, clic droit sur n'importe quel <b>Overlay</b> → <b>Interagir</b> → <b>double-clic</b> dans la fenêtre : tapez le nom de votre chaîne Twitch et le sujet du live → Enregistrer. C'est fini : tchat et alertes (subs, bits, raids) marchent tout seuls.</p></div></div>
+</div>
+
 <h2>Les vidéos Top 10</h2>
 <div class="cartes">
   <a class="carte" href="index.html"><div class="t">Studio <span>Top 10</span></div><p>Remplir vos tops : la carte joueur (photo, stats) et le récap se créent tout seuls.</p><span class="go">Ouvrir le studio →</span></a>
@@ -44,7 +56,8 @@ textarea{width:100%;height:150px;background:#0f0f11;color:#cfcdd8;border:0;paddi
   <a class="carte" href="live/streamelements/test.html"><div class="t">Voir les <span>alertes</span></div><p>Démo avec de faux follows, subs, bits et messages de tchat.</p><span class="go">Voir la démo →</span></a>
 </div>
 
-<h2>Alertes Twitch (StreamElements)</h2>
+<h2>En option : alertes de follow (StreamElements)</h2>
+<p class="sous" style="margin-bottom:10px">Les subs, bits et raids marchent déjà sans rien faire. Twitch ne donne les <b>follows</b> qu'à des services comme StreamElements : si vous les voulez, suivez ces étapes.</p>
 <ol>
   <li>Allez sur <b>streamelements.com</b>, connectez-vous avec Twitch.</li>
   <li><b>Streaming tools → Overlays → New overlay</b> (1920×1080).</li>

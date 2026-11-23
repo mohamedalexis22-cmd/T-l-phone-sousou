@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>TOPSIDE · alertes</title>
+  <link rel="stylesheet" href="../da/polices.css">
+  <link rel="stylesheet" href="streamelements/alertes/alertes.css">
+</head>
+<body>
+  <!-- Alertes Twitch (subs, réabonnements, subs offerts, bits, raids) — source Navigateur 1920×1080 tout en haut.
+       Lues directement dans le tchat de la chaîne : aucun compte à brancher. Les follows ne passent pas par là.
+       Test : ajoutez ?test=1 à l'adresse. -->
+  <div id="scene"></div>
+  <script src="../da/marque.js"></script>
+  <script src="reglages.js"></script>
+  <script src="twitch.js"></script>
+  <script>
+  (function () {
+    const R = window.TOPSIDE_REGLAGES;
+    const q = new URLSearchParams(location.search);
+    const DUREE = Number(q.get("duree") || 6) * 1000;
+    const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const nb = (n) => Number(n || 0).toLocaleString("fr-FR");
+    const file = []; let enCours = false;
+    function texte(ev) {
+      switch (ev.type) {
+        case "sub": return { type: "Nouveau sub", nom: ev.nom, detail: ev.prime ? "Prime" : "", msg: ev.message };
+        case "resub": return { type: "Réabonnement", nom: ev.nom, detail: `${nb(ev.mois)} mois`, msg: ev.message };
+        case "subgift": return { type: "Sub offert", nom: ev.nom, detail: `offert par ${ev.de}` };
+        case "subgifts": return { type: "Subs offerts", nom: ev.nom, detail: `offre ${nb(ev.nombre)} sub${ev.nombre > 1 ? "s" : ""}` };
+        case "bits": return { type: "Bits", nom: ev.nom, detail: `${nb(ev.montant)} bits`, msg: ev.message };
+        case "raid": return { type: "Raid", nom: ev.nom, detail: `${nb(ev.nombre)} raider${ev.nombre > 1 ? "s" : ""}` };
+      }
+    }
+    function suivante() {
+      const a = file.shift();
+      if (!a) { enCours = false; return; }
+      enCours = true;
+      const scene = document.getElementById("scene");
+      scene.innerHTML = `<div class="alerte"><img class="logo" src="../${esc(MARQUE.logo)}" alt=""><div class="txt"><div class="type">${esc(a.type)}</div><div class="nom">${esc(a.nom)}</div>${a.detail ? `<div class="detail">${esc(a.detail)}</div>` : ""}${a.msg ? `<div class="msg">${esc(a.msg)}</div>` : ""}</div></div>`;
+      setTimeout(() => {
+        const el = scene.querySelector(".alerte"); if (el) el.classList.add("sort");
+        setTimeout(() => { scene.innerHTML = ""; setTimeout(suivante, 400); }, 500);
+      }, DUREE);
+    }
+    function alerte(ev) { const a = texte(ev); if (!a) return; file.push(a); if (!enCours) suivante(); }
+    if (q.get("test") === "1") {
+      [{ type: "sub", nom: "Kylian_93" }, { type: "resub", nom: "LeBossDuFoot", mois: 6, message: "6 mois déjà, force à vous" }, { type: "bits", nom: "Mosses_Fan", montant: 500, message: "Maldini numéro 1 !" }, { type: "subgifts", nom: "Zizou10", nombre: 5 }, { type: "raid", nom: "TopFootTV", nombre: 84 }].forEach(alerte);
+      return;
+    }
+    TwitchTchat(R.valeur("chaine"), { evenement: alerte });
+  })();
+  </script>
+</body>
+</html>

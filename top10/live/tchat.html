@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>TOPSIDE · tchat</title>
+  <link rel="stylesheet" href="../da/polices.css">
+  <link rel="stylesheet" href="streamelements/tchat/tchat.css">
+  <style>
+    .vide { position: absolute; inset: 12px; display: grid; place-items: center; text-align: center; border: 1px dashed rgba(255,255,255,.25); border-radius: 8px; color: #8d8b95; font: 600 16px Inter, sans-serif; padding: 20px; }
+  </style>
+</head>
+<body>
+  <!-- Tchat Twitch dans la DA. Source Navigateur OBS à la taille du cadre « Tchat ».
+       Réglage de la chaîne : Interagir → double-clic. -->
+  <div id="tchat"></div>
+  <script src="reglages.js"></script>
+  <script src="twitch.js"></script>
+  <script>
+  (function () {
+    const R = window.TOPSIDE_REGLAGES;
+    const chaine = R.valeur("chaine");
+    const max = Number(new URLSearchParams(location.search).get("max") || 14);
+    const IGNORES = ["nightbot", "streamelements", "streamlabs", "moobot", "fossabot", "wizebot"];
+    const box = document.getElementById("tchat");
+    const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    if (!chaine) { box.innerHTML = '<div class="vide">Clic droit sur cette source → Interagir, puis double-clic ici pour indiquer votre chaîne Twitch.</div>'; return; }
+    function html(m) {
+      const car = Array.from(m.texte);
+      let h = "", i = 0;
+      m.emotes.forEach((e) => {
+        if (e.start < i) return;
+        h += esc(car.slice(i, e.start).join(""));
+        h += `<img class="emote" src="https://static-cdn.jtvnw.net/emoticons/v2/${esc(e.id)}/default/dark/2.0" alt="">`;
+        i = e.end + 1;
+      });
+      return h + esc(car.slice(i).join(""));
+    }
+    TwitchTchat(chaine, {
+      message(m) {
+        if (IGNORES.includes(String(m.nom).toLowerCase()) || m.texte.startsWith("!")) return;
+        const d = document.createElement("div");
+        d.className = "m" + (m.modo ? " modo" : "");
+        d.dataset.msg = m.id || ""; d.dataset.user = m.userId || "";
+        d.innerHTML = `<span class="n">${esc(m.nom)}</span>${html(m)}`;
+        box.appendChild(d);
+        while (box.children.length > max) box.firstChild.remove();
+      },
+      supprime(s) {
+        if (s.tout) box.innerHTML = "";
+        else box.querySelectorAll(s.msgId ? `[data-msg="${CSS.escape(s.msgId)}"]` : `[data-user="${CSS.escape(s.userId || "")}"]`).forEach((x) => x.remove());
+      },
+    });
+  })();
+  </script>
+</body>
+</html>
