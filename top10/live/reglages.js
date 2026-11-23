@@ -7,6 +7,8 @@
 (function () {
   const CLE = "topside-live-obs";
   const CHAMPS = [
+    ["nom", "Nom de l'émission (affiché quand il n'y a pas de sujet)", "ex. TOPSIDE"],
+    ["couleur", "Couleur d'accent", "", "color"],
     ["chaine", "Nom de votre chaîne Twitch", "ex. topside"],
     ["sujet", "Sujet du live", "ex. On réagit à l'actu foot"],
     ["heure", "Heure de début (écran d'attente)", "ex. 21:00"],
@@ -38,12 +40,18 @@
       #topside-reglages input{width:100%;box-sizing:border-box;background:#1d1d21;color:#f4f3f7;border:1px solid #2a2a30;border-radius:8px;padding:10px 12px;font:inherit}
       #topside-reglages .b{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
       #topside-reglages button{border:0;border-radius:8px;padding:10px 16px;font:700 14px Inter,sans-serif;cursor:pointer}
+      #topside-reglages .coul{display:flex;gap:10px;align-items:center}
+      #topside-reglages input[type=color]{width:70px;height:44px;padding:3px;cursor:pointer}
+      #topside-reglages .defaut{background:#1d1d21;color:#f4f3f7;font-weight:600}
       #topside-reglages .ok{background:#c4a7ff;color:#0b0b0c} #topside-reglages .non{background:#1d1d21;color:#f4f3f7}
     </style><form class="p"><h3>Réglages <b>TOPSIDE</b></h3><small>Valables pour tous les overlays de ce PC.</small>
-      ${CHAMPS.map(([k, l, ph]) => `<label>${l}</label><input name="${k}" placeholder="${ph}" value="${String(r[k] || "").replace(/"/g, "&quot;")}">`).join("")}
+      ${CHAMPS.map(([k, l, ph, type]) => type === "color"
+        ? `<label>${l}</label><div class="coul"><input type="color" name="${k}" value="${r[k] || "#c4a7ff"}"><button type="button" class="defaut">Lila d'origine</button></div>`
+        : `<label>${l}</label><input name="${k}" placeholder="${ph}" value="${String(r[k] || "").replace(/"/g, "&quot;")}">`).join("")}
       <div class="b"><button type="button" class="non">Annuler</button><button class="ok">Enregistrer</button></div></form>`;
     document.body.appendChild(d);
     d.querySelector(".non").onclick = () => d.remove();
+    d.querySelector(".defaut").onclick = () => { d.querySelector("input[type=color]").value = "#c4a7ff"; };
     d.querySelector("form").onsubmit = (e) => {
       e.preventDefault();
       const v = Object.assign(lire(), Object.fromEntries(new FormData(e.target)));
@@ -56,6 +64,14 @@
   // Les autres sources se rechargent quand les réglages changent
   let derniere = lire().maj || 0;
   setInterval(() => { const m = lire().maj || 0; if (m !== derniere) { derniere = m; location.reload(); } }, 2000);
+
+  // Couleur d'accent appliquée à tous les overlays
+  const c = lire().couleur;
+  if (c && /^#[0-9a-f]{6}$/i.test(c)) {
+    const st = document.documentElement.style;
+    st.setProperty("--lila", c);
+    st.setProperty("--lila-fort", c);
+  }
 
   window.TOPSIDE_REGLAGES = { lire, valeur, panneau };
 })();

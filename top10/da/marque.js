@@ -12,7 +12,7 @@ window.MARQUE = {
   logo: "assets/logo.png",
 
   // Réseaux affichés sur l'écran de fin
-  reseaux: ["@votrechaine"],
+  reseaux: [],
 
   // Couleurs : noir / blanc + une touche lila
   couleurs: {

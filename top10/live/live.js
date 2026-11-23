@@ -38,7 +38,7 @@
   }
   const logoA = (x, y, taille = 74) => `<div class="logo-live a" style="left:${x}px;top:${y}px;width:${taille}px;height:${taille}px"><img src="${esc(logo)}" alt=""></div>`;
   function barre(x, y, largeur, surCam) {
-    const t = P.sujet || M.nom;
+    const t = P.sujet || R.valeur("nom") || M.nom;
     const taille = Math.round(Math.min(52, (largeur - 200) / (Math.max(8, t.length) * 0.46)));
     return `<div class="barre-live a ${surCam ? "sur-cam" : ""}" style="left:${x}px;top:${y}px;animation-delay:150ms">
       <div class="t" style="font-size:${taille}px">${esc(t)}</div><div class="direct"><i></i>En direct</div></div>`;
