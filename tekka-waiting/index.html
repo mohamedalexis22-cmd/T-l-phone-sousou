@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tekka Cup Waiting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Permanent+Marker&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#d9a441; --gold2:#f3d38a; --ink:#0c0c10; --wall:#16161c;
+    --grass1:#2f7d32; --grass2:#2a7130;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100%;height:100%;overflow:hidden;background:#000}
+  /* Scène fixe 1920x1080, mise à l'échelle pour remplir la fenêtre */
+  #stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;overflow:hidden;
+    background:radial-gradient(1200px 600px at 50% 0%,#2a2a36 0%,var(--wall) 60%,#0d0d12 100%);}
+
+  /* ---------- Mur avec motif Tekka ---------- */
+  #wall{position:absolute;inset:0 0 300px 0;opacity:.09;background-repeat:repeat;background-size:320px 260px}
+  .glow{position:absolute;top:-220px;width:700px;height:520px;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(255,236,190,.22),rgba(255,236,190,0));pointer-events:none}
+
+  /* ---------- Cadres photo ---------- */
+  #track{position:absolute;left:0;top:120px;height:600px;display:flex;align-items:flex-start;will-change:transform}
+  .slot{position:relative;flex:0 0 auto;height:600px;margin-right:110px}
+  .frame{position:absolute;left:0;top:var(--y);width:var(--w);transform-origin:50% -40px;
+    animation:swing var(--sw,6s) ease-in-out infinite alternate;transform:rotate(var(--r))}
+  @keyframes swing{from{transform:rotate(calc(var(--r) - 1.2deg))}to{transform:rotate(calc(var(--r) + 1.2deg))}}
+  .frame img{display:block;width:100%;aspect-ratio:var(--ar,3/4);object-fit:cover}
+  .string{position:absolute;left:50%;top:-46px;width:0;height:0;pointer-events:none}
+  .string::before,.string::after{content:"";position:absolute;top:0;width:2px;height:62px;background:#8b8b93;transform-origin:top}
+  .string::before{transform:rotate(38deg)} .string::after{transform:rotate(-38deg)}
+  .nail{position:absolute;left:50%;top:-52px;width:12px;height:12px;margin-left:-6px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#eee,#777 60%,#333);z-index:2}
+  .lamp{position:absolute;left:50%;top:-118px;transform:translateX(-50%);width:90px;height:16px;border-radius:8px 8px 3px 3px;
+    background:linear-gradient(#3a3a44,#1c1c22);box-shadow:0 2px 0 #000}
+  .lamp::after{content:"";position:absolute;left:50%;top:14px;transform:translateX(-50%);width:420px;height:640px;
+    background:radial-gradient(ellipse at 50% 0%,rgba(255,226,160,.20),rgba(255,226,160,0) 65%);
+    clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);pointer-events:none}
+
+  /* style 1 : polaroid */
+  .f-polaroid{background:#fbfaf6;padding:14px 14px 58px;box-shadow:0 18px 30px rgba(0,0,0,.55)}
+  .f-polaroid .cap{position:absolute;left:0;right:0;bottom:10px;text-align:center;font:700 30px 'Caveat',cursive;color:#222}
+  /* style 2 : cadre doré */
+  .f-gold{padding:16px;background:linear-gradient(135deg,#8a5a14,var(--gold2) 25%,#a26d1c 50%,var(--gold2) 75%,#7a4e10);
+    box-shadow:0 20px 34px rgba(0,0,0,.6),inset 0 0 0 3px rgba(0,0,0,.25)}
+  .f-gold .inner{padding:12px;background:#f4ecd8;box-shadow:inset 0 0 6px rgba(0,0,0,.4)}
+  /* style 3 : cadre noir Tekka */
+  .f-black{padding:18px;background:#0b0b0e;border:2px solid var(--gold);box-shadow:0 20px 34px rgba(0,0,0,.7)}
+  .f-black .inner{outline:1px solid rgba(217,164,65,.6);outline-offset:6px}
+  /* style 4 : photo scotchée */
+  .f-tape{box-shadow:0 16px 26px rgba(0,0,0,.55);border:6px solid #fff}
+  .f-tape::before,.f-tape::after{content:"";position:absolute;width:110px;height:34px;background:rgba(240,228,190,.78);
+    box-shadow:0 1px 2px rgba(0,0,0,.2);z-index:3}
+  .f-tape::before{left:-30px;top:-10px;transform:rotate(-32deg)} .f-tape::after{right:-30px;top:-10px;transform:rotate(30deg)}
+  .f-tape ~ .string,.f-tape ~ .nail{display:none}
+  /* style 5 : cadre blanc galerie */
+  .f-white{padding:10px;background:#f2f2f2;border:10px solid #fff;box-shadow:0 18px 30px rgba(0,0,0,.55),0 0 0 2px #ccc}
+  .f-white .inner{padding:22px;background:#fff;box-shadow:inset 0 0 0 1px #ddd}
+  /* plaque sous les cadres (sauf polaroid) */
+  .plaque{position:absolute;left:50%;transform:translateX(-50%);bottom:-46px;white-space:nowrap;padding:5px 14px;
+    font:400 18px 'Anton',Impact,sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:#1a1206;
+    background:linear-gradient(#f3d38a,#c08c2e);border-radius:3px;box-shadow:0 3px 6px rgba(0,0,0,.5)}
+  .f-tape .plaque{font:700 26px 'Caveat',cursive;text-transform:none;letter-spacing:0;background:none;box-shadow:none;color:#f5f0e6;bottom:-44px}
+
+  /* ---------- Panneau LED + pelouse ---------- */
+  #board{position:absolute;left:0;right:0;top:720px;height:66px;background:#050507;border-top:3px solid #2b2b33;border-bottom:3px solid #000;overflow:hidden}
+  #boardText{position:absolute;top:0;left:0;height:100%;display:flex;align-items:center;white-space:nowrap;will-change:transform;
+    font:400 38px 'Anton',Impact,sans-serif;letter-spacing:4px;color:var(--gold);text-shadow:0 0 12px rgba(217,164,65,.7)}
+  #boardText span{padding:0 40px}
+  #board::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(0,0,0,.35) 0 2px,transparent 2px 5px)}
+  #grass{position:absolute;left:0;right:0;top:789px;bottom:0;
+    background:repeating-linear-gradient(90deg,var(--grass1) 0 160px,var(--grass2) 160px 320px)}
+  #grass::before{content:"";position:absolute;left:0;right:0;top:46px;height:6px;background:rgba(255,255,255,.85)}
+  #grass::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,0) 40%,rgba(0,0,0,.35))}
+
+  /* ---------- Personnage ---------- */
+  #runner{position:absolute;left:730px;top:540px;width:340px;height:494px;z-index:5}
+  #shadow{position:absolute;left:790px;top:990px;width:250px;height:30px;border-radius:50%;background:rgba(0,0,0,.45);filter:blur(4px);z-index:4;
+    animation:shadow .28s ease-in-out infinite}
+  @keyframes shadow{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.82);opacity:.7}}
+  #runner svg{width:100%;height:100%;overflow:visible}
+  .body{animation:bob .28s ease-in-out infinite;transform-origin:110px 290px}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(7deg)}50%{transform:translateY(-11px) rotate(7deg)}}
+  .thigh{animation:thigh .56s ease-in-out infinite;transform-origin:110px 190px}
+  .shin{animation:shin .56s linear infinite;transform-origin:110px 238px}
+  .back .thigh,.back .shin,.back .uarm,.back .farm{animation-delay:-.28s}
+  @keyframes thigh{0%,100%{transform:rotate(-52deg)}50%{transform:rotate(32deg)}}
+  @keyframes shin{0%,100%{transform:rotate(18deg)}35%{transform:rotate(12deg)}55%{transform:rotate(40deg)}78%{transform:rotate(100deg)}}
+  .uarm{animation:uarm .56s ease-in-out infinite;transform-origin:112px 122px}
+  .farm{animation:farm .56s ease-in-out infinite;transform-origin:112px 160px}
+  @keyframes uarm{0%,100%{transform:rotate(48deg)}50%{transform:rotate(-52deg)}}
+  @keyframes farm{0%,100%{transform:rotate(-70deg)}50%{transform:rotate(-100deg)}}
+  .back{filter:brightness(.72)}
+  .hairtip{animation:hair .28s ease-in-out infinite;transform-origin:100px 50px}
+  @keyframes hair{0%,100%{transform:rotate(0)}50%{transform:rotate(-4deg)}}
+
+  /* ballon */
+  #ball{position:absolute;left:1010px;top:922px;width:72px;height:72px;z-index:6;animation:dribble .56s ease-in-out infinite}
+  #ball svg{width:100%;height:100%;animation:spin .5s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes dribble{0%,100%{transform:translate(0,0)}25%{transform:translate(26px,-34px)}50%{transform:translate(38px,0)}75%{transform:translate(14px,-16px)}}
+  #ballShadow{position:absolute;left:1014px;top:988px;width:80px;height:14px;border-radius:50%;background:rgba(0,0,0,.4);filter:blur(3px);z-index:4;animation:dribbleS .56s ease-in-out infinite}
+  @keyframes dribbleS{0%,100%{transform:translateX(0)}25%{transform:translateX(26px) scale(.6)}50%{transform:translateX(38px)}75%{transform:translateX(14px) scale(.8)}}
+  .puff{position:absolute;border-radius:50%;background:rgba(220,235,200,.55);z-index:4;pointer-events:none}
+
+  /* ---------- Textes ---------- */
+  #badge{position:absolute;left:56px;top:40px;width:190px;height:190px;border-radius:50%;z-index:8;
+    background:#0b0b0e;border:4px solid #fff;box-shadow:0 0 0 8px #0b0b0e,0 0 0 11px var(--gold),0 12px 30px rgba(0,0,0,.6);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;animation:pulse 3s ease-in-out infinite}
+  #badge .t{font:400 58px/1 'Anton',Impact,sans-serif;letter-spacing:2px;transform:skewX(-8deg)}
+  #badge .s{font:400 20px/1.2 'Anton',Impact,sans-serif;letter-spacing:5px;color:var(--gold)}
+  #badge .stars{font-size:14px;letter-spacing:6px;color:var(--gold);margin-bottom:4px}
+  @keyframes pulse{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.04) rotate(-2deg)}}
+  #title{position:absolute;right:70px;bottom:52px;z-index:8;text-align:right;transform:rotate(-5deg);
+    font:400 92px/0.95 'Permanent Marker',Impact,cursive;color:#fff;
+    text-shadow:5px 5px 0 #000,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,0 0 24px rgba(0,0,0,.6)}
+  #title .y{color:var(--gold2)}
+  .dot{display:inline-block;animation:dot 1.5s infinite}
+  .dot:nth-child(2){animation-delay:.25s}.dot:nth-child(3){animation-delay:.5s}
+  @keyframes dot{0%,60%,100%{opacity:.15;transform:translateY(0)}30%{opacity:1;transform:translateY(-12px)}}
+  #count{margin-top:14px;font:400 40px 'Anton',Impact,sans-serif;letter-spacing:3px;color:var(--gold2);text-shadow:3px 3px 0 #000;display:none}
+  #vignette{position:absolute;inset:0;z-index:9;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55))}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="wall"></div>
+  <div class="glow" style="left:-120px"></div>
+  <div class="glow" style="left:610px;opacity:.6"></div>
+  <div class="glow" style="right:-120px"></div>
+
+  <div id="track"></div>
+
+  <div id="board"><div id="boardText"></div></div>
+  <div id="grass"></div>
+
+  <div id="shadow"></div>
+  <div id="runner">
+    <svg viewBox="0 0 220 320" aria-hidden="true">
+      <g class="body">
+        <!-- bras arrière -->
+        <g class="back"><g class="uarm">
+          <rect x="102" y="112" width="20" height="30" rx="10" fill="#141418"/>
+          <rect x="104" y="132" width="16" height="32" rx="8" fill="#7a4a2c"/>
+          <g class="farm"><rect x="104" y="154" width="16" height="38" rx="8" fill="#7a4a2c"/><circle cx="112" cy="192" r="9" fill="#7a4a2c"/></g>
+        </g></g>
+        <!-- jambe arrière -->
+        <g class="back"><g class="thigh">
+          <rect x="99" y="186" width="22" height="58" rx="11" fill="#7a4a2c"/>
+          <rect x="94" y="180" width="32" height="36" rx="9" fill="#141418"/>
+          <g class="shin">
+            <rect x="101" y="232" width="18" height="52" rx="9" fill="#7a4a2c"/>
+            <rect x="100" y="250" width="20" height="34" rx="6" fill="#f2f2f2"/>
+            <path d="M98 280 h22 q20 2 22 12 q0 6 -6 6 h-38 z" fill="#d7ff3a" stroke="#111" stroke-width="2"/>
+          </g>
+        </g></g>
+        <!-- torse -->
+        <rect x="104" y="96" width="16" height="20" rx="6" fill="#7a4a2c"/>
+        <rect x="86" y="106" width="52" height="92" rx="20" fill="#141418"/>
+        <path d="M90 130 L134 122" stroke="#d9a441" stroke-width="4" stroke-linecap="round"/>
+        <rect x="86" y="182" width="52" height="10" fill="#d9a441"/>
+        <circle cx="126" cy="146" r="9" fill="none" stroke="#d9a441" stroke-width="2.5"/>
+        <text x="126" y="151" font-family="Anton, Impact, sans-serif" font-size="12" fill="#d9a441" text-anchor="middle">T</text>
+        <rect x="88" y="190" width="50" height="22" rx="7" fill="#141418"/>
+        <!-- tête -->
+        <circle cx="120" cy="70" r="42" fill="#8d5a3b"/>
+        <g class="hairtip">
+          <circle cx="92" cy="44" r="16" fill="#1b1209"/><circle cx="110" cy="34" r="17" fill="#1b1209"/>
+          <circle cx="130" cy="32" r="16" fill="#1b1209"/><circle cx="148" cy="42" r="13" fill="#1b1209"/>
+          <circle cx="84" cy="62" r="14" fill="#1b1209"/><circle cx="82" cy="80" r="11" fill="#1b1209"/>
+          <circle cx="100" cy="28" r="6" fill="#d9a441"/><circle cx="124" cy="22" r="6" fill="#d9a441"/>
+          <circle cx="146" cy="30" r="5" fill="#d9a441"/><circle cx="78" cy="48" r="5" fill="#d9a441"/>
+        </g>
+        <ellipse cx="104" cy="76" rx="7" ry="9" fill="#7a4a2c"/>
+        <path d="M134 56 q8 -4 16 0" stroke="#1b1209" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <ellipse cx="143" cy="68" rx="5" ry="7" fill="#111"/><circle cx="145" cy="65" r="2" fill="#fff"/>
+        <path d="M160 74 q5 4 0 8" stroke="#6b4128" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M134 90 q10 9 22 0" stroke="#3a1d10" stroke-width="4" fill="#fff" stroke-linecap="round"/>
+        <!-- jambe avant -->
+        <g class="front"><g class="thigh">
+          <rect x="99" y="186" width="22" height="58" rx="11" fill="#8d5a3b"/>
+          <rect x="94" y="180" width="32" height="36" rx="9" fill="#1c1c22"/>
+          <g class="shin">
+            <rect x="101" y="232" width="18" height="52" rx="9" fill="#8d5a3b"/>
+            <rect x="100" y="250" width="20" height="34" rx="6" fill="#fff"/>
+            <rect x="100" y="254" width="20" height="4" fill="#d9a441"/>
+            <path d="M98 280 h22 q20 2 22 12 q0 6 -6 6 h-38 z" fill="#d7ff3a" stroke="#111" stroke-width="2"/>
+          </g>
+        </g></g>
+        <!-- bras avant -->
+        <g class="front"><g class="uarm">
+          <rect x="102" y="112" width="20" height="30" rx="10" fill="#1c1c22"/>
+          <rect x="102" y="136" width="20" height="5" fill="#d9a441"/>
+          <rect x="104" y="138" width="16" height="26" rx="8" fill="#8d5a3b"/>
+          <g class="farm"><rect x="104" y="154" width="16" height="38" rx="8" fill="#8d5a3b"/><circle cx="112" cy="192" r="9" fill="#8d5a3b"/></g>
+        </g></g>
+      </g>
+    </svg>
+  </div>
+  <div id="ballShadow"></div>
+  <div id="ball">
+    <svg viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="46" fill="#fff" stroke="#111" stroke-width="4"/>
+      <polygon points="50,32 66,44 60,63 40,63 34,44" fill="#111"/>
+      <path d="M50 32 L50 6 M66 44 L90 36 M60 63 L76 84 M40 63 L24 84 M34 44 L10 36" stroke="#111" stroke-width="3"/>
+      <path d="M38 8 L50 6 L62 8 L58 16 L42 16Z M88 30 L94 46 L84 42Z M80 80 L70 92 L66 82Z M20 80 L30 92 L34 82Z M12 30 L6 46 L16 42Z" fill="#d9a441"/>
+    </svg>
+  </div>
+
+  <div id="badge"><div class="stars">★ ★ ★</div><div class="t">TEKKA</div><div class="s">CUP 2026</div></div>
+  <div id="title">LE STREAM<br><span class="y">COMMENCE</span><br>BIENTÔT<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+    <div id="count"></div></div>
+  <div id="vignette"></div>
+</div>
+
+<script>
+/* ======= RÉGLAGES FACILES ======= */
+const PHOTOS = [
+  ["photos/01.jpg","Le moment de vérité"],
+  ["photos/02.jpg","L'entrée des artistes"],
+  ["photos/03.jpg","Les reines du terrain"],
+  ["photos/04.jpg","BUUUT !"],
+  ["photos/05.jpg","Concentration max"],
+  ["photos/06.jpg","Plongeon de folie"],
+  ["photos/07.jpg","L'arbitre est là"],
+  ["photos/08.jpg","Le regard qui tue"],
+  ["photos/09.jpg","El Tri version Tekka"],
+  ["photos/10.jpg","Coach en feu"],
+  ["photos/11.jpg","Player of the Match"],
+  ["photos/12.jpg","Mode chambrage"],
+  ["photos/13.jpg","Arrêt réflexe"],
+  ["photos/14.jpg","DIKSAA 93"],
+  ["photos/15.jpg","La célébration"],
+  ["photos/16.jpg","Échauffement"],
+  ["photos/17.jpg","Micro Tekka"],
+  ["photos/18.jpg","Le tunnel"],
+  ["photos/19.jpg","Toujours le sourire"],
+  ["photos/20.jpg","Vivinho au point de penalty"],
+  ["photos/21.jpg","Le tir au but"],
+  ["photos/22.jpg","Mentalité de gagnant"],
+  ["photos/23.jpg","Interview d'après-match"],
+  ["photos/24.jpg","Briefing d'équipe"],
+  ["photos/25.jpg","THR 44"],
+  ["photos/26.jpg","Toujours prêt"],
+  ["photos/27.jpg","Les inséparables"],
+  ["photos/28.jpg","Avant le coup d'envoi"],
+  ["photos/29.jpg","Le numéro 10"],
+  ["photos/30.jpg","Les yeux sur la finale"],
+];
+const SPEED_WALL = 120;   // vitesse des cadres (px/s)
+const SPEED_GRASS = 300;  // vitesse de la pelouse (px/s)
+const BOARD_TEXT = "TEKKA CUP 2026 ★ LE STREAM COMMENCE BIENTÔT ★ RESTEZ CONNECTÉS ★";
+/* ================================ */
+
+const stage = document.getElementById('stage');
+function fit(){ const s = Math.max(innerWidth/1920, innerHeight/1080);
+  stage.style.transform = `translate(${(innerWidth-1920*s)/2}px,${(innerHeight-1080*s)/2}px) scale(${s})`; }
+addEventListener('resize', fit); fit();
+
+// motif du mur (badges Tekka)
+const tile = `<svg xmlns='http://www.w3.org/2000/svg' width='320' height='260'>
+<g fill='none' stroke='white' stroke-width='3'><circle cx='80' cy='70' r='52'/><circle cx='80' cy='70' r='44' stroke-dasharray='3 5'/>
+<circle cx='240' cy='195' r='52'/><circle cx='240' cy='195' r='44' stroke-dasharray='3 5'/></g>
+<g fill='white' font-family='Impact,Anton,sans-serif' text-anchor='middle'><text x='80' y='80' font-size='28'>TEKKA</text>
+<text x='240' y='205' font-size='28'>TEKKA</text></g></svg>`;
+const wall = document.getElementById('wall');
+wall.style.backgroundImage = `url("data:image/svg+xml,${encodeURIComponent(tile)}")`;
+
+// cadres variés
+const STYLES = ['f-polaroid','f-gold','f-black','f-tape','f-white'];
+const track = document.getElementById('track');
+function makeSet(){
+  PHOTOS.forEach(([src,cap],i)=>{
+    const st = STYLES[i % STYLES.length];
+    const w = [250,270,230,290,240,260][i % 6];
+    const y = [70,20,110,50,90,30,120][i % 7];
+    const r = [-3,2,-1.5,3.5,-2.5,1][i % 6];
+    const ar = (st==='f-tape' && i%2) ? '4/3' : '3/4';
+    const slot = document.createElement('div'); slot.className='slot';
+    const fw = w + (st==='f-white'?64:st==='f-gold'?56:st==='f-black'?40:st==='f-polaroid'?28:12);
+    slot.style.width = fw + 'px';
+    slot.innerHTML = `<div class="lamp" style="left:${fw/2}px;top:${y-118+46}px"></div>
+      <div class="frame ${st}" style="--w:${fw}px;--y:${y}px;--r:${r}deg;--ar:${ar};--sw:${5+(i%4)}s">
+        <div class="string"></div><div class="nail"></div>
+        <div class="inner"><img src="${src}" alt=""></div>
+        ${st==='f-polaroid' ? `<div class="cap">${cap}</div>` : `<div class="plaque">${cap}</div>`}
+      </div>`;
+    track.appendChild(slot);
+  });
+}
+makeSet(); makeSet(); makeSet();
+
+// panneau LED
+const bt = document.getElementById('boardText');
+bt.innerHTML = Array(8).fill(`<span>${BOARD_TEXT}</span>`).join('');
+
+// compte à rebours optionnel : index.html?min=5
+const min = parseFloat(new URLSearchParams(location.search).get('min'));
+const count = document.getElementById('count');
+const end = min > 0 ? Date.now() + min*60000 : 0;
+if (end) count.style.display = 'block';
+
+// poussière sous les pieds
+let lastPuff = 0;
+function puff(t){
+  const p = document.createElement('div'); p.className='puff';
+  const s = 14 + Math.random()*16; Object.assign(p.style,{width:s+'px',height:s+'px',left:(860+Math.random()*30)+'px',top:(980+Math.random()*10)+'px'});
+  stage.appendChild(p);
+  p.animate([{transform:'translate(0,0) scale(.6)',opacity:.8},{transform:`translate(${-140-Math.random()*80}px,${-30-Math.random()*30}px) scale(1.6)`,opacity:0}],
+    {duration:900,easing:'ease-out'}).onfinish=()=>p.remove();
+}
+
+const grass = document.getElementById('grass');
+let setW = 0, boardW = 0, t0 = performance.now();
+function measure(){ setW = track.scrollWidth/3; boardW = bt.scrollWidth/8; }
+addEventListener('load', measure); measure();
+function loop(now){
+  const t = (now - t0)/1000;
+  if (setW) track.style.transform = `translateX(${-((t*SPEED_WALL) % setW)}px)`;
+  wall.style.backgroundPosition = `${-(t*SPEED_WALL*0.5)%320}px 0`;
+  grass.style.backgroundPosition = `${-(t*SPEED_GRASS)%320}px 0`;
+  if (boardW) bt.style.transform = `translateX(${-((t*SPEED_WALL*1.4) % boardW)}px)`;
+  if (now - lastPuff > 280){ lastPuff = now; puff(); }
+  if (end){ const s = Math.max(0, Math.round((end-Date.now())/1000));
+    count.textContent = s ? `DÉBUT DANS ${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}` : "ÇA COMMENCE !"; }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
