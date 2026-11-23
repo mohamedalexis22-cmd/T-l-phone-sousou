@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TOPSIDE — à ouvrir en premier</title>
+<link rel="stylesheet" href="da/polices.css">
+<style>
+:root{--noir:#0b0b0c;--n2:#141416;--n3:#1d1d21;--bord:#2a2a30;--gris:#8d8b95;--blanc:#f4f3f7;--lila:#c4a7ff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--noir);color:var(--blanc);font:16px/1.5 Inter,system-ui,sans-serif;padding:40px 16px 80px}
+.w{max-width:980px;margin:0 auto}
+.tete{display:flex;align-items:center;gap:18px} .tete img{width:76px;height:76px}
+h1{font:400 54px Anton,Impact,sans-serif;text-transform:uppercase;line-height:1} h1 b{color:var(--lila);font-weight:400}
+.sous{color:var(--gris);margin-top:6px}
+h2{font:400 30px Anton,Impact,sans-serif;text-transform:uppercase;margin:46px 0 14px}
+.cartes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+a.carte{display:block;text-decoration:none;color:inherit;background:var(--n2);border:1px solid var(--bord);border-radius:14px;padding:22px 22px 20px;transition:border-color .2s}
+a.carte:hover{border-color:var(--lila)}
+a.carte .t{font:400 28px Anton,Impact,sans-serif;text-transform:uppercase}
+a.carte .t span{color:var(--lila)}
+a.carte p{color:var(--gris);margin-top:6px;font-size:15px}
+a.carte .go{display:inline-block;margin-top:14px;background:var(--lila);color:var(--noir);font-weight:700;font-size:14px;padding:8px 14px;border-radius:8px}
+ol{margin-left:22px;color:#d6d4dc} li{margin:6px 0}
+.widget{background:var(--n2);border:1px solid var(--bord);border-radius:14px;margin-top:12px;overflow:hidden}
+.widget summary{cursor:pointer;padding:16px 20px;font:400 22px Anton,Impact,sans-serif;text-transform:uppercase;list-style:none}
+.widget summary::after{content:" +";color:var(--gris)} .widget[open] summary::after{content:" –"}
+.boites{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:12px;padding:0 16px 16px}
+.boite{background:var(--n3);border-radius:10px;overflow:hidden}
+.bh{display:flex;justify-content:space-between;align-items:center;padding:8px 10px 8px 14px}
+.bh b{font-size:14px}
+.cp{background:var(--lila);color:var(--noir);border:0;border-radius:7px;padding:6px 14px;font:700 13px Inter,sans-serif;cursor:pointer}
+.cp.ok{background:#7de0a5}
+textarea{width:100%;height:150px;background:#0f0f11;color:#cfcdd8;border:0;padding:10px 14px;font:12px/1.45 "JetBrains Mono",monospace;resize:vertical}
+@media(max-width:520px){.boites{grid-template-columns:1fr} h1{font-size:40px}}
+</style></head><body><div class="w">
+<div class="tete"><img src="assets/logo.png" alt=""><div><h1>Kit <b>TOPSIDE</b></h1><div class="sous">Tout est ici. Cliquez sur ce que vous voulez ouvrir.</div></div></div>
+
+<h2>Les vidéos Top 10</h2>
+<div class="cartes">
+  <a class="carte" href="index.html"><div class="t">Studio <span>Top 10</span></div><p>Remplir vos tops : la carte joueur (photo, stats) et le récap se créent tout seuls.</p><span class="go">Ouvrir le studio →</span></a>
+</div>
+
+<h2>Les lives</h2>
+<div class="cartes">
+  <a class="carte" href="live/index.html"><div class="t">Overlays <span>live</span></div><p>Attente, réaction vidéo, tweets, tier list, discussion, pause, fin. Copier les liens pour OBS.</p><span class="go">Ouvrir les overlays →</span></a>
+  <a class="carte" href="live/streamelements/test.html"><div class="t">Voir les <span>alertes</span></div><p>Démo avec de faux follows, subs, bits et messages de tchat.</p><span class="go">Voir la démo →</span></a>
+</div>
+
+<h2>Alertes Twitch (StreamElements)</h2>
+<ol>
+  <li>Allez sur <b>streamelements.com</b>, connectez-vous avec Twitch.</li>
+  <li><b>Streaming tools → Overlays → New overlay</b> (1920×1080).</li>
+  <li><b>+ → Static/Custom → Custom widget</b>, puis <b>Open editor</b>.</li>
+  <li>Ouvrez un widget ci-dessous : pour chaque onglet (HTML, CSS, JS, Fields), cliquez <b>Copier</b> et collez dans l'onglet du même nom chez StreamElements. <b>Done</b>.</li>
+  <li>Recommencez pour les 3 widgets, placez-les, <b>Save</b>, puis copiez le lien de l'overlay et ajoutez-le dans OBS (source Navigateur, 1920×1080, tout en haut).</li>
+</ol>
+<details class="widget"><summary>Alertes (follow, sub, bits, raid)</summary><div class="boites"><div class="boite"><div class="bh"><b>Onglet HTML</b><button class="cp">Copier</button></div><textarea readonly spellcheck="false">&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Anton&amp;family=Inter:wght@500;600;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;!-- TOPSIDE — alertes (follow, sub, bits, raid, don). Onglet HTML du Custom widget StreamElements. --&gt;
+&lt;div id=&quot;scene&quot;&gt;&lt;/div&gt;
+</textarea></div><div class="boite"><div class="bh"><b>Onglet CSS</b><button class="cp">Copier</button></div><textarea readonly spellcheck="false">/* TOPSIDE — alertes. Onglet CSS du Custom widget StreamElements. */
+:root { --lila: #c4a7ff; --fond: rgba(12,12,13,.94); --blanc: #f4f3f7; --gris: #8d8b95; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: transparent; overflow: hidden; }
+#scene { position: absolute; inset: 0; display: flex; justify-content: center; align-items: flex-start; padding-top: 40px; }
+
+.alerte {
+  position: relative; display: flex; align-items: center; gap: 22px;
+  min-width: 520px; max-width: 900px; padding: 22px 34px 22px 26px;
+  background: var(--fond); border-radius: 10px; overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,.5);
+  color: var(--blanc); font-family: &quot;Inter&quot;, Arial, sans-serif;
+  animation: entre .7s cubic-bezier(.22,1,.36,1) both;
+}
+.alerte.sort { animation: sort .5s cubic-bezier(.64,0,.78,0) both; }
+.alerte::before { content: &quot;&quot;; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--lila); transform-origin: top; animation: barre .6s .2s cubic-bezier(.22,1,.36,1) both; }
+.alerte .logo { width: 60px; height: 60px; flex: none; object-fit: contain; }
+.alerte .txt { min-width: 0; }
+.alerte .type { font-weight: 600; font-size: 15px; letter-spacing: .24em; text-transform: uppercase; color: var(--gris); }
+.alerte .nom { font-family: &quot;Anton&quot;, Impact, sans-serif; font-size: 58px; line-height: 1.05; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.alerte .detail { font-weight: 700; font-size: 20px; color: var(--lila); margin-top: 2px; }
+.alerte .msg { font-weight: 500; font-size: 19px; color: #d6d4dc; margin-top: 8px; max-width: 760px; line-height: 1.35; }
+
+@keyframes entre { from { opacity: 0; transform: translateY(-30px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes sort { to { opacity: 0; transform: translateY(-20px); } }
+@keyframes barre { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+</textarea></div><div class="boite"><div class="bh"><b>Onglet JS</b><button class="cp">Copier</button></div><textarea readonly spellcheck="false">/* TOPSIDE — alertes. Onglet JS du Custom widget StreamElements.
+   Une alerte à la fois (file d&#x27;attente), durée et son réglables dans « Fields ». */
+let reglages = {};
+const file = [];
+let enCours = false;
+
+const esc = (s) =&gt; String(s ?? &quot;&quot;).replace(/[&amp;&lt;&gt;&quot;&#x27;]/g, (c) =&gt; ({ &quot;&amp;&quot;: &quot;&amp;amp;&quot;, &quot;&lt;&quot;: &quot;&amp;lt;&quot;, &quot;&gt;&quot;: &quot;&amp;gt;&quot;, &#x27;&quot;&#x27;: &quot;&amp;quot;&quot;, &quot;&#x27;&quot;: &quot;&amp;#39;&quot; }[c]));
+const nb = (n) =&gt; Number(n || 0).toLocaleString(&quot;fr-FR&quot;);
+
+window.addEventListener(&quot;onWidgetLoad&quot;, (obj) =&gt; { reglages = obj.detail.fieldData || {}; });
+
+window.addEventListener(&quot;onEventReceived&quot;, (obj) =&gt; {
+  const l = obj.detail.listener, e = obj.detail.event || {};
+  let a = null;
+  if (l === &quot;follower-latest&quot; &amp;&amp; reglages.follow !== false) a = { type: &quot;Nouveau follow&quot;, nom: e.name };
+  else if (l === &quot;subscriber-latest&quot; &amp;&amp; reglages.sub !== false) {
+    if (e.bulkGifted) a = { type: &quot;Subs offerts&quot;, nom: e.sender || e.name, detail: `offre ${nb(e.amount)} sub${e.amount &gt; 1 ? &quot;s&quot; : &quot;&quot;}` };
+    else if (e.isCommunityGift) return; // déjà annoncé par l&#x27;alerte groupée
+    else if (e.gifted) a = { type: &quot;Sub offert&quot;, nom: e.name, detail: `offert par ${e.sender}` };
+    else a = { type: e.amount &gt; 1 ? &quot;Réabonnement&quot; : &quot;Nouveau sub&quot;, nom: e.name, detail: e.amount &gt; 1 ? `${nb(e.amount)} mois` : (e.tier === &quot;prime&quot; ? &quot;Prime&quot; : &quot;&quot;), msg: e.message };
+  }
+  else if (l === &quot;cheer-latest&quot; &amp;&amp; reglages.bits !== false) a = { type: &quot;Bits&quot;, nom: e.name, detail: `${nb(e.amount)} bits`, msg: e.message };
+  else if (l === &quot;raid-latest&quot; &amp;&amp; reglages.raid !== false) a = { type: &quot;Raid&quot;, nom: e.name, detail: `${nb(e.amount)} raider${e.amount &gt; 1 ? &quot;s&quot; : &quot;&quot;}` };
+  else if (l === &quot;tip-latest&quot; &amp;&amp; reglages.don !== false) a = { type: &quot;Don&quot;, nom: e.name, detail: `${nb(e.amount)} €`, msg: e.message };
+  if (!a) return;
+  file.push(a);
+  if (!enCours) suivante();
+});
+
+function suivante() {
+  const a = file.shift();
+  if (!a) { enCours = false; return; }
+  enCours = true;
+  const duree = Math.max(2, Number(reglages.duree || 6)) * 1000;
+  const logo = reglages.logo ? `&lt;img class=&quot;logo&quot; src=&quot;${esc(reglages.logo)}&quot; alt=&quot;&quot;&gt;` : &quot;&quot;;
+  const msg = reglages.messages !== false &amp;&amp; a.msg ? `&lt;div class=&quot;msg&quot;&gt;${esc(a.msg)}&lt;/div&gt;` : &quot;&quot;;
+  const scene = document.getElementById(&quot;scene&quot;);
+  scene.innerHTML = `&lt;div class=&quot;alerte&quot;&gt;${logo}&lt;div class=&quot;txt&quot;&gt;&lt;div class=&quot;type&quot;&gt;${esc(a.type)}&lt;/div&gt;&lt;div class=&quot;nom&quot;&gt;${esc(a.nom)}&lt;/div&gt;${a.detail ? `&lt;div class=&quot;detail&quot;&gt;${esc(a.detail)}&lt;/div&gt;` : &quot;&quot;}${msg}&lt;/div&gt;&lt;/div&gt;`;
+  if (reglages.son) { try { const s = new Audio(reglages.son); s.volume = Math.min(1, Number(reglages.volume ?? 50) / 100); s.play().catch(() =&gt; {}); } catch (err) {} }
+  setTimeout(() =&gt; {
+    const el = scene.querySelector(&quot;.alerte&quot;);
+    if (el) el.classList.add(&quot;sort&quot;);
+    setTimeout(() =&gt; { scene.innerHTML = &quot;&quot;; setTimeout(suivante, 400); }, 500);
+  }, duree);
+}
+</textarea></div><div class="boite"><div class="bh"><b>Onglet Fields</b><button class="cp">Copier</button></div><textarea readonly spellcheck="false">{
+  &quot;logo&quot;: { &quot;type&quot;: &quot;image-input&quot;, &quot;label&quot;: &quot;Logo (PNG transparent)&quot;, &quot;value&quot;: &quot;&quot; },
+  &quot;duree&quot;: { &quot;type&quot;: &quot;number&quot;, &quot;label&quot;: &quot;Durée d&#x27;une alerte (secondes)&quot;, &quot;value&quot;: 6, &quot;min&quot;: 2, &quot;max&quot;: 30 },
+  &quot;son&quot;: { &quot;type&quot;: &quot;sound-input&quot;, &quot;label&quot;: &quot;Son de l&#x27;alerte (facultatif)&quot;, &quot;value&quot;: &quot;&quot; },
+  &quot;volume&quot;: { &quot;type&quot;: &quot;slider&quot;, &quot;label&quot;: &quot;Volume du son&quot;, &quot;value&quot;: 50, &quot;min&quot;: 0, &quot;max&quot;: 100, &quot;step&quot;: 1 },
+  &quot;messages&quot;: { &quot;type&quot;: &quot;checkbox&quot;, &quot;label&quot;: &quot;Afficher le message du viewer&quot;, &quot;value&quot;: true },
+  &quot;follow&quot;: { &quot;type&quot;: &quot;checkbox&quot;, &quot;label&quot;: &quot;Alertes follows&quot;, &quot;value&quot;: true },
+  &quot;sub&quot;: { &quot;type&quot;: &quot;checkbox&quot;, &quot;label&quot;: &quot;Alertes subs&quot;, &quot;value&quot;: true },
+  &quot;bits&quot;: { &quot;type&quot;: &quot;checkbox&quot;, &quot;label&quot;: &quot;Alertes bits&quot;, &quot;value&quot;: true },
+  &quot;raid&quot;: { &quot;type&quot;: &quot;checkbox&quot;, &quot;label&quot;: &quot;Alertes raids&quot;, &quot;value&quot;: true },
+  &quot;don&quot;: { &quot;type&quot;: &quot;checkbox&quot;, &quot;label&quot;: &quot;Alertes dons&quot;, &quot;value&quot;: true }
+}
+</textarea></div></div></details><details class="widget"><summary>Derniers events (Follow · Sub · Bits)</summary><div class="boites"><div class="boite"><div class="bh"><b>Onglet HTML</b><button class="cp">Copier</button></div><textarea readonly spellcheck="false">&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Anton&amp;family=Inter:wght@600;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;!-- TOPSIDE — derniers événements (follow, sub, bits). Onglet HTML du Custom widget StreamElements. --&gt;
+&lt;div id=&quot;ligne&quot;&gt;
+  &lt;div class=&quot;ev&quot;&gt;&lt;span class=&quot;lab&quot;&gt;Follow&lt;/span&gt;&lt;span class=&quot;nom&quot; id=&quot;ev-follow&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ev&quot;&gt;&lt;span class=&quot;lab&quot;&gt;Sub&lt;/span&gt;&lt;span class=&quot;nom&quot; id=&quot;ev-sub&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ev&quot;&gt;&lt;span class=&quot;lab&quot;&gt;Bits&lt;/span&gt;&lt;span class=&quot;nom&quot; id=&quot;ev-bits&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+</textarea></div><div class="boite"><div class="bh"><b>Onglet CSS</b><button class="cp">Copier</button></div><textarea readonly spellcheck="false">/* TOPSIDE — derniers événements. Onglet CSS. */
+:root { --lila: #c4a7ff; --blanc: #f4f3f7; --gris: #8d8b95; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: transparent; overflow: hidden; }
+#ligne { display: flex; align-items: baseline; gap: 34px; padding: 10px 4px; font-family: &quot;Inter&quot;, Arial, sans-serif; color: var(--blanc); white-space: nowrap; }
+.ev { display: flex; align-items: baseline; gap: 10px; }
+.ev + .ev::before { content: &quot;&quot;; width: 5px; height: 5px; border-radius: 50%; background: var(--lila); align-self: center; margin-right: 24px; }
+.lab { font-weight: 600; font-size: 14px; letter-spacing: .22em; text-transform: uppercase; color: var(--gris); }
+.nom { font-family: &quot;Anton&quot;, Impact, sans-serif; font-size: 28px; text-transform: uppercase; }
+.nom.neuf { animation: flash 1.2s ease-out; }
+@keyframes flash { 0% { color: var(--lila); } 100% { color: var(--blanc); } }
+</textarea></div><div class="boite"><div class="bh"><b>Onglet JS</b><button class="cp">Copier</button></div><textarea readonly spellcheck="false">/* TOPSIDE — derniers événements. Onglet JS. */
+const nb = (n) =&gt; Number(n || 0).toLocaleString(&quot;fr-FR&quot;);
+function poser(id, texte) {
+  const el = document.getElementById(id);
+  if (!el || !texte) return;
+  el.textContent = texte;
+  el.classList.remove(&quot;neuf&quot;); void el.offsetWidth; el.classList.add(&quot;neuf&quot;);
+}
+window.addEventListener(&quot;onWidgetLoad&quot;, (obj) =&gt; {
+  const d = (obj.detail.session &amp;&amp; obj.detail.session.data) || {};
+  if (d[&quot;follower-latest&quot;]) poser(&quot;ev-follow&quot;, d[&quot;follower-latest&quot;].name);
+  if (d[&quot;subscriber-latest&quot;]) poser(&quot;ev-sub&quot;, d[&quot;subscriber-latest&quot;].name);
+  if (d[&quot;cheer-latest&quot;] &amp;&amp; d[&quot;cheer-latest&quot;].name) poser(&quot;ev-bits&quot;, `${d[&quot;cheer-latest&quot;].name} · ${nb(d[&quot;cheer-latest&quot;].amount)}`);
+});
+window.addEventListener(&quot;onEventReceived&quot;, (obj) =&gt; {
+  const l = obj.detail.listener, e = obj.detail.event || {};
+  if (l === &quot;follower-latest&quot;) poser(&quot;ev-follow&quot;, e.name);
+  else if (l === &quot;subscriber-latest&quot;) poser(&quot;ev-sub&quot;, e.bulkGifted ? e.sender : e.name);
+  else if (l === &quot;cheer-latest&quot;) poser(&quot;ev-bits&quot;, `${e.name} · ${nb(e.amount)}`);
+});
+</textarea></div><div class="boite"><div class="bh"><b>Onglet Fields</b><button class="cp">Copier</button></div><textarea readonly spellcheck="false">{}
+</textarea></div></div></details><details class="widget"><summary>Tchat Twitch</summary><div class="boites"><div class="boite"><div class="bh"><b>Onglet HTML</b><button class="cp">Copier</button></div><textarea readonly spellcheck="false">&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;!-- TOPSIDE — tchat Twitch. Onglet HTML du Custom widget StreamElements. --&gt;
+&lt;div id=&quot;tchat&quot;&gt;&lt;/div&gt;
+</textarea></div><div class="boite"><div class="bh"><b>Onglet CSS</b><button class="cp">Copier</button></div><textarea readonly spellcheck="false">/* TOPSIDE — tchat. Onglet CSS. Les messages montent depuis le bas. */
+:root { --lila: #c4a7ff; --blanc: #f4f3f7; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: transparent; overflow: hidden; height: 100%; }
+#tchat { position: absolute; left: 0; right: 0; bottom: 0; top: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; padding: 12px; font-family: &quot;Inter&quot;, Arial, sans-serif; overflow: hidden; }
+.m { padding: 8px 12px 9px; border-radius: 8px; background: rgba(255,255,255,.05); color: var(--blanc); font-weight: 500; font-size: 19px; line-height: 1.35; word-wrap: break-word; animation: entre .35s cubic-bezier(.22,1,.36,1) both; }
+.m.sort { animation: sort .4s ease both; }
+.m .n { display: block; font-weight: 700; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--lila); margin-bottom: 2px; }
+.m.modo .n::after { content: &quot; · modo&quot;; color: #8d8b95; }
+.m .emote { height: 1.4em; vertical-align: middle; margin: -2px 1px 0; }
+@keyframes entre { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes sort { to { opacity: 0; } }
+</textarea></div><div class="boite"><div class="bh"><b>Onglet JS</b><button class="cp">Copier</button></div><textarea readonly spellcheck="false">/* TOPSIDE — tchat Twitch. Onglet JS du Custom widget StreamElements. */
+let reglages = { max: 12, duree: 0, ignorer: &quot;Nightbot,StreamElements,Streamlabs,Moobot&quot;, commandes: true };
+const esc = (s) =&gt; String(s ?? &quot;&quot;).replace(/[&amp;&lt;&gt;&quot;&#x27;]/g, (c) =&gt; ({ &quot;&amp;&quot;: &quot;&amp;amp;&quot;, &quot;&lt;&quot;: &quot;&amp;lt;&quot;, &quot;&gt;&quot;: &quot;&amp;gt;&quot;, &#x27;&quot;&#x27;: &quot;&amp;quot;&quot;, &quot;&#x27;&quot;: &quot;&amp;#39;&quot; }[c]));
+
+window.addEventListener(&quot;onWidgetLoad&quot;, (obj) =&gt; { reglages = Object.assign(reglages, obj.detail.fieldData || {}); });
+
+// Texte + emotes (positions données par Twitch), tout le reste échappé
+function texteAvecEmotes(texte, emotes) {
+  const ems = (emotes || []).filter((e) =&gt; typeof e.start === &quot;number&quot; &amp;&amp; e.urls).sort((a, b) =&gt; a.start - b.start);
+  if (!ems.length) {
+    // repli : remplacement par nom d&#x27;emote
+    let html = esc(texte);
+    (emotes || []).forEach((e) =&gt; {
+      const url = e.urls &amp;&amp; (e.urls[&quot;2&quot;] || e.urls[&quot;1&quot;]);
+      if (url &amp;&amp; e.name) html = html.split(esc(e.name)).join(`&lt;img class=&quot;emote&quot; src=&quot;${esc(url)}&quot; alt=&quot;&quot;&gt;`);
+    });
+    return html;
+  }
+  const car = Array.from(texte);
+  let html = &quot;&quot;, i = 0;
+  ems.forEach((e) =&gt; {
+    if (e.start &lt; i) return;
+    html += esc(car.slice(i, e.start).join(&quot;&quot;));
+    html += `&lt;img class=&quot;emote&quot; src=&quot;${esc(e.urls[&quot;2&quot;] || e.urls[&quot;1&quot;])}&quot; alt=&quot;&quot;&gt;`;
+    i = e.end + 1;
+  });
+  return html + esc(car.slice(i).join(&quot;&quot;));
+}
+
+window.addEventListener(&quot;onEventReceived&quot;, (obj) =&gt; {
+  const l = obj.detail.listener, ev = obj.detail.event || {};
+  const box = document.getElementById(&quot;tchat&quot;);
+  if (l === &quot;delete-message&quot;) { box.querySelectorAll(`[data-msg=&quot;${CSS.escape(ev.msgId || &quot;&quot;)}&quot;]`).forEach((x) =&gt; x.remove()); return; }
+  if (l === &quot;delete-messages&quot;) { box.querySelectorAll(`[data-user=&quot;${CSS.escape(ev.userId || &quot;&quot;)}&quot;]`).forEach((x) =&gt; x.remove()); return; }
+  if (l !== &quot;message&quot;) return;
+  const d = ev.data || {};
+  const ignores = String(reglages.ignorer || &quot;&quot;).toLowerCase().split(&quot;,&quot;).map((s) =&gt; s.trim());
+  if (ignores.includes(String(d.nick || d.displayName || &quot;&quot;).toLowerCase())) return;
+  if (reglages.commandes &amp;&amp; String(d.text || &quot;&quot;).startsWith(&quot;!&quot;)) return;
+  const modo = (d.badges || []).some((b) =&gt; [&quot;moderator&quot;, &quot;broadcaster&quot;].includes(b.type));
+  const div = document.createElement(&quot;div&quot;);
+  div.className = &quot;m&quot; + (modo ? &quot; modo&quot; : &quot;&quot;);
+  div.dataset.msg = d.msgId || &quot;&quot;;
+  div.dataset.user = d.userId || &quot;&quot;;
+  div.innerHTML = `&lt;span class=&quot;n&quot;&gt;${esc(d.displayName || d.nick)}&lt;/span&gt;${texteAvecEmotes(d.text || &quot;&quot;, d.emotes)}`;
+  box.appendChild(div);
+  while (box.children.length &gt; Number(reglages.max || 12)) box.firstChild.remove();
+  const duree = Number(reglages.duree || 0);
+  if (duree &gt; 0) setTimeout(() =&gt; { div.classList.add(&quot;sort&quot;); setTimeout(() =&gt; div.remove(), 400); }, duree * 1000);
+});
+</textarea></div><div class="boite"><div class="bh"><b>Onglet Fields</b><button class="cp">Copier</button></div><textarea readonly spellcheck="false">{
+  &quot;max&quot;: { &quot;type&quot;: &quot;number&quot;, &quot;label&quot;: &quot;Nombre de messages affichés&quot;, &quot;value&quot;: 12, &quot;min&quot;: 3, &quot;max&quot;: 40 },
+  &quot;duree&quot;: { &quot;type&quot;: &quot;number&quot;, &quot;label&quot;: &quot;Disparition après (secondes, 0 = jamais)&quot;, &quot;value&quot;: 0, &quot;min&quot;: 0, &quot;max&quot;: 600 },
+  &quot;ignorer&quot;: { &quot;type&quot;: &quot;text&quot;, &quot;label&quot;: &quot;Comptes ignorés (bots), séparés par des virgules&quot;, &quot;value&quot;: &quot;Nightbot,StreamElements,Streamlabs,Moobot&quot; },
+  &quot;commandes&quot;: { &quot;type&quot;: &quot;checkbox&quot;, &quot;label&quot;: &quot;Cacher les commandes (!...)&quot;, &quot;value&quot;: true }
+}
+</textarea></div></div></details>
+</div>
+<script>
+document.querySelectorAll(".cp").forEach(function(b){b.addEventListener("click",function(){
+  var ta=b.closest(".boite").querySelector("textarea");
+  function ok(){b.textContent="Copié !";b.classList.add("ok");setTimeout(function(){b.textContent="Copier";b.classList.remove("ok")},1800)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ta.value).then(ok,function(){ta.select();document.execCommand("copy");ok()})}
+  else{ta.select();document.execCommand("copy");ok()}
+})});
+</script></body></html>
