@@ -31,6 +31,7 @@ const BASE = "https://www.transfermarkt.fr";
 const UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36";
 const pause = (ms) => new Promise((r) => setTimeout(r, ms));
 const DELAI = Number(process.env.TM_DELAI || 4000);
+let LISTE = [];
 
 const MOIS = { janv: 1, févr: 2, fevr: 2, mars: 3, avr: 4, mai: 5, juin: 6, juil: 7, août: 8, aout: 8, sept: 9, oct: 10, nov: 11, déc: 12, dec: 12 };
 const PAYS = {
@@ -124,12 +125,17 @@ async function importer(entree, idForce) {
   // id : celui d'une fiche saisie à la main s'il existe (même nom), sinon prénom-nom
   const manuels = lireManuels();
   const id = idForce || (manuels.has(slugId(nom || prenom)) ? slugId(nom || prenom) : slugId([prenom, nom].filter(Boolean).join(" "))) || String(tmId);
-  const photo = photoUrl ? await telechargerPhoto(photoUrl, id) : "";
+  // deux joueurs différents avec le même id → on ajoute l'année de naissance
+  let idFinal = id;
+  const urlTM = `${BASE}/-/profil/spieler/${tmId}`;
+  if (LISTE.some((x) => x.id === idFinal && x.transfermarkt !== urlTM)) idFinal = `${id}-${ne.slice(0, 4) || tmId}`;
+  if (LISTE.some((x) => x.id === idFinal && x.transfermarkt !== urlTM)) idFinal = `${id}-${tmId}`;
+  const photo = photoUrl ? await telechargerPhoto(photoUrl, idFinal) : "";
   const stats = {};
   if (sel) { stats.selections = Number(sel[1]); stats.butsSelection = Number(sel[2]); }
 
   return {
-    id, prenom, nom, nation: PAYS[natTxt] || natTxt.slice(0, 3).toUpperCase(), poste, ne, clubs, photo, stats,
+    id: idFinal, prenom, nom, nation: PAYS[natTxt] || natTxt.slice(0, 3).toUpperCase(), poste, ne, clubs, photo, stats,
     transfermarkt: `${BASE}/-/profil/spieler/${tmId}`,
     source: "Transfermarkt", verifie: false, maj: new Date().toISOString().slice(0, 10),
   };
@@ -176,18 +182,29 @@ ${corps}
   const args = process.argv.slice(2);
   const i = args.indexOf("--id"); const idForce = i >= 0 ? args.splice(i, 2)[1] : null;
   const f = args.indexOf("--fichier");
+  const forcer = args.includes("--forcer"); if (forcer) args.splice(args.indexOf("--forcer"), 1);
   let entrees = f >= 0 ? fs.readFileSync(args.splice(f, 2)[1], "utf8").split(/\r?\n/).map((s) => s.trim()).filter(Boolean) : args;
   if (!entrees.length) { console.log("Usage : node tools/transfermarkt.js <lien | id | \"nom\"> [...]"); process.exit(1); }
   const liste = lireExistants();
+  LISTE = liste;
+  const dejaTM = new Set(liste.map((x) => (x.transfermarkt || "").match(/spieler\/(\d+)/)?.[1]).filter(Boolean));
+  let n = 0;
   for (const e of entrees) {
+    const idTM = /^\d+$/.test(e) ? e : (e.match(/spieler\/(\d+)/) || [])[1];
+    if (idTM && dejaTM.has(idTM) && !forcer) continue; // déjà importé
     try {
       const j = await importer(e, entrees.length === 1 ? idForce : null);
-      const k = liste.findIndex((x) => x.id === j.id);
-      if (k >= 0) liste[k] = j; else liste.push(j);
+      const k2 = liste.findIndex((x) => x.id === j.id);
+      if (k2 >= 0) liste[k2] = j; else liste.push(j);
+      dejaTM.add((j.transfermarkt.match(/spieler\/(\d+)/) || [])[1]);
+      ecrire(liste); // enregistré après chaque joueur
+      n++;
       console.log(`✓ ${j.prenom} ${j.nom} (${j.id}) · ${j.nation} · ${j.poste} · ${j.clubs.length} clubs · sél. ${j.stats.selections ?? "—"}${j.photo ? " · photo" : ""}`);
-    } catch (err) { console.log(`✗ ${e} : ${err.message}`); }
+    } catch (err) {
+      console.log(`✗ ${e} : ${err.message}`);
+      if (/\b403\b|429/.test(err.message)) { console.log("  (bloqué par le site : pause de 3 minutes)"); await pause(180000); }
+    }
     await pause(DELAI); // on reste poli avec le site (il bloque si on va trop vite)
   }
-  ecrire(liste);
-  console.log(`\n${liste.length} joueur(s) dans data/joueurs-transfermarkt.js`);
+  console.log(`\n${n} importé(s) · ${liste.length} joueur(s) dans data/joueurs-transfermarkt.js`);
 })();
