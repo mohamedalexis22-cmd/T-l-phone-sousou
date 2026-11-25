@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../da/polices.css">
+<style>
+  body { margin: 0; padding: 40px; background: transparent; font-family: Inter, sans-serif; }
+  .img { display: inline-flex; margin: 30px; width: max-content; }
+  .ligne { display: flex; align-items: center; gap: 46px; padding: 10px; }
+  .liste { display: flex; flex-direction: column; gap: 22px; padding: 10px; }
+  .so { display: flex; align-items: center; gap: 18px; }
+  .so b { font: 400 54px/1 Anton, Impact, sans-serif; text-transform: uppercase; font-weight: 400; }
+  .blanc { color: #f4f3f7; } .noir { color: #0b0b0c; }
+  .blanc .so b { text-shadow: 0 2px 10px rgba(0,0,0,.35); }
+  .horaire { display: flex; align-items: center; gap: 20px; font: 400 64px/1 Anton, Impact, sans-serif; text-transform: uppercase; padding: 10px; }
+  .horaire i { width: 22px; height: 22px; border-radius: 50%; background: #c4a7ff; flex: none; }
+  .horaire b { color: #c4a7ff; font-weight: 400; } .noir.horaire b { color: #7a4fe0; } .noir.horaire i { background: #7a4fe0; }
+  .horaire small { display: block; font: 600 26px Inter, sans-serif; letter-spacing: .2em; color: inherit; opacity: .75; margin-top: 10px; }
+  .seul { padding: 4px; }
+</style></head><body>
+<div id="zone"></div>
+<script src="../da/sociaux.js"></script>
+<script>
+const S = window.SOCIAUX, z = document.getElementById("zone");
+const so = (s, t) => `<span class="so">${S.badge(s.app, t)}<b>${s.pseudo}</b></span>`;
+let h = "";
+for (const c of ["blanc", "noir"]) {
+  h += `<div class="img ligne ${c}" id="reseaux-bande-${c}">${S.liste.map((s) => so(s, 64)).join("")}</div>`;
+  h += `<div class="img liste ${c}" id="reseaux-liste-${c}">${S.liste.map((s) => so(s, 64)).join("")}</div>`;
+  S.liste.forEach((s) => { h += `<div class="img ligne ${c}" id="${s.app}-${c}">${so(s, 80)}</div>`; });
+  h += `<div class="img horaire ${c}" id="live-21h-${c}"><i></i><div>En live tous les soirs à <b>21h</b><small>Du mardi au dimanche</small></div></div>`;
+}
+S.liste.forEach((s) => { h += `<div class="img seul" id="logo-${s.app}">${S.badge(s.app, 256)}</div>`; });
+z.innerHTML = h;
+window.__ids = [...document.querySelectorAll(".img")].map((e) => e.id);
+</script></body></html>

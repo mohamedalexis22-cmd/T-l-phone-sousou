@@ -46,11 +46,14 @@
     reaction: { video: { x: 40, y: 40, w: 1280, h: 720 }, cam: CAM, chat: CHAT, logo: { x: 40, y: 800, w: 74 }, barre: { x: 140, y: 812, w: 1180 } },
     tweets: { tweets: { x: 40, y: 40, w: 760, h: 880 }, cam: { x: 840, y: 40, w: 1040, h: 585 }, chat: { x: 840, y: 665, w: 1040, h: 375 }, logo: { x: 40, y: 950, w: 70 }, barre: { x: 130, y: 960, w: 700 } },
     discussion: { chat: { x: 1480, y: 300, w: 400, h: 620 }, logo: { x: 40, y: 40, w: 70 }, barre: { x: 40, y: 960, w: 1300 } },
+    pleinecran: { logo: { x: 40, y: 34, w: 84 }, titre: { x: 140, y: 44, w: 700 } },
+    ecrancam: { cam: { x: 1440, y: 40, w: 440, h: 248 }, bandeau: { x: 1440, y: 300, w: 440 } },
+    ecrancamg: { cam: { x: 40, y: 724, w: 440, h: 248 }, bandeau: { x: 40, y: 984, w: 440 } },
     tierlist: { cam: CAM, chat: CHAT, logo: { x: 40, y: 34, w: 64 }, titre: { x: 124, y: 44, w: 700 }, ajout: { x: 840, y: 44, w: 480 }, board: { x: 40, y: 120, w: 1280, h: 740 }, bac: { x: 40, y: 880, w: 1280, h: 160 } },
   };
   const L = {};
   Object.entries(ORIGINE[P.ecran] || ORIGINE.attente).forEach(([k, v]) => (L[k] = Object.assign({}, v, DISPO[k] || {})));
-  const NOMS = { video: "Vidéo", tweets: "Tweets", cam: "Caméra", chat: "Tchat", logo: "Logo", barre: "Bandeau", bloc: "Textes", titre: "Titre", ajout: "Ajout joueur", board: "Tableau", bac: "À classer" };
+  const NOMS = { bandeau: "Bandeau caméra", video: "Vidéo", tweets: "Tweets", cam: "Caméra", chat: "Tchat", logo: "Logo", barre: "Bandeau", bloc: "Textes", titre: "Titre", ajout: "Ajout joueur", board: "Tableau", bac: "À classer" };
   const pos = (b) => `left:${b.x}px;top:${b.y}px;${b.w ? `width:${b.w}px;` : ""}${b.h ? `height:${b.h}px;` : ""}`;
 
   /* ---------- Briques ---------- */
@@ -82,6 +85,10 @@
     discussion: () => `<div class="trou-vue" style="left:0;top:0;width:1920px;height:1080px;border-radius:0">Caméra plein cadre</div>
         <div class="fond-chat" data-edit="chat" style="position:absolute;${pos(L.chat)};background:rgba(12,12,13,.55);border-radius:6px"></div>
         ${logoA()}${barre(true)}`,
+    pleinecran: () => `<div class="trou-vue" style="left:0;top:0;width:1920px;height:1080px;border-radius:0">Caméra plein écran</div>
+        ${logoA()}<div class="titre-coin a" data-edit="titre" data-largeur="1" style="${pos(L.titre)}">${T("titre", R.valeur("nom") || M.nom)}</div>`,
+    ecrancam: () => ecranCam(),
+    ecrancamg: () => ecranCam(),
     tierlist: () => fondPerce(["cam", "chat"]) + logoA() +
       `<div class="barre-live a" data-edit="titre" data-largeur="1" style="${pos(L.titre)}"><div class="t" style="font-size:44px">${esc(P.sujet || txt("titre", "Tier list"))}</div></div>
         <form class="tl-ajout" id="tl-ajout" data-edit="ajout" data-largeur="1" style="${pos(L.ajout)}" autocomplete="off">
@@ -91,12 +98,29 @@
         <datalist id="tl-banque"></datalist>`,
   };
 
+  // Écran partagé plein cadre + caméra dans un coin + petit bandeau sous la caméra
+  function ecranCam() {
+    return `<div class="trou-vue" style="left:0;top:0;width:1920px;height:1080px;border-radius:0">Votre écran</div>
+      <div class="trou-vue" style="${pos(L.cam)}">Caméra</div>
+      <div class="cadre-trou cadre-cam" data-edit="cam" style="${pos(L.cam)}"></div>
+      <div class="bandeau-cam a" data-edit="bandeau" data-largeur="1" style="${pos(L.bandeau)}">
+        <img src="${esc(logo)}" alt="">${T("nom", R.valeur("nom") || M.nom, "span", "n")}<span class="direct"><i></i>${T("direct", "Live")}</span></div>`;
+  }
+
+  // Rangée réseaux (logos officiels + pseudos) + horaire
+  function sociaux() {
+    const S = window.SOCIAUX;
+    if (!S) return P.reseaux.length ? `<div class="reseaux a" style="animation-delay:500ms">${P.reseaux.map(esc).join("   ·   ")}</div>` : "";
+    return `<div class="sociaux a" style="animation-delay:500ms">${S.liste.map((s) => `<span class="so">${S.badge(s.app, 34)}<b>${esc(s.pseudo)}</b></span>`).join("")}</div>
+      <div class="horaire-live a" style="animation-delay:650ms"><i></i>${T("horaire", S.horaire)}</div>`;
+  }
+
   function ecranTexte(petit, centre, sujet) {
     return fondPerce(["chat"]) + `<div class="attente" data-edit="bloc" style="left:${L.bloc.x}px;top:${L.bloc.y}px;bottom:auto;justify-content:flex-start">
       <div class="logo-live a"><img src="${esc(logo)}" alt=""></div>
       ${petit}${centre}
       ${sujet ? `<div class="sujet a" style="animation-delay:350ms"><div class="t">${esc(sujet)}</div></div>` : ""}
-      ${P.reseaux.length ? `<div class="reseaux a" style="animation-delay:500ms">${P.reseaux.map(esc).join("   ·   ")}</div>` : ""}</div>`;
+      ${sociaux()}</div>`;
   }
 
   /* ---------- Compte à rebours ---------- */

@@ -7,29 +7,38 @@
    "name": "1 · Attente"
   },
   {
-   "name": "2 · Discussion"
+   "name": "2 · Plein écran (caméra)"
   },
   {
-   "name": "3 · Réaction vidéo"
+   "name": "3 · Écran + caméra"
   },
   {
-   "name": "4 · Tweets"
+   "name": "4 · Écran + caméra (bas gauche)"
   },
   {
-   "name": "5 · Tier list"
+   "name": "5 · Discussion"
   },
   {
-   "name": "6 · Pause"
+   "name": "6 · Réaction vidéo"
   },
   {
-   "name": "7 · Fin"
+   "name": "7 · Tweets"
+  },
+  {
+   "name": "8 · Tier list"
+  },
+  {
+   "name": "9 · Pause"
+  },
+  {
+   "name": "10 · Fin"
   }
  ],
  "sources": [
   {
    "prev_ver": 503382019,
    "name": "Caméra",
-   "uuid": "6f26157e-9290-4113-8c88-6226c2c3433e",
+   "uuid": "a7093b1e-91c6-4e0f-85d4-a3495a2e5188",
    "id": "dshow_input",
    "versioned_id": "dshow_input",
    "settings": {
@@ -57,7 +66,7 @@
   {
    "prev_ver": 503382019,
    "name": "Vidéo à regarder (fenêtre du navigateur)",
-   "uuid": "bec37c84-32ee-4736-b847-b420f26bc336",
+   "uuid": "1b004758-04d7-42be-9c47-b8533f701348",
    "id": "window_capture",
    "versioned_id": "window_capture",
    "settings": {
@@ -84,8 +93,35 @@
   },
   {
    "prev_ver": 503382019,
+   "name": "Votre écran",
+   "uuid": "54704afe-1d38-4e85-a331-8a736f2d6605",
+   "id": "monitor_capture",
+   "versioned_id": "monitor_capture",
+   "settings": {
+    "monitor": 0,
+    "capture_cursor": true
+   },
+   "mixers": 0,
+   "sync": 0,
+   "flags": 0,
+   "volume": 1.0,
+   "balance": 0.5,
+   "enabled": true,
+   "muted": false,
+   "push-to-mute": false,
+   "push-to-mute-delay": 0,
+   "push-to-talk": false,
+   "push-to-talk-delay": 0,
+   "hotkeys": {},
+   "deinterlace_mode": 0,
+   "deinterlace_field_order": 0,
+   "monitoring_type": 0,
+   "private_settings": {}
+  },
+  {
+   "prev_ver": 503382019,
    "name": "Alertes Twitch",
-   "uuid": "dc570850-721e-479b-b6b7-aa9396b0376b",
+   "uuid": "6de68dc8-56ae-4b39-b12b-24f6a6769146",
    "id": "browser_source",
    "versioned_id": "browser_source",
    "settings": {
@@ -117,8 +153,41 @@
   },
   {
    "prev_ver": 503382019,
+   "name": "Bandeau réseaux (défilant)",
+   "uuid": "1e76b876-ddb4-47e9-809c-ee20f2c21c54",
+   "id": "browser_source",
+   "versioned_id": "browser_source",
+   "settings": {
+    "url": "file:///C:/TOPSIDE/live/bandeau.html",
+    "width": 1920,
+    "height": 90,
+    "css": "body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }",
+    "is_local_file": false,
+    "reroute_audio": false,
+    "restart_when_active": false,
+    "shutdown": false
+   },
+   "mixers": 0,
+   "sync": 0,
+   "flags": 0,
+   "volume": 1.0,
+   "balance": 0.5,
+   "enabled": true,
+   "muted": false,
+   "push-to-mute": false,
+   "push-to-mute-delay": 0,
+   "push-to-talk": false,
+   "push-to-talk-delay": 0,
+   "hotkeys": {},
+   "deinterlace_mode": 0,
+   "deinterlace_field_order": 0,
+   "monitoring_type": 0,
+   "private_settings": {}
+  },
+  {
+   "prev_ver": 503382019,
    "name": "Tchat · attente",
-   "uuid": "48493c1e-8fc1-43f6-85c3-1ab7156a1560",
+   "uuid": "fca1027d-2d25-449c-add2-ac6e023c225b",
    "id": "browser_source",
    "versioned_id": "browser_source",
    "settings": {
@@ -150,8 +219,41 @@
   },
   {
    "prev_ver": 503382019,
+   "name": "Tchat · colonne",
+   "uuid": "ac3c74c6-506c-4f8b-8379-3ddf4f9660e0",
+   "id": "browser_source",
+   "versioned_id": "browser_source",
+   "settings": {
+    "url": "file:///C:/TOPSIDE/live/tchat.html",
+    "width": 530,
+    "height": 662,
+    "css": "body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }",
+    "is_local_file": false,
+    "reroute_audio": false,
+    "restart_when_active": false,
+    "shutdown": false
+   },
+   "mixers": 0,
+   "sync": 0,
+   "flags": 0,
+   "volume": 1.0,
+   "balance": 0.5,
+   "enabled": true,
+   "muted": false,
+   "push-to-mute": false,
+   "push-to-mute-delay": 0,
+   "push-to-talk": false,
+   "push-to-talk-delay": 0,
+   "hotkeys": {},
+   "deinterlace_mode": 0,
+   "deinterlace_field_order": 0,
+   "monitoring_type": 0,
+   "private_settings": {}
+  },
+  {
+   "prev_ver": 503382019,
    "name": "Overlay · attente",
-   "uuid": "7dc09461-52fc-4c3b-895c-ff07d01e2904",
+   "uuid": "2f93aac3-078d-4dda-9f44-688dffe7632a",
    "id": "browser_source",
    "versioned_id": "browser_source",
    "settings": {
@@ -184,7 +286,7 @@
   {
    "prev_ver": 503382019,
    "name": "1 · Attente",
-   "uuid": "496f39f3-44a8-49a3-a56b-001c027ab9c0",
+   "uuid": "9a0f926d-8258-41ea-a7b1-2e39091c791e",
    "id": "scene",
    "versioned_id": "scene",
    "settings": {
@@ -193,7 +295,7 @@
     "items": [
      {
       "name": "Overlay · attente",
-      "source_uuid": "7dc09461-52fc-4c3b-895c-ff07d01e2904",
+      "source_uuid": "2f93aac3-078d-4dda-9f44-688dffe7632a",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -232,7 +334,7 @@
      },
      {
       "name": "Tchat · attente",
-      "source_uuid": "48493c1e-8fc1-43f6-85c3-1ab7156a1560",
+      "source_uuid": "fca1027d-2d25-449c-add2-ac6e023c225b",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -271,7 +373,7 @@
      },
      {
       "name": "Alertes Twitch",
-      "source_uuid": "dc570850-721e-479b-b6b7-aa9396b0376b",
+      "source_uuid": "6de68dc8-56ae-4b39-b12b-24f6a6769146",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -329,14 +431,14 @@
   },
   {
    "prev_ver": 503382019,
-   "name": "Tchat · discussion",
-   "uuid": "6ea76952-3b9e-4f58-8586-c389094a9a59",
+   "name": "Overlay · plein écran",
+   "uuid": "41fc4ad6-5fb8-4f7b-990f-d6843ee3364b",
    "id": "browser_source",
    "versioned_id": "browser_source",
    "settings": {
-    "url": "file:///C:/TOPSIDE/live/tchat.html",
-    "width": 400,
-    "height": 620,
+    "url": "file:///C:/TOPSIDE/live/overlay.html?ecran=pleinecran",
+    "width": 1920,
+    "height": 1080,
     "css": "body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }",
     "is_local_file": false,
     "reroute_audio": false,
@@ -362,8 +464,707 @@
   },
   {
    "prev_ver": 503382019,
+   "name": "2 · Plein écran (caméra)",
+   "uuid": "111659be-918e-4764-b6df-f9fd00c74c94",
+   "id": "scene",
+   "versioned_id": "scene",
+   "settings": {
+    "id_counter": 4,
+    "custom_size": false,
+    "items": [
+     {
+      "name": "Caméra",
+      "source_uuid": "a7093b1e-91c6-4e0f-85d4-a3495a2e5188",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 2,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 1920.0,
+       "y": 1080.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 1,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Overlay · plein écran",
+      "source_uuid": "41fc4ad6-5fb8-4f7b-990f-d6843ee3364b",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 2,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Bandeau réseaux (défilant)",
+      "source_uuid": "1e76b876-ddb4-47e9-809c-ee20f2c21c54",
+      "visible": false,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 990.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 3,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Alertes Twitch",
+      "source_uuid": "6de68dc8-56ae-4b39-b12b-24f6a6769146",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 4,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     }
+    ]
+   },
+   "mixers": 0,
+   "sync": 0,
+   "flags": 0,
+   "volume": 1.0,
+   "balance": 0.5,
+   "enabled": true,
+   "muted": false,
+   "push-to-mute": false,
+   "push-to-mute-delay": 0,
+   "push-to-talk": false,
+   "push-to-talk-delay": 0,
+   "hotkeys": {},
+   "deinterlace_mode": 0,
+   "deinterlace_field_order": 0,
+   "monitoring_type": 0,
+   "private_settings": {}
+  },
+  {
+   "prev_ver": 503382019,
+   "name": "Overlay · écran + caméra",
+   "uuid": "ad16b6b9-7c02-468a-a0ee-aa9b50ee0a1f",
+   "id": "browser_source",
+   "versioned_id": "browser_source",
+   "settings": {
+    "url": "file:///C:/TOPSIDE/live/overlay.html?ecran=ecrancam",
+    "width": 1920,
+    "height": 1080,
+    "css": "body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }",
+    "is_local_file": false,
+    "reroute_audio": false,
+    "restart_when_active": false,
+    "shutdown": false
+   },
+   "mixers": 0,
+   "sync": 0,
+   "flags": 0,
+   "volume": 1.0,
+   "balance": 0.5,
+   "enabled": true,
+   "muted": false,
+   "push-to-mute": false,
+   "push-to-mute-delay": 0,
+   "push-to-talk": false,
+   "push-to-talk-delay": 0,
+   "hotkeys": {},
+   "deinterlace_mode": 0,
+   "deinterlace_field_order": 0,
+   "monitoring_type": 0,
+   "private_settings": {}
+  },
+  {
+   "prev_ver": 503382019,
+   "name": "3 · Écran + caméra",
+   "uuid": "ddcb5fd7-9701-4eb2-a52b-61d7d9e684ef",
+   "id": "scene",
+   "versioned_id": "scene",
+   "settings": {
+    "id_counter": 5,
+    "custom_size": false,
+    "items": [
+     {
+      "name": "Votre écran",
+      "source_uuid": "54704afe-1d38-4e85-a331-8a736f2d6605",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 2,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 1920.0,
+       "y": 1080.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 1,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Caméra",
+      "source_uuid": "a7093b1e-91c6-4e0f-85d4-a3495a2e5188",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 1440.0,
+       "y": 40.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 2,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 440.0,
+       "y": 248.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 2,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Overlay · écran + caméra",
+      "source_uuid": "ad16b6b9-7c02-468a-a0ee-aa9b50ee0a1f",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 3,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Bandeau réseaux (défilant)",
+      "source_uuid": "1e76b876-ddb4-47e9-809c-ee20f2c21c54",
+      "visible": false,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 990.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 4,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Alertes Twitch",
+      "source_uuid": "6de68dc8-56ae-4b39-b12b-24f6a6769146",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 5,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     }
+    ]
+   },
+   "mixers": 0,
+   "sync": 0,
+   "flags": 0,
+   "volume": 1.0,
+   "balance": 0.5,
+   "enabled": true,
+   "muted": false,
+   "push-to-mute": false,
+   "push-to-mute-delay": 0,
+   "push-to-talk": false,
+   "push-to-talk-delay": 0,
+   "hotkeys": {},
+   "deinterlace_mode": 0,
+   "deinterlace_field_order": 0,
+   "monitoring_type": 0,
+   "private_settings": {}
+  },
+  {
+   "prev_ver": 503382019,
+   "name": "Overlay · écran + caméra bas gauche",
+   "uuid": "3e2d46fe-6e61-465e-ab97-c23b35888bf9",
+   "id": "browser_source",
+   "versioned_id": "browser_source",
+   "settings": {
+    "url": "file:///C:/TOPSIDE/live/overlay.html?ecran=ecrancamg",
+    "width": 1920,
+    "height": 1080,
+    "css": "body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }",
+    "is_local_file": false,
+    "reroute_audio": false,
+    "restart_when_active": false,
+    "shutdown": false
+   },
+   "mixers": 0,
+   "sync": 0,
+   "flags": 0,
+   "volume": 1.0,
+   "balance": 0.5,
+   "enabled": true,
+   "muted": false,
+   "push-to-mute": false,
+   "push-to-mute-delay": 0,
+   "push-to-talk": false,
+   "push-to-talk-delay": 0,
+   "hotkeys": {},
+   "deinterlace_mode": 0,
+   "deinterlace_field_order": 0,
+   "monitoring_type": 0,
+   "private_settings": {}
+  },
+  {
+   "prev_ver": 503382019,
+   "name": "4 · Écran + caméra (bas gauche)",
+   "uuid": "444c220c-79a0-4101-8c31-b2f25160fd3f",
+   "id": "scene",
+   "versioned_id": "scene",
+   "settings": {
+    "id_counter": 5,
+    "custom_size": false,
+    "items": [
+     {
+      "name": "Votre écran",
+      "source_uuid": "54704afe-1d38-4e85-a331-8a736f2d6605",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 2,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 1920.0,
+       "y": 1080.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 1,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Caméra",
+      "source_uuid": "a7093b1e-91c6-4e0f-85d4-a3495a2e5188",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 40.0,
+       "y": 724.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 2,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 440.0,
+       "y": 248.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 2,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Overlay · écran + caméra bas gauche",
+      "source_uuid": "3e2d46fe-6e61-465e-ab97-c23b35888bf9",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 3,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Bandeau réseaux (défilant)",
+      "source_uuid": "1e76b876-ddb4-47e9-809c-ee20f2c21c54",
+      "visible": false,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 990.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 4,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Alertes Twitch",
+      "source_uuid": "6de68dc8-56ae-4b39-b12b-24f6a6769146",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 5,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     }
+    ]
+   },
+   "mixers": 0,
+   "sync": 0,
+   "flags": 0,
+   "volume": 1.0,
+   "balance": 0.5,
+   "enabled": true,
+   "muted": false,
+   "push-to-mute": false,
+   "push-to-mute-delay": 0,
+   "push-to-talk": false,
+   "push-to-talk-delay": 0,
+   "hotkeys": {},
+   "deinterlace_mode": 0,
+   "deinterlace_field_order": 0,
+   "monitoring_type": 0,
+   "private_settings": {}
+  },
+  {
+   "prev_ver": 503382019,
    "name": "Overlay · discussion",
-   "uuid": "f3db3b0b-919b-40d5-ae02-9c26c815d70f",
+   "uuid": "83330a3f-873d-4e52-8e5e-509bd776da73",
    "id": "browser_source",
    "versioned_id": "browser_source",
    "settings": {
@@ -395,17 +1196,50 @@
   },
   {
    "prev_ver": 503382019,
-   "name": "2 · Discussion",
-   "uuid": "3614b0b8-33fc-4578-894b-ba1069f1ba4f",
+   "name": "Tchat · discussion",
+   "uuid": "8ca0b500-5e86-4e49-90d1-e8e919854084",
+   "id": "browser_source",
+   "versioned_id": "browser_source",
+   "settings": {
+    "url": "file:///C:/TOPSIDE/live/tchat.html",
+    "width": 400,
+    "height": 620,
+    "css": "body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }",
+    "is_local_file": false,
+    "reroute_audio": false,
+    "restart_when_active": false,
+    "shutdown": false
+   },
+   "mixers": 0,
+   "sync": 0,
+   "flags": 0,
+   "volume": 1.0,
+   "balance": 0.5,
+   "enabled": true,
+   "muted": false,
+   "push-to-mute": false,
+   "push-to-mute-delay": 0,
+   "push-to-talk": false,
+   "push-to-talk-delay": 0,
+   "hotkeys": {},
+   "deinterlace_mode": 0,
+   "deinterlace_field_order": 0,
+   "monitoring_type": 0,
+   "private_settings": {}
+  },
+  {
+   "prev_ver": 503382019,
+   "name": "5 · Discussion",
+   "uuid": "77d605c9-7370-44f0-8c4f-81dfdc8513e5",
    "id": "scene",
    "versioned_id": "scene",
    "settings": {
-    "id_counter": 4,
+    "id_counter": 5,
     "custom_size": false,
     "items": [
      {
       "name": "Caméra",
-      "source_uuid": "6f26157e-9290-4113-8c88-6226c2c3433e",
+      "source_uuid": "a7093b1e-91c6-4e0f-85d4-a3495a2e5188",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -444,7 +1278,7 @@
      },
      {
       "name": "Overlay · discussion",
-      "source_uuid": "f3db3b0b-919b-40d5-ae02-9c26c815d70f",
+      "source_uuid": "83330a3f-873d-4e52-8e5e-509bd776da73",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -483,7 +1317,7 @@
      },
      {
       "name": "Tchat · discussion",
-      "source_uuid": "6ea76952-3b9e-4f58-8586-c389094a9a59",
+      "source_uuid": "8ca0b500-5e86-4e49-90d1-e8e919854084",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -521,8 +1355,47 @@
       "private_settings": {}
      },
      {
+      "name": "Bandeau réseaux (défilant)",
+      "source_uuid": "1e76b876-ddb4-47e9-809c-ee20f2c21c54",
+      "visible": false,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 990.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 4,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
       "name": "Alertes Twitch",
-      "source_uuid": "dc570850-721e-479b-b6b7-aa9396b0376b",
+      "source_uuid": "6de68dc8-56ae-4b39-b12b-24f6a6769146",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -546,7 +1419,7 @@
       "crop_top": 0,
       "crop_right": 0,
       "crop_bottom": 0,
-      "id": 4,
+      "id": 5,
       "group_item_backup": false,
       "scale_filter": "disable",
       "blend_method": "default",
@@ -580,41 +1453,8 @@
   },
   {
    "prev_ver": 503382019,
-   "name": "Tchat · colonne",
-   "uuid": "ddc715dd-4550-452b-a4e0-3596f8c22d57",
-   "id": "browser_source",
-   "versioned_id": "browser_source",
-   "settings": {
-    "url": "file:///C:/TOPSIDE/live/tchat.html",
-    "width": 530,
-    "height": 662,
-    "css": "body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }",
-    "is_local_file": false,
-    "reroute_audio": false,
-    "restart_when_active": false,
-    "shutdown": false
-   },
-   "mixers": 0,
-   "sync": 0,
-   "flags": 0,
-   "volume": 1.0,
-   "balance": 0.5,
-   "enabled": true,
-   "muted": false,
-   "push-to-mute": false,
-   "push-to-mute-delay": 0,
-   "push-to-talk": false,
-   "push-to-talk-delay": 0,
-   "hotkeys": {},
-   "deinterlace_mode": 0,
-   "deinterlace_field_order": 0,
-   "monitoring_type": 0,
-   "private_settings": {}
-  },
-  {
-   "prev_ver": 503382019,
    "name": "Overlay · réaction vidéo",
-   "uuid": "bd95d528-bcc8-4e65-9dfe-1e3033f38d7a",
+   "uuid": "9931fa4e-51c8-48a6-8084-05034a9fa156",
    "id": "browser_source",
    "versioned_id": "browser_source",
    "settings": {
@@ -646,17 +1486,17 @@
   },
   {
    "prev_ver": 503382019,
-   "name": "3 · Réaction vidéo",
-   "uuid": "d54e8eff-2200-401d-aab8-47ecd6e6f28d",
+   "name": "6 · Réaction vidéo",
+   "uuid": "5ddbea07-41df-4029-bba7-028bf97faad4",
    "id": "scene",
    "versioned_id": "scene",
    "settings": {
-    "id_counter": 5,
+    "id_counter": 6,
     "custom_size": false,
     "items": [
      {
       "name": "Vidéo à regarder (fenêtre du navigateur)",
-      "source_uuid": "bec37c84-32ee-4736-b847-b420f26bc336",
+      "source_uuid": "1b004758-04d7-42be-9c47-b8533f701348",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -695,7 +1535,7 @@
      },
      {
       "name": "Caméra",
-      "source_uuid": "6f26157e-9290-4113-8c88-6226c2c3433e",
+      "source_uuid": "a7093b1e-91c6-4e0f-85d4-a3495a2e5188",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -734,7 +1574,7 @@
      },
      {
       "name": "Overlay · réaction vidéo",
-      "source_uuid": "bd95d528-bcc8-4e65-9dfe-1e3033f38d7a",
+      "source_uuid": "9931fa4e-51c8-48a6-8084-05034a9fa156",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -773,7 +1613,7 @@
      },
      {
       "name": "Tchat · colonne",
-      "source_uuid": "ddc715dd-4550-452b-a4e0-3596f8c22d57",
+      "source_uuid": "ac3c74c6-506c-4f8b-8379-3ddf4f9660e0",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -811,8 +1651,47 @@
       "private_settings": {}
      },
      {
+      "name": "Bandeau réseaux (défilant)",
+      "source_uuid": "1e76b876-ddb4-47e9-809c-ee20f2c21c54",
+      "visible": false,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 990.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 5,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
       "name": "Alertes Twitch",
-      "source_uuid": "dc570850-721e-479b-b6b7-aa9396b0376b",
+      "source_uuid": "6de68dc8-56ae-4b39-b12b-24f6a6769146",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -836,7 +1715,7 @@
       "crop_top": 0,
       "crop_right": 0,
       "crop_bottom": 0,
-      "id": 5,
+      "id": 6,
       "group_item_backup": false,
       "scale_filter": "disable",
       "blend_method": "default",
@@ -870,41 +1749,8 @@
   },
   {
    "prev_ver": 503382019,
-   "name": "Tchat · tweets",
-   "uuid": "07b4fc4d-79ef-4026-89bb-a5d456b7e076",
-   "id": "browser_source",
-   "versioned_id": "browser_source",
-   "settings": {
-    "url": "file:///C:/TOPSIDE/live/tchat.html",
-    "width": 1040,
-    "height": 375,
-    "css": "body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }",
-    "is_local_file": false,
-    "reroute_audio": false,
-    "restart_when_active": false,
-    "shutdown": false
-   },
-   "mixers": 0,
-   "sync": 0,
-   "flags": 0,
-   "volume": 1.0,
-   "balance": 0.5,
-   "enabled": true,
-   "muted": false,
-   "push-to-mute": false,
-   "push-to-mute-delay": 0,
-   "push-to-talk": false,
-   "push-to-talk-delay": 0,
-   "hotkeys": {},
-   "deinterlace_mode": 0,
-   "deinterlace_field_order": 0,
-   "monitoring_type": 0,
-   "private_settings": {}
-  },
-  {
-   "prev_ver": 503382019,
    "name": "Overlay · tweets",
-   "uuid": "799ab29a-3b48-4f56-9e24-d45e78017333",
+   "uuid": "4fcc1626-bfcd-4edb-a495-4ee09c304aa6",
    "id": "browser_source",
    "versioned_id": "browser_source",
    "settings": {
@@ -936,17 +1782,50 @@
   },
   {
    "prev_ver": 503382019,
-   "name": "4 · Tweets",
-   "uuid": "3051ccb4-51eb-47c7-a23b-e3885c83fe1c",
+   "name": "Tchat · tweets",
+   "uuid": "4fb7d3bf-d721-4a15-91e9-738d206d9455",
+   "id": "browser_source",
+   "versioned_id": "browser_source",
+   "settings": {
+    "url": "file:///C:/TOPSIDE/live/tchat.html",
+    "width": 1040,
+    "height": 375,
+    "css": "body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }",
+    "is_local_file": false,
+    "reroute_audio": false,
+    "restart_when_active": false,
+    "shutdown": false
+   },
+   "mixers": 0,
+   "sync": 0,
+   "flags": 0,
+   "volume": 1.0,
+   "balance": 0.5,
+   "enabled": true,
+   "muted": false,
+   "push-to-mute": false,
+   "push-to-mute-delay": 0,
+   "push-to-talk": false,
+   "push-to-talk-delay": 0,
+   "hotkeys": {},
+   "deinterlace_mode": 0,
+   "deinterlace_field_order": 0,
+   "monitoring_type": 0,
+   "private_settings": {}
+  },
+  {
+   "prev_ver": 503382019,
+   "name": "7 · Tweets",
+   "uuid": "8a09ae03-f76d-4de1-8a90-58ac0ccf8202",
    "id": "scene",
    "versioned_id": "scene",
    "settings": {
-    "id_counter": 5,
+    "id_counter": 6,
     "custom_size": false,
     "items": [
      {
       "name": "Vidéo à regarder (fenêtre du navigateur)",
-      "source_uuid": "bec37c84-32ee-4736-b847-b420f26bc336",
+      "source_uuid": "1b004758-04d7-42be-9c47-b8533f701348",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -985,7 +1864,7 @@
      },
      {
       "name": "Caméra",
-      "source_uuid": "6f26157e-9290-4113-8c88-6226c2c3433e",
+      "source_uuid": "a7093b1e-91c6-4e0f-85d4-a3495a2e5188",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -1024,7 +1903,7 @@
      },
      {
       "name": "Overlay · tweets",
-      "source_uuid": "799ab29a-3b48-4f56-9e24-d45e78017333",
+      "source_uuid": "4fcc1626-bfcd-4edb-a495-4ee09c304aa6",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -1063,7 +1942,7 @@
      },
      {
       "name": "Tchat · tweets",
-      "source_uuid": "07b4fc4d-79ef-4026-89bb-a5d456b7e076",
+      "source_uuid": "4fb7d3bf-d721-4a15-91e9-738d206d9455",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -1101,8 +1980,304 @@
       "private_settings": {}
      },
      {
+      "name": "Bandeau réseaux (défilant)",
+      "source_uuid": "1e76b876-ddb4-47e9-809c-ee20f2c21c54",
+      "visible": false,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 990.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 5,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
       "name": "Alertes Twitch",
-      "source_uuid": "dc570850-721e-479b-b6b7-aa9396b0376b",
+      "source_uuid": "6de68dc8-56ae-4b39-b12b-24f6a6769146",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 6,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     }
+    ]
+   },
+   "mixers": 0,
+   "sync": 0,
+   "flags": 0,
+   "volume": 1.0,
+   "balance": 0.5,
+   "enabled": true,
+   "muted": false,
+   "push-to-mute": false,
+   "push-to-mute-delay": 0,
+   "push-to-talk": false,
+   "push-to-talk-delay": 0,
+   "hotkeys": {},
+   "deinterlace_mode": 0,
+   "deinterlace_field_order": 0,
+   "monitoring_type": 0,
+   "private_settings": {}
+  },
+  {
+   "prev_ver": 503382019,
+   "name": "Overlay · tier list",
+   "uuid": "5f6a4590-4fea-4981-94d5-9889bff68862",
+   "id": "browser_source",
+   "versioned_id": "browser_source",
+   "settings": {
+    "url": "file:///C:/TOPSIDE/live/overlay.html?ecran=tierlist",
+    "width": 1920,
+    "height": 1080,
+    "css": "body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }",
+    "is_local_file": false,
+    "reroute_audio": false,
+    "restart_when_active": false,
+    "shutdown": false
+   },
+   "mixers": 0,
+   "sync": 0,
+   "flags": 0,
+   "volume": 1.0,
+   "balance": 0.5,
+   "enabled": true,
+   "muted": false,
+   "push-to-mute": false,
+   "push-to-mute-delay": 0,
+   "push-to-talk": false,
+   "push-to-talk-delay": 0,
+   "hotkeys": {},
+   "deinterlace_mode": 0,
+   "deinterlace_field_order": 0,
+   "monitoring_type": 0,
+   "private_settings": {}
+  },
+  {
+   "prev_ver": 503382019,
+   "name": "8 · Tier list",
+   "uuid": "8b721996-61db-4198-ab71-56792f433c7d",
+   "id": "scene",
+   "versioned_id": "scene",
+   "settings": {
+    "id_counter": 5,
+    "custom_size": false,
+    "items": [
+     {
+      "name": "Caméra",
+      "source_uuid": "a7093b1e-91c6-4e0f-85d4-a3495a2e5188",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 1350.0,
+       "y": 40.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 2,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 530.0,
+       "y": 298.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 1,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Overlay · tier list",
+      "source_uuid": "5f6a4590-4fea-4981-94d5-9889bff68862",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 2,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Tchat · colonne",
+      "source_uuid": "ac3c74c6-506c-4f8b-8379-3ddf4f9660e0",
+      "visible": true,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 1350.0,
+       "y": 378.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 3,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Bandeau réseaux (défilant)",
+      "source_uuid": "1e76b876-ddb4-47e9-809c-ee20f2c21c54",
+      "visible": false,
+      "locked": false,
+      "rot": 0.0,
+      "pos": {
+       "x": 0.0,
+       "y": 990.0
+      },
+      "scale": {
+       "x": 1.0,
+       "y": 1.0
+      },
+      "align": 5,
+      "bounds_type": 0,
+      "bounds_align": 0,
+      "bounds_crop": false,
+      "bounds": {
+       "x": 0.0,
+       "y": 0.0
+      },
+      "crop_left": 0,
+      "crop_top": 0,
+      "crop_right": 0,
+      "crop_bottom": 0,
+      "id": 4,
+      "group_item_backup": false,
+      "scale_filter": "disable",
+      "blend_method": "default",
+      "blend_type": "normal",
+      "show_transition": {
+       "duration": 0
+      },
+      "hide_transition": {
+       "duration": 0
+      },
+      "private_settings": {}
+     },
+     {
+      "name": "Alertes Twitch",
+      "source_uuid": "6de68dc8-56ae-4b39-b12b-24f6a6769146",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -1160,226 +2335,8 @@
   },
   {
    "prev_ver": 503382019,
-   "name": "Overlay · tier list",
-   "uuid": "38c22b5f-0ecb-494a-adbc-0519ce38a3e9",
-   "id": "browser_source",
-   "versioned_id": "browser_source",
-   "settings": {
-    "url": "file:///C:/TOPSIDE/live/overlay.html?ecran=tierlist",
-    "width": 1920,
-    "height": 1080,
-    "css": "body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }",
-    "is_local_file": false,
-    "reroute_audio": false,
-    "restart_when_active": false,
-    "shutdown": false
-   },
-   "mixers": 0,
-   "sync": 0,
-   "flags": 0,
-   "volume": 1.0,
-   "balance": 0.5,
-   "enabled": true,
-   "muted": false,
-   "push-to-mute": false,
-   "push-to-mute-delay": 0,
-   "push-to-talk": false,
-   "push-to-talk-delay": 0,
-   "hotkeys": {},
-   "deinterlace_mode": 0,
-   "deinterlace_field_order": 0,
-   "monitoring_type": 0,
-   "private_settings": {}
-  },
-  {
-   "prev_ver": 503382019,
-   "name": "5 · Tier list",
-   "uuid": "c8969938-4f35-462f-b367-e3af19dbc6e8",
-   "id": "scene",
-   "versioned_id": "scene",
-   "settings": {
-    "id_counter": 4,
-    "custom_size": false,
-    "items": [
-     {
-      "name": "Caméra",
-      "source_uuid": "6f26157e-9290-4113-8c88-6226c2c3433e",
-      "visible": true,
-      "locked": false,
-      "rot": 0.0,
-      "pos": {
-       "x": 1350.0,
-       "y": 40.0
-      },
-      "scale": {
-       "x": 1.0,
-       "y": 1.0
-      },
-      "align": 5,
-      "bounds_type": 2,
-      "bounds_align": 0,
-      "bounds_crop": false,
-      "bounds": {
-       "x": 530.0,
-       "y": 298.0
-      },
-      "crop_left": 0,
-      "crop_top": 0,
-      "crop_right": 0,
-      "crop_bottom": 0,
-      "id": 1,
-      "group_item_backup": false,
-      "scale_filter": "disable",
-      "blend_method": "default",
-      "blend_type": "normal",
-      "show_transition": {
-       "duration": 0
-      },
-      "hide_transition": {
-       "duration": 0
-      },
-      "private_settings": {}
-     },
-     {
-      "name": "Overlay · tier list",
-      "source_uuid": "38c22b5f-0ecb-494a-adbc-0519ce38a3e9",
-      "visible": true,
-      "locked": false,
-      "rot": 0.0,
-      "pos": {
-       "x": 0.0,
-       "y": 0.0
-      },
-      "scale": {
-       "x": 1.0,
-       "y": 1.0
-      },
-      "align": 5,
-      "bounds_type": 0,
-      "bounds_align": 0,
-      "bounds_crop": false,
-      "bounds": {
-       "x": 0.0,
-       "y": 0.0
-      },
-      "crop_left": 0,
-      "crop_top": 0,
-      "crop_right": 0,
-      "crop_bottom": 0,
-      "id": 2,
-      "group_item_backup": false,
-      "scale_filter": "disable",
-      "blend_method": "default",
-      "blend_type": "normal",
-      "show_transition": {
-       "duration": 0
-      },
-      "hide_transition": {
-       "duration": 0
-      },
-      "private_settings": {}
-     },
-     {
-      "name": "Tchat · colonne",
-      "source_uuid": "ddc715dd-4550-452b-a4e0-3596f8c22d57",
-      "visible": true,
-      "locked": false,
-      "rot": 0.0,
-      "pos": {
-       "x": 1350.0,
-       "y": 378.0
-      },
-      "scale": {
-       "x": 1.0,
-       "y": 1.0
-      },
-      "align": 5,
-      "bounds_type": 0,
-      "bounds_align": 0,
-      "bounds_crop": false,
-      "bounds": {
-       "x": 0.0,
-       "y": 0.0
-      },
-      "crop_left": 0,
-      "crop_top": 0,
-      "crop_right": 0,
-      "crop_bottom": 0,
-      "id": 3,
-      "group_item_backup": false,
-      "scale_filter": "disable",
-      "blend_method": "default",
-      "blend_type": "normal",
-      "show_transition": {
-       "duration": 0
-      },
-      "hide_transition": {
-       "duration": 0
-      },
-      "private_settings": {}
-     },
-     {
-      "name": "Alertes Twitch",
-      "source_uuid": "dc570850-721e-479b-b6b7-aa9396b0376b",
-      "visible": true,
-      "locked": false,
-      "rot": 0.0,
-      "pos": {
-       "x": 0.0,
-       "y": 0.0
-      },
-      "scale": {
-       "x": 1.0,
-       "y": 1.0
-      },
-      "align": 5,
-      "bounds_type": 0,
-      "bounds_align": 0,
-      "bounds_crop": false,
-      "bounds": {
-       "x": 0.0,
-       "y": 0.0
-      },
-      "crop_left": 0,
-      "crop_top": 0,
-      "crop_right": 0,
-      "crop_bottom": 0,
-      "id": 4,
-      "group_item_backup": false,
-      "scale_filter": "disable",
-      "blend_method": "default",
-      "blend_type": "normal",
-      "show_transition": {
-       "duration": 0
-      },
-      "hide_transition": {
-       "duration": 0
-      },
-      "private_settings": {}
-     }
-    ]
-   },
-   "mixers": 0,
-   "sync": 0,
-   "flags": 0,
-   "volume": 1.0,
-   "balance": 0.5,
-   "enabled": true,
-   "muted": false,
-   "push-to-mute": false,
-   "push-to-mute-delay": 0,
-   "push-to-talk": false,
-   "push-to-talk-delay": 0,
-   "hotkeys": {},
-   "deinterlace_mode": 0,
-   "deinterlace_field_order": 0,
-   "monitoring_type": 0,
-   "private_settings": {}
-  },
-  {
-   "prev_ver": 503382019,
    "name": "Overlay · pause",
-   "uuid": "61cfaa4a-1f3d-4af4-8a12-72603a1db568",
+   "uuid": "cf85d48d-857d-45ee-816b-1e0cdf96cb1f",
    "id": "browser_source",
    "versioned_id": "browser_source",
    "settings": {
@@ -1411,8 +2368,8 @@
   },
   {
    "prev_ver": 503382019,
-   "name": "6 · Pause",
-   "uuid": "98777bd9-64c1-42af-b207-422d560d3038",
+   "name": "9 · Pause",
+   "uuid": "b928968e-2c75-45f1-83cd-0e1ea104cb2c",
    "id": "scene",
    "versioned_id": "scene",
    "settings": {
@@ -1421,7 +2378,7 @@
     "items": [
      {
       "name": "Overlay · pause",
-      "source_uuid": "61cfaa4a-1f3d-4af4-8a12-72603a1db568",
+      "source_uuid": "cf85d48d-857d-45ee-816b-1e0cdf96cb1f",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -1460,7 +2417,7 @@
      },
      {
       "name": "Tchat · attente",
-      "source_uuid": "48493c1e-8fc1-43f6-85c3-1ab7156a1560",
+      "source_uuid": "fca1027d-2d25-449c-add2-ac6e023c225b",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -1499,7 +2456,7 @@
      },
      {
       "name": "Alertes Twitch",
-      "source_uuid": "dc570850-721e-479b-b6b7-aa9396b0376b",
+      "source_uuid": "6de68dc8-56ae-4b39-b12b-24f6a6769146",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -1558,7 +2515,7 @@
   {
    "prev_ver": 503382019,
    "name": "Overlay · fin",
-   "uuid": "9a22da0e-b21b-4aa4-9bb0-af30c704fe7e",
+   "uuid": "3dda0996-95ff-4e93-8936-98686b79fd15",
    "id": "browser_source",
    "versioned_id": "browser_source",
    "settings": {
@@ -1590,8 +2547,8 @@
   },
   {
    "prev_ver": 503382019,
-   "name": "7 · Fin",
-   "uuid": "5ffa40b6-1838-4cb7-bca8-1ad1a1b48adc",
+   "name": "10 · Fin",
+   "uuid": "b690e7df-149e-47cc-b091-881ee6b71c8d",
    "id": "scene",
    "versioned_id": "scene",
    "settings": {
@@ -1600,7 +2557,7 @@
     "items": [
      {
       "name": "Overlay · fin",
-      "source_uuid": "9a22da0e-b21b-4aa4-9bb0-af30c704fe7e",
+      "source_uuid": "3dda0996-95ff-4e93-8936-98686b79fd15",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -1639,7 +2596,7 @@
      },
      {
       "name": "Tchat · attente",
-      "source_uuid": "48493c1e-8fc1-43f6-85c3-1ab7156a1560",
+      "source_uuid": "fca1027d-2d25-449c-add2-ac6e023c225b",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -1678,7 +2635,7 @@
      },
      {
       "name": "Alertes Twitch",
-      "source_uuid": "dc570850-721e-479b-b6b7-aa9396b0376b",
+      "source_uuid": "6de68dc8-56ae-4b39-b12b-24f6a6769146",
       "visible": true,
       "locked": false,
       "rot": 0.0,
@@ -1750,10 +2707,15 @@
   "type2": 3
  },
  "modules": {},
+ "resolution": {
+  "x": 1920,
+  "y": 1080
+ },
+ "version": 2,
  "DesktopAudioDevice1": {
   "prev_ver": 503382019,
   "name": "Son du PC",
-  "uuid": "f5a3961a-7692-4a8b-97f0-b554f444767e",
+  "uuid": "f923240e-eebc-4ac5-93c0-97324059280d",
   "id": "wasapi_output_capture",
   "versioned_id": "wasapi_output_capture",
   "settings": {
@@ -1779,7 +2741,7 @@
  "AuxAudioDevice1": {
   "prev_ver": 503382019,
   "name": "Micro",
-  "uuid": "30957d0a-887e-4066-b530-d4136aeadced",
+  "uuid": "fa6f3a96-f54c-45dc-9938-4e5eb36fffeb",
   "id": "wasapi_input_capture",
   "versioned_id": "wasapi_input_capture",
   "settings": {
@@ -1801,10 +2763,5 @@
   "deinterlace_field_order": 0,
   "monitoring_type": 0,
   "private_settings": {}
- },
- "resolution": {
-  "x": 1920,
-  "y": 1080
- },
- "version": 2
+ }
 }

@@ -105,3 +105,12 @@ Clic droit sur un overlay → **Interagir** → **double-clic** :
 - **Modifier la disposition et les textes de cet écran** : glisser les cadres, le logo, le bandeau ; coin en bas à droite pour la taille ; cliquer sur un texte pour le réécrire ; **Enregistrer** (ou « Disposition d'origine » pour revenir en arrière).
 
 Si vous déplacez un cadre (caméra, vidéo, tchat), déplacez aussi la source correspondante dans OBS pour qu'elle tombe dedans.
+
+### Réseaux sociaux
+
+- Pseudos et horaire : `da/sociaux.js` (tout le reste suit).
+- `assets/reseaux/` : PNG transparents (chaque réseau, bande, liste, « En live à 21h », logos seuls).
+- `assets/videos/` : bandeau défilant pour le montage (fond sombre, fond vert, transparent).
+- `live/bandeau.html` : bandeau défilant pour OBS (1920×90) — `?fond=sombre|clair|aucun`.
+- Écrans OBS en plus : plein écran (`pleinecran`), écran + caméra en haut à droite (`ecrancam`) ou en bas à gauche (`ecrancamg`).
+- `tools/obs-scenes.py` régénère `obs/TOPSIDE-scenes.json`.

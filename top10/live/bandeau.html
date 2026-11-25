@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>TOPSIDE · bandeau réseaux</title>
+  <link rel="stylesheet" href="../da/polices.css">
+  <style>
+    :root { --lila: #c4a7ff; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: transparent; overflow: hidden; width: 100%; height: 100%; }
+    /* Bandeau qui défile — source OBS 1920 × 90 (ou plus large/étroit, il s'adapte) */
+    .bande { position: absolute; inset: 0; display: flex; align-items: center; overflow: hidden; }
+    .bande.sombre { background: rgba(12, 12, 13, .88); border-top: 2px solid var(--lila); }
+    .bande.clair { background: rgba(244, 243, 247, .94); border-top: 2px solid var(--lila); }
+    .piste { display: flex; align-items: center; white-space: nowrap; will-change: transform; animation: defile var(--duree, 30s) linear infinite; }
+    .bloc { display: flex; align-items: center; flex: none; }
+    .el { display: flex; align-items: center; gap: 14px; padding: 0 34px; }
+    .el svg { flex: none; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35)); }
+    .el .p { font: 400 34px/1 Anton, Impact, sans-serif; text-transform: uppercase; letter-spacing: .01em; color: #f4f3f7; }
+    .clair .el .p, .clair .horaire { color: #0b0b0c; }
+    .clair .horaire b { color: #7a4fe0; } .clair .horaire i, .clair .sep { background: #7a4fe0; }
+    .horaire { display: flex; align-items: center; gap: 14px; padding: 0 34px; font: 400 34px/1 Anton, Impact, sans-serif; text-transform: uppercase; color: #f4f3f7; }
+    .horaire i { width: 12px; height: 12px; border-radius: 50%; background: var(--lila); animation: clignote 1.6s ease-in-out infinite; }
+    .horaire b { color: var(--lila); font-weight: 400; }
+    .sep { width: 6px; height: 6px; border-radius: 50%; background: var(--lila); flex: none; opacity: .8; }
+    @keyframes defile { to { transform: translateX(-50%); } }
+    @keyframes clignote { 50% { opacity: .25; } }
+  </style>
+</head>
+<body>
+  <!-- Paramètres : ?fond=sombre (défaut) | clair | aucun   &duree=30 (secondes pour un tour)   &taille=44 (logos) -->
+  <div class="bande" id="bande"><div class="piste" id="piste"></div></div>
+  <script src="../da/sociaux.js"></script>
+  <script>
+  (function () {
+    const q = new URLSearchParams(location.search);
+    const fond = q.get("fond") || "sombre";
+    const taille = Number(q.get("taille") || 44);
+    const S = window.SOCIAUX;
+    const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    document.getElementById("bande").className = "bande " + (fond === "aucun" ? "" : fond);
+    // L'horaire en mettant « 21h » en couleur
+    const horaire = esc(S.horaire).replace(/(\d{1,2}h\d{0,2})/, "<b>$1</b>");
+    const un = `<div class="bloc"><div class="horaire"><i></i>${horaire}</div><span class="sep"></span>` +
+      S.liste.map((s) => `<div class="el">${S.badge(s.app, taille)}<span class="p">${esc(s.pseudo)}</span></div><span class="sep"></span>`).join("") + `</div>`;
+    const piste = document.getElementById("piste");
+    // assez de répétitions pour couvrir l'écran, puis le tout en double pour boucler sans saut
+    piste.innerHTML = un;
+    const largeur = piste.firstElementChild.getBoundingClientRect().width || 2000;
+    const n = Math.max(1, Math.ceil((innerWidth + 50) / largeur));
+    const moitie = un.repeat(n);
+    piste.innerHTML = moitie + moitie;
+    const duree = Number(q.get("duree") || Math.round((largeur * n) / 90)); // ~90 px/s
+    piste.style.setProperty("--duree", duree + "s");
+    window.__dureeBandeau = duree;
+  })();
+  </script>
+</body>
+</html>

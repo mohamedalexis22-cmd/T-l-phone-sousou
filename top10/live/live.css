@@ -95,3 +95,22 @@ body.edition .poignee { display: block; position: absolute; right: -10px; bottom
 #outils-edition span { color: #8d8b95; font-size: 13px; }
 #outils-edition button { border: 0; border-radius: 8px; padding: 9px 14px; font: 700 13px Inter, sans-serif; cursor: pointer; background: #1d1d21; color: #f4f3f7; }
 #outils-edition .ok { background: var(--lila); color: var(--encre); }
+
+/* Plein écran : nom en haut à gauche */
+.titre-coin { position: absolute; font-family: var(--f-titre); font-size: 64px; line-height: 1; text-transform: uppercase; color: var(--blanc); text-shadow: 0 2px 14px rgba(0,0,0,.55); white-space: nowrap; }
+.logo-live img { filter: drop-shadow(0 2px 10px rgba(0,0,0,.45)); }
+
+/* Écran + caméra : cadre fin + petit bandeau sous la caméra */
+.cadre-cam { border-radius: 10px; }
+.bandeau-cam { position: absolute; display: flex; align-items: center; gap: 12px; height: 60px; padding: 0 16px 0 10px; background: rgba(12,12,13,.9); border-radius: 10px; box-shadow: 0 10px 26px rgba(0,0,0,.4); }
+.bandeau-cam img { width: 42px; height: 42px; object-fit: contain; flex: none; }
+.bandeau-cam .n { font-family: var(--f-titre); font-size: 32px; line-height: 1; text-transform: uppercase; color: var(--blanc); white-space: nowrap; }
+.bandeau-cam .direct { margin-left: auto; display: flex; align-items: center; gap: 7px; font: 700 13px var(--f-texte); letter-spacing: .16em; text-transform: uppercase; color: var(--gris); }
+.bandeau-cam .direct i { width: 8px; height: 8px; border-radius: 50%; background: var(--lila); animation: clignote 1.6s ease-in-out infinite; }
+
+/* Réseaux sur les écrans attente / pause / fin */
+.attente .sociaux { display: flex; flex-wrap: wrap; gap: 14px 26px; margin-top: 40px; max-width: 1100px; }
+.attente .so { display: flex; align-items: center; gap: 10px; }
+.attente .so b { font: 400 26px Anton, Impact, sans-serif; text-transform: uppercase; color: var(--blanc); font-weight: 400; }
+.attente .horaire-live { display: flex; align-items: center; gap: 12px; margin-top: 22px; font: 600 18px var(--f-texte); letter-spacing: .16em; text-transform: uppercase; color: var(--gris); }
+.attente .horaire-live i { width: 10px; height: 10px; border-radius: 50%; background: var(--lila); animation: clignote 1.6s ease-in-out infinite; }
