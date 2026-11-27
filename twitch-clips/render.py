@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 W, H, FPS = 1080, 1920, 30
 PURPLE, PURPLE_D, WHITE = (123, 44, 255), (42, 10, 94), (255, 255, 255)
-ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'assets')
+ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets')
 FONT_BLACK = '/usr/share/fonts/opentype/inter/Inter-Black.otf'
 FONT_XB = '/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf'
 PANEL_H = 960          # each half
