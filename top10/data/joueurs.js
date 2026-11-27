@@ -133,4 +133,13 @@ window.JOUEURS = [
     palmares: ["Ligue des champions 2012"],
     source: "", verifie: false, maj: "",
   },
+  {
+    id: "raul", prenom: "Raúl", nom: "González", surnom: "Raúl", nation: "ESP",
+    poste: "Attaquant", ne: "1977-06-27",
+    clubs: [["Real Madrid", "1994–10"], ["Schalke 04", "2010–12"], ["Al Sadd", "2012–14"], ["New York Cosmos", "2014–15"]],
+    photo: "assets/joueurs/raul.jpg",
+    photoCredit: "Photo : Wikimedia Commons, « Raúl González in Real Madrid 2009 », CC BY-SA 2.0",
+    stats: { selections: 102, butsSelection: 44 },
+    source: "saisie manuelle (Transfermarkt indisponible)", verifie: false, maj: "2026-11-27",
+  },
 ];

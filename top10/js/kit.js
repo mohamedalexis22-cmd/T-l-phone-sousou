@@ -80,9 +80,9 @@
     // Présentation d'un joueur, sur la caméra plein cadre
     fiche(ep, p) {
       const a = animateur(ep, p.a);
-      const slot = ((ep.classements || {})[p.a] || [])[p.r - 1] || {};
+      const slot = p.slot || ((ep.classements || {})[p.a] || [])[p.r - 1] || {};
       const j = resoudre(slot);
-      const cote = ep.cote === "gauche" ? "gauche" : "droite";
+      const cote = (p.cote || ep.cote) === "gauche" ? "gauche" : "droite";
       const stats = (ep.stats || []).map((s, i) => ({ s, v: (slot.valeurs || [])[i] })).filter((x) => (x.s.label || "").trim());
       const lignes = stats.map(({ s, v }, i) => {
         const val = compteur(v, 1700 + i * 150);
@@ -94,12 +94,12 @@
       const taille = Math.round(Math.min(104, 560 / Math.max(1, nomA.length * 0.46)));
       const prenom = j ? (j.surnom ? [j.prenom, j.nom].filter(Boolean).join(" ") : j.prenom) : "";
       const glisse = cote === "droite" ? "a-glisse-d" : "a-glisse-g";
-      return `<div class="scene overlay fiche ${cote}">
+      return `<div class="scene overlay fiche ${cote} ${ep.panneau ? "panneau" : ""} ${p.r ? "" : "mention"}">
         <div class="carte papier a ${glisse}" ${d(0)}>
           ${scotch("", 350)}
-          <div class="rangf a a-pose" ${d(450)}><span><small>#</small>${p.r}</span></div>
+          <div class="rangf a a-pose" ${d(450)}>${p.r ? `<span><small>#</small>${p.r}</span>` : `<span class="mh">Mention<br>honorable</span>`}</div>
           ${photo(j, "--r:-4deg", 500)}
-          <div class="tampon a a-tampon" ${d(2300)}>Choix de ${esc(a.nom)}</div>
+          <div class="tampon a a-tampon" ${d(2300)}>${p.r ? "Choix" : "Mention"} de ${esc(a.nom)}</div>
           <div class="ident">
             <div class="prenom a a-fondu" ${d(900)}>${esc(prenom)}</div>
             <div class="nom titre a a-monte" style="animation-delay:950ms;font-size:${taille}px">${esc(nomA)}</div>

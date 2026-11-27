@@ -320,3 +320,9 @@ body.fond-vert #stage { background: #00b140; }
 .fiche .bulletin .lab { font-family: var(--f-titre); text-transform: uppercase; font-size: 30px; color: #333; }
 .fiche .bulletin .val { font-family: var(--f-titre); font-size: 54px; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .fiche .argument { margin-top: 16px; font-family: var(--f-feutre); font-size: 24px; line-height: 1.3; color: #222; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* Panneau sombre derrière la carte (vidéo en plan large) */
+.fiche.panneau::before { content: ""; position: absolute; top: 0; bottom: 0; width: 800px; animation: fondu .5s ease both; }
+.fiche.panneau.droite::before { right: 0; background: linear-gradient(to left, rgba(10,10,12,.94) 72%, rgba(10,10,12,0)); }
+.fiche.panneau.gauche::before { left: 0; background: linear-gradient(to right, rgba(10,10,12,.94) 72%, rgba(10,10,12,0)); }
+.fiche.mention .rangf .mh { display: block; font-size: 30px; line-height: .95; text-align: center; }
