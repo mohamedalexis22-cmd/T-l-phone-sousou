@@ -1,0 +1,1289 @@
+{
+ "01_mahrez_can": {
+  "fixes": [
+   [
+    "Mais la pire de moi, miss.",
+    ""
+   ],
+   [
+    "une canne",
+    "une CAN"
+   ],
+   [
+    "la canne",
+    "la CAN"
+   ],
+   [
+    "les dernières cannes,",
+    "les dernières CAN,"
+   ],
+   [
+    "Couffrant,",
+    "coup franc,"
+   ],
+   [
+    "avec un Couffrant,",
+    "avec un coup franc,"
+   ],
+   [
+    "vas-y, c'est Inzazef,",
+    "vas-y,"
+   ],
+   [
+    "Il serait permis, il serait permis.",
+    ""
+   ],
+   [
+    "et beaucoup de bandeurs de l'Algérie,",
+    ""
+   ],
+   [
+    "Ok, c'est que Algérie,",
+    "Ok, c'est que l'Algérie,"
+   ],
+   [
+    "que Algérie",
+    "que l'Algérie"
+   ],
+   [
+    "je le mette direct",
+    "je le mets direct"
+   ],
+   [
+    "ça fait parler à côté de moi,",
+    "ça fait parler mon côté,"
+   ],
+   [
+    "réadmettre cette équipe-là",
+    "ramener cette équipe-là"
+   ],
+   [
+    "ou en fait quand moi j'arrivais,",
+    "en fait"
+   ]
+  ]
+ },
+ "02_algerie_pays_foot": {
+  "end_after": "Il est resté habillé.",
+  "fixes": [
+   [
+    "En fait, genre même ta gare...",
+    ""
+   ],
+   [
+    "le bonheur qu'elle a procuré",
+    "le bonheur qu'il a procuré"
+   ],
+   [
+    "Couffre-en, 97e minute.",
+    "Coup franc, à la fin du match."
+   ],
+   [
+    "moi j'aurais jeté le maillot Kamas.",
+    "moi j'aurais jeté le maillot."
+   ]
+  ]
+ },
+ "03_messi_7e": {
+  "fixes": [
+   [
+    "3, 2, 1, il me recette Messi.",
+    "3, 2, 1, numéro 7, Messi."
+   ],
+   [
+    "J'ai pas trop parlé sans lui.",
+    "J'ai pas trop parlé sur lui."
+   ],
+   [
+    "Moi, je prends pas de Messi ou Barça.",
+    "Moi, je parle pas de Messi au Barça."
+   ],
+   [
+    "Parce que en tant que capitaine de l'histoire du Barça, j'aime pas.",
+    ""
+   ],
+   [
+    "C'est ma capitaine de l'histoire du Barça.",
+    "C'est le meilleur capitaine de l'histoire du Barça."
+   ],
+   [
+    "Moi je suis pas d'accord à travailler là-dessus,",
+    "Moi je suis pas d'accord là-dessus,"
+   ],
+   [
+    "Mais non, j'aime pas ta vie.",
+    ""
+   ],
+   [
+    "c'est même pas des genres de foot.",
+    "c'est même pas des joueurs de foot."
+   ],
+   [
+    "Mais c'est moi qui ai eu le système.",
+    ""
+   ],
+   [
+    "C'est moi qui ai eu le système.",
+    ""
+   ],
+   [
+    "Messi, c'est ma capitaine de l'histoire du Barça.",
+    "Messi, c'est le meilleur capitaine de l'histoire du Barça."
+   ],
+   [
+    "sa truc de Barça,",
+    "son truc de Barça,"
+   ],
+   [
+    "Tu m'as pas enlevé la merde ?",
+    ""
+   ],
+   [
+    "Pour moi, c'est ma meilleure truc.",
+    ""
+   ],
+   [
+    "ses chums",
+    "septième"
+   ]
+  ]
+ },
+ "04_pique_ramos": {
+  "end_after": "Même Pépé, c'est la meilleure défenseur que Ramos, voilà, qui va dire quoi ?",
+  "fixes": [
+   [
+    "toutes les équipes ou l'AIT c'était... je n'aime pas le meilleur joueur.",
+    "dans toutes les équipes où il était, c'était pas le meilleur joueur."
+   ],
+   [
+    "ça ne va pas encore se perdre aux joueurs,",
+    ""
+   ],
+   [
+    "Piqué c'est un bien défenseur comme Ramos encore.",
+    "Piqué c'est un meilleur défenseur que Ramos."
+   ],
+   [
+    "Intraséquemment, je suis pas sur le point de...",
+    "Intrinsèquement."
+   ],
+   [
+    "Mais là c'est pas mieux, il t'acclame pas mieux.",
+    ""
+   ],
+   [
+    "un petit type mieux.",
+    "un petit peu mieux."
+   ],
+   [
+    "Piqué pourtant c'est mal que Ramos.",
+    "Piqué pourtant c'est mieux que Ramos."
+   ],
+   [
+    "se lâche avec ses têtes.",
+    "se démarque avec ses têtes."
+   ],
+   [
+    "obligé de t'acler,",
+    "obligé de tacler,"
+   ],
+   [
+    "Même Pépé, c'est la meilleure défenseur que Ramos,",
+    "Même Pepe, c'est un meilleur défenseur que Ramos,"
+   ]
+  ]
+ },
+ "05_matip_van_dijk": {
+  "end_after": "et il était archi fort, Trop fort !",
+  "fixes": [
+   [
+    "Matip Kamrouni,",
+    "Matip le Camerounais,"
+   ],
+   [
+    "une note d'agri",
+    "une autre dinguerie"
+   ],
+   [
+    "votre 6 de masse Fabinho,",
+    "votre 6 de base Fabinho,"
+   ],
+   [
+    "c'était Fabinho match-up,",
+    "c'était Fabinho-Matip,"
+   ],
+   [
+    "En fait, fallait savoir déjà que la saison d'après-monde, Van Dijk vient d'être croisé match-up et il était archi fort,",
+    "En fait, la saison d'après, Van Dijk est associé à Matip et il était archi fort,"
+   ]
+  ]
+ },
+ "06_matip_carlos": {
+  "end_after": "c'est juste qu'il a pas cette place.",
+  "fixes": [
+   [
+    "c'est trop un joueur qu'on laisse sur deux côtés et tout.",
+    "c'est un joueur qu'on laisse de côté."
+   ],
+   [
+    "Il est pas beau, cette dame, il ressemble",
+    "Il est pas beau, il ressemble"
+   ],
+   [
+    "plus fort que Farad.",
+    "plus fort que Varane."
+   ],
+   [
+    "Mais il a des sons, ferme ta gueule !",
+    ""
+   ],
+   [
+    "Eh, Farad, c'est juste parce que c'est un tismé français,",
+    "Eh, Varane, c'est juste parce que c'est un Français,"
+   ]
+  ]
+ },
+ "07_thiago_silva_affect": {
+  "start_at": "Mon top 3, ça va me faire rire",
+  "end_after": "J'ai joué démonseur pour lui!",
+  "fixes": [
+   [
+    "J'ai pas dit une heure, attends, je suis en fricadier.",
+    ""
+   ],
+   [
+    "Il a eu des champions.",
+    "Il a eu la Ligue des champions."
+   ],
+   [
+    "On ne parle pas de queue, de quoi il était capitaine?",
+    "On parle pas de ça, il était capitaine ?"
+   ],
+   [
+    "C'est moi quand j'étais français.",
+    ""
+   ],
+   [
+    "Et de bas,",
+    "Et de base,"
+   ],
+   [
+    "subjetif",
+    "subjectif"
+   ],
+   [
+    "J'ai joué démonseur pour lui!",
+    "J'ai joué défenseur pour lui !"
+   ]
+  ]
+ },
+ "08_rakitic_barca": {
+  "start_at": "Mais en fait moi ce qui m'énerve",
+  "end_after": "on sait même plus c'est qui là.",
+  "title": [
+   "À CÔTÉ D'INIESTA ET XAVI",
+   "« MÊME MOI J'AURAIS ÉTÉ FORT »"
+  ],
+  "fixes": [
+   [
+    "Iniesta au Bousquets,",
+    "Iniesta, Busquets,"
+   ],
+   [
+    "tout milieu de terrain qui est accompagné",
+    "un milieu de terrain qui est accompagné"
+   ],
+   [
+    "dans tout milieu de terrain,",
+    "dans ce milieu de terrain,"
+   ],
+   [
+    "Si il mérite de jouer dans tout milieu de terrain.",
+    ""
+   ],
+   [
+    "en fait tout milieu de terrain, un milieu",
+    "en fait un milieu"
+   ],
+   [
+    "Si il mérite de jouer dans ce milieu de terrain,",
+    ""
+   ]
+  ]
+ },
+ "09_modric_ballon_dor": {
+  "start_at": "Modrić est trop fort.",
+  "end_after": "Contrôler le jeu réel.",
+  "fixes": [
+   [
+    "Modrić contre l'Argentine, Tambus, Kamaz, ton match contre l'Angleterre.",
+    "Modrić contre l'Argentine, son match contre l'Angleterre."
+   ],
+   [
+    "Wallah Starfall a son match contre l'Angleterre.",
+    ""
+   ],
+   [
+    "En 2018, t'es trop frère.",
+    "En 2018, c'est trop frère."
+   ],
+   [
+    "il arrête le Rennes ?",
+    "il arrête le règne ?"
+   ],
+   [
+    "le plus dure",
+    "le plus dur"
+   ],
+   [
+    "Il s'arrêtaient pas.",
+    ""
+   ],
+   [
+    "Ah mais il a mis un fin.",
+    "Ah mais il y a mis fin."
+   ],
+   [
+    "Et en vrai 2021, c'est lui le...",
+    ""
+   ],
+   [
+    "Même au réel.",
+    "Même au Real."
+   ],
+   [
+    "tous les bits iconiques",
+    "tous les buts iconiques"
+   ],
+   [
+    "la passe des ?",
+    "la passe décisive ?"
+   ],
+   [
+    "les passe des ?",
+    "les passes décisives ?"
+   ],
+   [
+    "Contrôler le jeu réel.",
+    "Il contrôlait le jeu du Real."
+   ]
+  ]
+ },
+ "10_cr7_top5": {
+  "end_after": "Ouais, mais pour le Portugal c'est trop ce qu'il a fait.",
+  "fixes": [
+   [
+    "Quand je suis paris, il est là, il m'a loupé de son pays.",
+    ""
+   ],
+   [
+    "moi c'est parce que c'est moi l'affaite avec le Real,",
+    ""
+   ],
+   [
+    "il aurait été sa carrière plus tôt,",
+    "il aurait arrêté sa carrière plus tôt,"
+   ],
+   [
+    "pour atteindre 2000 buts.",
+    "pour atteindre 1000 buts."
+   ],
+   [
+    "Alnacer",
+    "Al-Nassr"
+   ],
+   [
+    "Pour moi Manchester, il devait avoir été bon.",
+    ""
+   ],
+   [
+    "il a pris la perjure du noy et tout,",
+    "il a pris joueur du mois et tout,"
+   ],
+   [
+    "par rapport à la phase,",
+    "par rapport au fait,"
+   ]
+  ]
+ },
+ "11_marquinhos_4e": {
+  "end_after": "c'est franchement trop",
+  "fixes": [
+   [
+    "Marquis.",
+    "Marquinhos."
+   ],
+   [
+    "Wallah, mis skinné.",
+    ""
+   ],
+   [
+    "Il a encore 2012-2013 comme ça.",
+    "Il est arrivé en 2012-2013."
+   ],
+   [
+    "l'air Katarith",
+    "les Qataris"
+   ],
+   [
+    "Il est arrivé avant les Qataris.",
+    "Il est arrivé après les Qataris."
+   ],
+   [
+    "Déjà un je me serais dit Belet je le mets dedans.",
+    "Déjà une, je me serais dit je le mets dedans."
+   ],
+   [
+    "et la belle avec même une troisième",
+    "et peut-être même une troisième"
+   ],
+   [
+    "marquino",
+    "Marquinhos"
+   ],
+   [
+    "ça y est ça y est c'est ça m'a saoulé",
+    "ça y est, ça m'a saoulé,"
+   ],
+   [
+    "sous côté",
+    "sous-coté"
+   ],
+   [
+    "la dernière année des champions",
+    "la dernière Ligue des champions"
+   ],
+   [
+    "c'était le meilleur genre de le meilleur défense centrale pas de choses comme ça comme ça pas toujours mais",
+    "c'était le meilleur défenseur central, mais"
+   ],
+   [
+    "ils sont envoyés par Lusias",
+    "il se fait envoyer par Luis Díaz,"
+   ],
+   [
+    "ils font un match de ouf",
+    "il fait un match de ouf"
+   ]
+  ]
+ },
+ "12_messi_joueurs_nuls": {
+  "start_at": "En fait vous ne rendez pas compte, il a normalisé",
+  "end_after": "Pas parce que c'était le capitaine. Parce que c'était Messi.",
+  "fixes": [
+   [
+    "En fait vous ne rendez pas compte,",
+    "En fait vous vous rendez pas compte,"
+   ],
+   [
+    "Wallah qu'on ne sait même pas ils jouent au MOUM.",
+    "Wallah qu'on sait même pas où ils jouent."
+   ],
+   [
+    "Coupe du MOUM",
+    "Coupe du monde"
+   ],
+   [
+    "elle paie sa merde.",
+    "elle pue la merde."
+   ],
+   [
+    "Modrić a fait une plus grosse arme.",
+    "Modrić a fait une plus grosse chose."
+   ],
+   [
+    "Non, non, jamais ta vie.",
+    "Non, jamais de ta vie."
+   ],
+   [
+    "Marguerite ne joue pas,",
+    "Agüero ne joue pas,"
+   ],
+   [
+    "Vas-y, Lothar Romarty, vas-y, joue-là quand vas-y, Lothar Romarty.",
+    "Vas-y, Lautaro Martínez."
+   ],
+   [
+    "Ota Menji",
+    "Otamendi"
+   ],
+   [
+    "Moi Tagliafico, c'est le troisième de latéral gauche de Lyon.",
+    "Tagliafico, c'est le troisième latéral gauche de Lyon."
+   ],
+   [
+    "Mais rentrez chez toi.",
+    "Mais rentre chez toi."
+   ]
+  ]
+ },
+ "13_capitaine_daron": {
+  "start_at": "Askez sait bien parler, non mais Messi",
+  "end_after": "quand tu as besoin d'un but, il te les donne.",
+  "fixes": [
+   [
+    "Askez sait bien parler, non mais Messi, il parle avec son pied.",
+    "Non mais Messi, il parle avec son pied."
+   ],
+   [
+    "Cavani, tu n'as pas besoin qu'il crie, qu'il crie, tu cries pour rien des fois.",
+    "Un capitaine, j'ai pas besoin qu'il crie, qu'il crie pour rien des fois."
+   ],
+   [
+    "Ramos, c'est pour ça qu'il crie pour rien.",
+    "Ramos, c'est pour ça, il crie pour rien."
+   ],
+   [
+    "Mais, moi, quand je te parle, tu joueurs extraordinaires,",
+    "Mais moi, quand je te parle, joueur extraordinaire,"
+   ],
+   [
+    "Quand tu as besoin de Dibal, il te les donne.",
+    "Quand tu as besoin de sous, il te les donne."
+   ],
+   [
+    "Et c'est ça mon truc, au moins.",
+    "Et c'est ça mon truc, moi."
+   ]
+  ]
+ },
+ "14_totti_real": {
+  "end_after": "ils ont tout le monde.",
+  "fixes": [
+   [
+    "l'AS Rom,",
+    "l'AS Roma,"
+   ],
+   [
+    "Qui ramène une série ou deux,",
+    "Qui ramène une Serie A ou deux,"
+   ],
+   [
+    "pendant le prime d'AYOV tout ça.",
+    "pendant le prime de la Juve tout ça."
+   ],
+   [
+    "Et son histoire d'amour actuel à l'AS Roma.",
+    "Et son histoire d'amour avec l'AS Roma."
+   ],
+   [
+    "C'est un daigre.",
+    ""
+   ],
+   [
+    "J'ai gagné.",
+    ""
+   ],
+   [
+    "Le Real, ils voulaient vraiment au moment.",
+    "Le Real, ils le voulaient vraiment."
+   ],
+   [
+    "Chaque blanc, ils l'ont donné.",
+    "Chèque en blanc, ils lui ont donné."
+   ],
+   [
+    "C'est pas le Real, il a déjà son équipe avec ça.",
+    "C'est pas le Real qui a déjà son équipe."
+   ]
+  ]
+ },
+ "15_de_bruyne": {
+  "end_after": "Franchement, en termes de jeu, il est très important.",
+  "fixes": [
+   [
+    "Pour moi, je dirais d'un gris,",
+    "Pour moi, je dirais une dinguerie,"
+   ],
+   [
+    "Je ne sais jamais encore qu'en tant que pire. Tu m'aurais dit Arnaud de Jaques, je t'aurais dit Bélène.",
+    ""
+   ],
+   [
+    "La première ligue.",
+    "La Premier League."
+   ],
+   [
+    "Devant ? Après une première ligue ?",
+    "En Premier League ?"
+   ],
+   [
+    "Heureusement qu'il y a une zéro de chute avec la Belgique.",
+    "Heureusement qu'il a zéro titre avec la Belgique."
+   ],
+   [
+    "Chavi, tête de homme.",
+    "Xavi."
+   ],
+   [
+    "mieux de Thera,",
+    "milieu de terrain,"
+   ],
+   [
+    "meilleur que Chavi.",
+    "meilleur que Xavi."
+   ]
+  ]
+ },
+ "16_lahm_330": {
+  "fixes": [
+   [
+    "le Capitana, c'était l'âme.",
+    "le capitaine, c'était Lahm."
+   ],
+   [
+    "l'âme",
+    "Lahm"
+   ],
+   [
+    "Capitana",
+    "capitanats"
+   ],
+   [
+    "septième sous ça.",
+    "septième."
+   ]
+  ]
+ },
+ "17_equipe_terrifiante": {
+  "end_after": "Je ne pouvais pas mettre le Real.",
+  "fixes": [
+   [
+    "T'es terrifiante en nul ?",
+    "Terrifiante en nul ?"
+   ],
+   [
+    "Non, t'es terrifiante en trop forte.",
+    "Non, terrifiante en trop fort."
+   ],
+   [
+    "Tu peux me contraire, t'as peur en fait.",
+    "Tu les rencontres, t'as peur en fait."
+   ],
+   [
+    "le Liverpool de clock.",
+    "le Liverpool de Klopp."
+   ],
+   [
+    "il coupe du monde",
+    "une Coupe du monde"
+   ],
+   [
+    "Le bail en 2020,",
+    "Le Bayern en 2020,"
+   ],
+   [
+    "Ils ont matricé",
+    "Ils ont atomisé"
+   ],
+   [
+    "Le PSG, il est plus terrifiant.",
+    "Le Bayern, il est plus terrifiant."
+   ],
+   [
+    "Alors que le ballon, c'est...",
+    "Alors que le Bayern, c'est..."
+   ],
+   [
+    "rentre, tu rentres.",
+    "rentre chez toi."
+   ],
+   [
+    "Le club, le club, c'est la même chose.",
+    ""
+   ]
+  ]
+ },
+ "18_benzema_2022": {
+  "fixes": [
+   [
+    "le moment où il a eu une capitaine,",
+    "le moment où il a été capitaine,"
+   ],
+   [
+    "il était là comme ça, le coach disait, mais non, je me sens marqué un but, voilà,",
+    "il était là comme ça, voilà,"
+   ],
+   [
+    "parce qu'il savait très mal,",
+    "parce qu'il savait,"
+   ],
+   [
+    "je vais en marquer un deux autres,",
+    "je vais en marquer deux autres,"
+   ],
+   [
+    "parce qu'en fait, toi, le pro contexte du Réal de 2002, jamais de la victoire du Réal, il gagne là, il est champion.",
+    "remets dans le contexte le Real de 2022, jamais de la vie tu penses qu'il gagne la Ligue des champions."
+   ],
+   [
+    "Fernand Mendy,",
+    "Ferland Mendy,"
+   ],
+   [
+    "à Drake, à Mamiga,",
+    ""
+   ],
+   [
+    "quand même, je vous dis un truc, on fera prochainement, mais pour le moment,",
+    ""
+   ],
+   [
+    "Réal",
+    "Real"
+   ]
+  ]
+ },
+ "19_zlatan_suede": {
+  "end_after": "Il est très sous-côté dans ce qu'il a fait.",
+  "fixes": [
+   [
+    "Vous allez me créer dessus.",
+    "Vous allez me crier dessus."
+   ],
+   [
+    "C'est le type de capitaine que je n'ai pas du tout.",
+    "C'est le type de capitaine."
+   ],
+   [
+    "une sélection gaze",
+    "une sélection gaz"
+   ],
+   [
+    "J'ai un autre domo top",
+    "J'ai un autre de mon top"
+   ],
+   [
+    "sous-côté",
+    "sous-coté"
+   ]
+  ]
+ },
+ "20_chiellini_juve": {
+  "end_after": "Non, il était dans mon top 15.",
+  "fixes": [
+   [
+    "de la G20,",
+    "de la Juve,"
+   ],
+   [
+    "le réel,",
+    "le Real,"
+   ],
+   [
+    "le Gibala, Manzuki, Marquizio, Chiellini, Bonucci, un frère, c'est-à-dire des briscards.",
+    "Dybala, Mandžukić, Marchisio, Chiellini, Bonucci, frère, c'était des briscards."
+   ],
+   [
+    "C'est le jour là, Chiellini, Bonucci, mais Buffon !",
+    "Chiellini, Bonucci, et Buffon !"
+   ]
+  ]
+ },
+ "21_chiellini_euro": {
+  "title": [
+   "CHIELLINI",
+   "QUI ATTRAPE SAKA EN FINALE"
+  ],
+  "fixes": [
+   [
+    "ils sont gaises,",
+    "ils sont gaz,"
+   ],
+   [
+    "je me rappelle d'action contre Saka, que l'attrape Saka en finale, c'est Kiellini contre Saka,",
+    "je me rappelle de l'action contre Saka, quand il attrape Saka en finale, c'est Chiellini contre Saka,"
+   ]
+  ]
+ },
+ "22_devine_real": {
+  "end_after": "dans les Galactik.",
+  "fixes": [
+   [
+    "Barra le capitaine,",
+    "Varane capitaine,"
+   ],
+   [
+    "réel",
+    "Real"
+   ],
+   [
+    "Barra ?",
+    "Varane ?"
+   ],
+   [
+    "Disolé,",
+    "Désolé,"
+   ],
+   [
+    "il s'était fait chier dessus, parce qu'il dit, le match dégueulasse,",
+    "il s'était fait marcher dessus, le match dégueulasse,"
+   ],
+   [
+    "Saint-Georgen Ramos.",
+    "Sergio Ramos."
+   ],
+   [
+    "j'ai même vu des matchs de lui.",
+    "j'ai jamais vu des matchs de lui."
+   ],
+   [
+    "Non, mais par exemple, dans la famille, tu veux déjà un oncle, tu parles pas mal de Raoul. Et il aime trop Raoul.",
+    ""
+   ],
+   [
+    "Tu parles de Raoul Morientes,",
+    "Tu parles de Raúl, Morientes,"
+   ],
+   [
+    "comme si c'était Yaman là.",
+    "comme si c'était Yamal là."
+   ],
+   [
+    "Laura, qui là, genre même Galactik, Galactik, c'est lui qui a été maître là-bas, dans les Galactik.",
+    "La Roja, même les Galácticos, c'est lui qui était maître là-bas, dans les Galácticos."
+   ],
+   [
+    "Raoul",
+    "Raúl"
+   ]
+  ]
+ },
+ "23_puyol_surcote": {
+  "end_after": "C'est un sien mais moi je vais remettre le toc.",
+  "fixes": [
+   [
+    "Alors, le message.",
+    ""
+   ],
+   [
+    "il aurait pu être sûr.",
+    "il aurait pu être top 1."
+   ],
+   [
+    "En sort, t'es une fiole.",
+    ""
+   ],
+   [
+    "capitana,",
+    "capitanat,"
+   ],
+   [
+    "Pouilleol",
+    "Puyol"
+   ],
+   [
+    "Intrasequement, intrinsèquement.",
+    "Intrinsèquement."
+   ],
+   [
+    "un match 75,",
+    "un match à 75,"
+   ],
+   [
+    "il a trop, il a tant d'impactes de ouf !",
+    "il a un impact de ouf !"
+   ],
+   [
+    "C'est un sien mais moi je vais remettre le toc.",
+    ""
+   ]
+  ]
+ },
+ "24_barca_messi": {
+  "end_after": "Il jouait avec des joueurs de merde.",
+  "fixes": [
+   [
+    "Ah, il fait pas deux ans.",
+    ""
+   ],
+   [
+    "devant Mexican, j'ai eu peur.",
+    "devant Messi, j'ai eu peur."
+   ],
+   [
+    "comment il était gaze.",
+    "comment il était gaz."
+   ],
+   [
+    "En vrai, vous gagnez après au retour.",
+    ""
+   ],
+   [
+    "Mais il matcha l'équipe de Messi.",
+    ""
+   ],
+   [
+    "C'est que pendant une semaine, j'étais en train de passer.",
+    ""
+   ],
+   [
+    "Moi, j'étais en train de gérer un chat.",
+    ""
+   ],
+   [
+    "En fait, là, en temps d'achetage, je faisais des deux rages de fou.",
+    ""
+   ],
+   [
+    "Et on l'a fait.",
+    ""
+   ]
+  ]
+ },
+ "25_buffon_serie_b": {
+  "end_after": "Je l'ai pas mis, je l'ai pas mis, je l'ai pas mis.",
+  "fixes": [
+   [
+    "T'as mis un peu ?",
+    ""
+   ],
+   [
+    "c'est juste Buffon sur Kiff, que ça juge l'Italie, etc.",
+    "c'est juste Buffon, la Juve, l'Italie, etc."
+   ],
+   [
+    "Ils se sont pas descendus en Ligue 2",
+    "Ils sont descendus en Ligue 2"
+   ]
+  ]
+ },
+ "26_ramos_psg": {
+  "end_after": "et en Espagne c'était la même chose avec Piqué.",
+  "fixes": [
+   [
+    "il tchébrant parce que j'avoue",
+    "j'avoue"
+   ],
+   [
+    "Mais il était deux Marquinhos tous les heures qu'il faisait, Marquinhos il les rattrapait.",
+    "Mais il avait Marquinhos, toutes les erreurs qu'il faisait, Marquinhos les rattrapait."
+   ]
+  ]
+ },
+ "27_jamais_recal": {
+  "end_after": "Oui, c'est parce que t'es Liverpool, c'est tout.",
+  "title": [
+   "VAN DIJK, 64 MATCHS",
+   "SANS SE FAIRE DRIBBLER ?"
+  ],
+  "fixes": [
+   [
+    "Parce que Van Dijk, la Turqueuse...",
+    "Parce que Van Dijk..."
+   ],
+   [
+    "64 matchs sans sept-pli, dribri.",
+    "64 matchs sans se faire dribbler."
+   ],
+   [
+    "C'est une tasse de merde, wesh !",
+    "C'est une stat de merde, wesh !"
+   ],
+   [
+    "Mais c'est le mot que vous pensez !",
+    ""
+   ],
+   [
+    "recalparer de meufs.",
+    "recaler par une meuf."
+   ],
+   [
+    "Si je suis pas le même meuf,",
+    "Si tu parles jamais à une meuf,"
+   ]
+  ]
+ },
+ "28_ramos_top1": {
+  "fixes": [
+   [
+    "C'est le premier jour que j'ai pensé.",
+    "C'est le premier joueur que j'ai pensé."
+   ],
+   [
+    "Mais t'as pas le mal à parler de Messi.",
+    "Mais t'as mal parlé de Messi."
+   ],
+   [
+    "c'est-à-dire que l'argentin n'a jamais été forte à lui.",
+    "c'est-à-dire que l'Argentine n'a jamais été forte avant lui."
+   ],
+   [
+    "l'argentin",
+    "l'Argentine"
+   ],
+   [
+    "C'était pas une nation de tout.",
+    "C'était pas une nation de foot ?"
+   ],
+   [
+    "Avant Messi, avec qui, comme jour...",
+    "Avant Messi, avec qui, comme joueur..."
+   ],
+   [
+    "Y'avait-il qui avant Messi ?",
+    "Y'avait qui avant Messi ?"
+   ],
+   [
+    "Mais Maradona, c'est un maire capitaine qui met sur une sélection.",
+    "Mais Maradona, c'est un meilleur capitaine que Messi en sélection."
+   ],
+   [
+    "n'importe quel argentin",
+    "n'importe quel Argentin"
+   ],
+   [
+    "les argentins.",
+    "les Argentins."
+   ]
+  ]
+ },
+ "29_speaker_vinicius": {
+  "fixes": [
+   [
+    "comme le réel,",
+    "comme le Real,"
+   ],
+   [
+    "Ouais, en vérité je l'ai payé en fait je trouve.",
+    "Ouais."
+   ]
+  ]
+ },
+ "30_ramos_heritier": {
+  "end_after": "Il y a un défenseur, je ne sais plus comment il s'appelle.",
+  "fixes": [
+   [
+    "au réel,",
+    "au Real,"
+   ],
+   [
+    "que ce soit à l'Orasto.",
+    ""
+   ],
+   [
+    "Tadjim, Thiago Silva,",
+    "Thiago Silva,"
+   ]
+  ]
+ },
+ "31_pro_cr7": {
+  "fixes": [
+   [
+    "Meilleur joueur du selection nationale,",
+    "Meilleur joueur de sélection nationale,"
+   ],
+   [
+    "Meilleur joueur du club,",
+    "Meilleur joueur de club,"
+   ],
+   [
+    "C'est pas savoir, c'est que Messi,",
+    "Ce qu'il faut savoir, c'est que Messi,"
+   ]
+  ]
+ },
+ "32_cavani_zlatan": {
+  "fixes": [
+   [
+    "haïtte",
+    "haine"
+   ],
+   [
+    "avec Moutichat,",
+    "avec lui,"
+   ],
+   [
+    "il avait un propos",
+    "il avait comme propos"
+   ],
+   [
+    "C'est pareil, crier, ça fait rien de gérer.",
+    "C'est pareil, crier, ça veut rien dire."
+   ],
+   [
+    "On a dit que tu étais le meilleur capitaine par rapport à nous.",
+    "On a dit que c'était les meilleurs capitaines par rapport à nous."
+   ],
+   [
+    "on n'a pas dit quoi pour objectif.",
+    "on n'a pas dit que c'était objectif."
+   ],
+   [
+    "haine, même dans le top 20,",
+    "même dans le top 20,"
+   ]
+  ]
+ },
+ "33_di_maria": {
+  "end_after": "et but en copain américain.",
+  "fixes": [
+   [
+    "mes joueurs les plus écoutés, j'ai pas fait une dix,",
+    "mes joueurs les plus sous-cotés, j'ai pas fait un top 10,"
+   ],
+   [
+    "Wallah qui est la raison. Di María fait la raison.",
+    "Wallah qu'il a raison."
+   ],
+   [
+    "Wallah, Di María, tu te mettes aussi le final.",
+    ""
+   ],
+   [
+    "T'arrêtes pas, le final est juste dans un match, non ?",
+    ""
+   ],
+   [
+    "Et Marco Coutinho ?",
+    ""
+   ],
+   [
+    "vous savez où je disais quoi ?",
+    "vous savez je disais quoi ?"
+   ],
+   [
+    "pour les sporteurs.",
+    "pour les supporters."
+   ],
+   [
+    "C'est juste, en fait, un mot de nez.",
+    ""
+   ],
+   [
+    "Alors, d'aujourd'hui, on n'a pas dédié les droits.",
+    ""
+   ],
+   [
+    "tu joues en Arsène.",
+    "tu joues à Rosario."
+   ],
+   [
+    "parce qu'il s'est pas joué du pied droit.",
+    "parce qu'il sait pas jouer du pied droit."
+   ],
+   [
+    "la passe dès qu'il fait comme ça ?",
+    "la passe qu'il fait comme ça ?"
+   ],
+   [
+    "Je m'en rappellerai, quand tu vas voir leur boulet, là.",
+    ""
+   ],
+   [
+    "et but en copain américain.",
+    "et son but en Copa América."
+   ]
+  ]
+ },
+ "34_rodrygo": {
+  "fixes": [
+   [
+    "un mec qui vient de ton étnique,",
+    "un mec qui vient de ton ethnie,"
+   ],
+   [
+    "C'est vrai, c'est pas parce qu'il médite.",
+    ""
+   ],
+   [
+    "un djeun de Bollywood.",
+    "un Indien de Bollywood."
+   ],
+   [
+    "Rodrigo, c'est un djeun même.",
+    "Rodrygo, c'est un Indien même."
+   ],
+   [
+    "il est pas un djeun",
+    "il est pas indien"
+   ],
+   [
+    "il était un djeun.",
+    "il était indien."
+   ],
+   [
+    "un djeun",
+    "indien"
+   ],
+   [
+    "Rodrigo",
+    "Rodrygo"
+   ]
+  ]
+ },
+ "35_futur_capitaine_psg": {
+  "fixes": [
+   [
+    "Marquinhos, Salomaré, Lekoum,",
+    "Marquinhos, salam alaykoum,"
+   ],
+   [
+    "on va gagner pas mal de vies.",
+    "on va gagner pas mal de titres."
+   ],
+   [
+    "Au cas où João Neves c'est un 2600.",
+    "João Neves c'est un 2004."
+   ],
+   [
+    "Il y a le même match que cette table là.",
+    ""
+   ],
+   [
+    "Après c'est un 2002.",
+    ""
+   ],
+   [
+    "C'est vrai qu'il a deux ans que nous,",
+    "C'est vrai, il a deux ans de moins que nous,"
+   ],
+   [
+    "Il y a un problème avec le match que nous, mais oui.",
+    ""
+   ],
+   [
+    "Il est le match comme mon petit frère.",
+    "Il a le même âge que mon petit frère."
+   ],
+   [
+    "il va battre avant la trentaine.",
+    "il va bientôt avoir la trentaine."
+   ]
+  ]
+ },
+ "36_messi_sous_cote": {
+  "start_at": "Moi, j'ai un avis et je le dirai tout le temps",
+  "end_after": "C'est son pied. C'est son pied qui parle.",
+  "fixes": [
+   [
+    "sous-côté",
+    "sous-coté"
+   ],
+   [
+    "On peut pas dire que c'est le goûte alors que c'est…",
+    "On peut pas dire ça alors que c'est le GOAT…"
+   ],
+   [
+    "J'aime la dernière coupe du jambon.",
+    "Même la dernière Coupe du monde."
+   ],
+   [
+    "À tout le monde avant la coupe jaune !",
+    "Tout le monde avant la Coupe du monde !"
+   ],
+   [
+    "On va appeler le G, tu as le Gagne 2-0, frérot.",
+    ""
+   ],
+   [
+    "Messi l'a activé ses jambes, on a perdu 3-2 en type.",
+    "Messi a activé ses jambes, on a perdu."
+   ],
+   [
+    "Il a activé ses jambes, j'ai pleuré.",
+    "Il a activé ses jambes, j'ai pleuré."
+   ]
+  ]
+ }
+}

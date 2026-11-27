@@ -1,0 +1,330 @@
+{
+ "vod": "/home/user/clips/topside/topside_src.mp4",
+ "outdir": "/home/user/clips/topside/clips",
+ "clips": [
+  {
+   "slug": "mahrez_can",
+   "start": 706,
+   "end": 782,
+   "title": [
+    "MAHREZ 10ÈME",
+    "IL A OFFERT LA CAN À L'ALGÉRIE"
+   ]
+  },
+  {
+   "slug": "algerie_pays_foot",
+   "start": 796,
+   "end": 846,
+   "title": [
+    "EN ALGÉRIE",
+    "IL N'Y A QUE LE FOOT"
+   ]
+  },
+  {
+   "slug": "messi_7e",
+   "start": 1624,
+   "end": 1700,
+   "title": [
+    "MESSI SEULEMENT 7ÈME ?!",
+    "LE DÉBAT EXPLOSE"
+   ]
+  },
+  {
+   "slug": "pique_ramos",
+   "start": 2218,
+   "end": 2292,
+   "title": [
+    "PIQUÉ MEILLEUR",
+    "QUE RAMOS ?!"
+   ]
+  },
+  {
+   "slug": "matip_van_dijk",
+   "start": 2408,
+   "end": 2470,
+   "title": [
+    "MATIP MEILLEUR",
+    "QUE VAN DIJK ?!"
+   ]
+  },
+  {
+   "slug": "matip_carlos",
+   "start": 2470,
+   "end": 2520,
+   "title": [
+    "POURQUOI ON PARLE JAMAIS",
+    "DE MATIP ?"
+   ]
+  },
+  {
+   "slug": "thiago_silva_affect",
+   "start": 2524,
+   "end": 2600,
+   "title": [
+    "THIAGO SILVA 3ÈME",
+    "PAR PUR AFFECT"
+   ]
+  },
+  {
+   "slug": "rakitic_barca",
+   "start": 2696,
+   "end": 2760,
+   "title": [
+    "RAKITIĆ AU BARÇA ?",
+    "« MÊME MOI J'AURAIS ÉTÉ FORT »"
+   ]
+  },
+  {
+   "slug": "modric_ballon_dor",
+   "start": 2756,
+   "end": 2820,
+   "title": [
+    "MODRIĆ 2ÈME",
+    "LE BALLON D'OR LE PLUS DUR"
+   ]
+  },
+  {
+   "slug": "cr7_top5",
+   "start": 1955,
+   "end": 2025,
+   "title": [
+    "CR7 TOP 5",
+    "IL A TROP RALLONGÉ SA CARRIÈRE ?"
+   ]
+  },
+  {
+   "slug": "marquinhos_4e",
+   "start": 2056,
+   "end": 2118,
+   "title": [
+    "MARQUINHOS 4ÈME",
+    "LA DÉFINITION DU CAPITAINE"
+   ]
+  },
+  {
+   "slug": "messi_joueurs_nuls",
+   "start": 2958,
+   "end": 3050,
+   "title": [
+    "MESSI A GAGNÉ",
+    "AVEC DES JOUEURS NULS ?"
+   ]
+  },
+  {
+   "slug": "capitaine_daron",
+   "start": 3155,
+   "end": 3200,
+   "title": [
+    "UN CAPITAINE",
+    "C'EST COMME TON DARON"
+   ]
+  },
+  {
+   "slug": "totti_real",
+   "start": 345,
+   "end": 407,
+   "title": [
+    "TOTTI A REFUSÉ",
+    "LE REAL MADRID"
+   ]
+  },
+  {
+   "slug": "de_bruyne",
+   "start": 414,
+   "end": 482,
+   "title": [
+    "DE BRUYNE",
+    "MEILLEUR PASSEUR DE LA PL ?"
+   ]
+  },
+  {
+   "slug": "lahm_330",
+   "start": 886,
+   "end": 954,
+   "title": [
+    "LAHM",
+    "330 MATCHS CAPITAINE"
+   ]
+  },
+  {
+   "slug": "equipe_terrifiante",
+   "start": 956,
+   "end": 1022,
+   "title": [
+    "L'ÉQUIPE LA PLUS",
+    "TERRIFIANTE DE L'HISTOIRE ?"
+   ]
+  },
+  {
+   "slug": "benzema_2022",
+   "start": 1040,
+   "end": 1112,
+   "title": [
+    "BENZEMA 2022",
+    "UN SUPER-HÉROS"
+   ]
+  },
+  {
+   "slug": "zlatan_suede",
+   "start": 1176,
+   "end": 1232,
+   "title": [
+    "ZLATAN",
+    "IL A RENDU LA SUÈDE FORTE"
+   ]
+  },
+  {
+   "slug": "chiellini_juve",
+   "start": 1257,
+   "end": 1342,
+   "title": [
+    "CHIELLINI 8ÈME",
+    "LA JUVE DE 2016 ÉTAIT INJOUABLE"
+   ]
+  },
+  {
+   "slug": "chiellini_euro",
+   "start": 1340,
+   "end": 1373,
+   "title": [
+    "CHIELLINI",
+    "CAPITAINE CHAMPION D'EUROPE"
+   ]
+  },
+  {
+   "slug": "devine_real",
+   "start": 1418,
+   "end": 1512,
+   "title": [
+    "DEVINE SON TOP 8",
+    "IL A JOUÉ AU REAL"
+   ]
+  },
+  {
+   "slug": "puyol_surcote",
+   "start": 1530,
+   "end": 1606,
+   "title": [
+    "PUYOL",
+    "SURCOTÉ ?"
+   ]
+  },
+  {
+   "slug": "barca_messi",
+   "start": 1700,
+   "end": 1760,
+   "title": [
+    "RONALDO DEVANT MESSI ?",
+    "« JAMAIS »"
+   ]
+  },
+  {
+   "slug": "buffon_serie_b",
+   "start": 2130,
+   "end": 2162,
+   "title": [
+    "BUFFON",
+    "IL EST RESTÉ EN SERIE B"
+   ]
+  },
+  {
+   "slug": "ramos_psg",
+   "start": 2290,
+   "end": 2345,
+   "title": [
+    "RAMOS AU PSG",
+    "ÇA PASSE OU PAS ?"
+   ]
+  },
+  {
+   "slug": "jamais_recal",
+   "start": 2366,
+   "end": 2400,
+   "title": [
+    "LA COMPARAISON",
+    "LA PLUS CLAIRE DU DÉBAT"
+   ]
+  },
+  {
+   "slug": "ramos_top1",
+   "start": 2895,
+   "end": 2955,
+   "title": [
+    "RAMOS OU MESSI",
+    "TOP 1 CAPITAINE ?"
+   ]
+  },
+  {
+   "slug": "speaker_vinicius",
+   "start": 3308,
+   "end": 3342,
+   "title": [
+    "LE SPEAKER",
+    "DU BERNABÉU"
+   ]
+  },
+  {
+   "slug": "ramos_heritier",
+   "start": 3341,
+   "end": 3378,
+   "title": [
+    "RAMOS",
+    "IL A LAISSÉ QUEL HÉRITIER ?"
+   ]
+  },
+  {
+   "slug": "pro_cr7",
+   "start": 3456,
+   "end": 3500,
+   "title": [
+    "« JE SUIS PRO CR7 »",
+    "MAIS MESSI M'A CALMÉ"
+   ]
+  },
+  {
+   "slug": "cavani_zlatan",
+   "start": 3606,
+   "end": 3646,
+   "title": [
+    "CAVANI MEILLEUR",
+    "QUE ZLATAN ?"
+   ]
+  },
+  {
+   "slug": "di_maria",
+   "start": 3672,
+   "end": 3745,
+   "title": [
+    "DI MARÍA",
+    "LE PLUS SOUS-COTÉ DE L'HISTOIRE"
+   ]
+  },
+  {
+   "slug": "rodrygo",
+   "start": 3779,
+   "end": 3830,
+   "title": [
+    "RODRYGO",
+    "IL EST INDIEN ?!"
+   ]
+  },
+  {
+   "slug": "futur_capitaine_psg",
+   "start": 3884,
+   "end": 3935,
+   "title": [
+    "LE FUTUR CAPITAINE",
+    "DU PSG"
+   ]
+  },
+  {
+   "slug": "messi_sous_cote",
+   "start": 3100,
+   "end": 3160,
+   "title": [
+    "MESSI",
+    "LE JOUEUR LE PLUS SOUS-COTÉ DE L'HISTOIRE"
+   ]
+  }
+ ]
+}

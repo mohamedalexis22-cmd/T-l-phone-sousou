@@ -19,7 +19,7 @@ FONT_BLACK = '/usr/share/fonts/opentype/inter/Inter-Black.otf'
 FONT_XB = '/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf'
 PANEL_H = 960          # each half
 BANNER_Y = 830         # banner sits across the seam
-CAP_Y = 1560           # captions baseline area (bottom panel)
+CAP_Y = 1520           # captions baseline area (bottom panel)
 
 
 def run(cmd):
@@ -35,7 +35,7 @@ def A(p):
 
 
 # ---------------------------------------------------------------- timeline
-def speech_segments(words, start, end, gap=0.35, pre=0.08, post=0.12, max_len=3.6):
+def speech_segments(words, start, end, gap=0.9, pre=0.15, post=0.3, max_len=4.5):
     ws = [w for w in words if w['s'] >= start and w['e'] <= end]
     if not ws:
         return [(start, end)], []
@@ -77,38 +77,58 @@ def probe_dur(p):
 
 
 # ---------------------------------------------------------------- scenes
-def is_screen(vod, t):
+def scene_kind(vod, t):
+    """'screen' (tier list / browser), 'room' (full room cam) or 'match' (broadcast + cam overlay)."""
     raw = subprocess.run(['ffmpeg', '-loglevel', 'error', '-ss', f'{t:.2f}', '-i', vod, '-frames:v', '1',
-                          '-vf', 'scale=192:108', '-f', 'rawvideo', '-pix_fmt', 'gray', '-'],
+                          '-vf', 'scale=192:108', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'],
                          capture_output=True).stdout
-    if len(raw) < 192 * 108:
-        return False
-    strip = raw[0:192 * 3][:120]       # top rows, left part: browser chrome is light grey
-    return sum(strip) / len(strip) > 150
+    if len(raw) < 192 * 108 * 3:
+        return 'room'
+    px = lambda x, y: raw[(y * 192 + x) * 3:(y * 192 + x) * 3 + 3]
+    strip = [sum(px(x, y)) / 3 for y in range(0, 3) for x in range(0, 120)]
+    if sum(strip) / len(strip) > 150:
+        return 'screen'
+    reg = [px(x, y) for y in range(45, 108, 3) for x in range(0, 120, 3)]
+    r = sum(p[0] for p in reg) / len(reg); g = sum(p[1] for p in reg) / len(reg); b = sum(p[2] for p in reg) / len(reg)
+    return 'room' if (b > g + 12 and (r + g + b) / 3 < 120) else 'match'
 
 
-def panel_filters(screen, variant):
+CFG = {'pill': ['EN LIVE TOUS LES SOIRS À PARTIR DE 21H', 'twitch.tv/teekkaa_'],
+       'outro': ['EN LIVE TOUS LES SOIRS', 'À PARTIR DE 21H', 'twitch.tv/teekkaa_'],
+       'kind': None, 'cam_top': [690, 620], 'cam_bot': [1300, 1380], 'cam_cy': 600}
+
+
+def panel_filters(kind, variant):
     """Return (top, bottom) crop filters for a 1920x1080 source -> 1080x960 each."""
     z_top, z_bot = (1.0, 1.18) if variant % 2 == 0 else (1.18, 1.0)
-    if screen:
+    if kind == 'screen':
         # top: the shared screen (left of the cam overlay); bottom: the cam overlay
         cw, ch = 1215 / z_top, 1080 / z_top
         top = f"crop={cw:.0f}:{ch:.0f}:{max(0, 640 - cw / 2):.0f}:{(1080 - ch) / 2:.0f}"
         cw2 = 400 / z_bot; ch2 = cw2 / 1.125
         bot = f"crop={cw2:.0f}:{ch2:.0f}:{1605 - cw2 / 2:.0f}:{max(0, 177 - ch2 / 2):.0f}"
+    elif kind == 'match':
+        # reactions only (no broadcast footage): two crops of the cam overlay
+        def ov(cx, z):
+            cw = 400 / z; ch = cw / 1.125
+            x = min(max(1290, cx - cw / 2), 1920 - cw)
+            return f"crop={cw:.0f}:{ch:.0f}:{x:.0f}:{max(0, 190 - ch / 2):.0f}"
+        top = ov([1480, 1500][variant % 2], z_top)
+        bot = ov([1730, 1710][variant % 2], z_bot)
     else:
         def cam(cx, cy, z):
             cw, ch = 1080 / z, 960 / z
             x = min(max(0, cx - cw / 2), 1920 - cw); y = min(max(0, cy - ch / 2), 1080 - ch)
             return f"crop={cw:.0f}:{ch:.0f}:{x:.0f}:{y:.0f}"
-        top = cam([690, 620][variant % 2], 600 if z_top == 1.0 else 630, z_top)
-        bot = cam([1300, 1380][variant % 2], 600 if z_bot == 1.0 else 630, z_bot)
+        cy = CFG['cam_cy']
+        top = cam(CFG['cam_top'][variant % 2], cy if z_top == 1.0 else cy + 30, z_top)
+        bot = cam(CFG['cam_bot'][variant % 2], cy if z_bot == 1.0 else cy + 30, z_bot)
     sc = f"scale={W}:{PANEL_H}:flags=lanczos,setsar=1"
     return f"{top},{sc}", f"{bot},{sc}"
 
 
-def render_segment(vod, a, b, screen, variant, out):
-    top, bot = panel_filters(screen, variant)
+def render_segment(vod, a, b, kind, variant, out):
+    top, bot = panel_filters(kind, variant)
     fc = (f"[0:v]fps={FPS},split[a][b];[a]{top}[t];[b]{bot}[u];[t][u]vstack,format=yuv420p[v];"
           f"[0:a]aresample=48000,aformat=channel_layouts=stereo[au]")
     run(['ffmpeg', '-loglevel', 'error', '-y', '-ss', f'{a:.3f}', '-to', f'{b:.3f}', '-i', vod,
@@ -151,14 +171,19 @@ def make_overlay(title, path):
     logo = Image.open(A('logo_white.png')).resize((190, 190), Image.LANCZOS)
     shadow = Image.new('RGBA', logo.size, (0, 0, 0, 0)); shadow.putalpha(logo.getchannel('A').point(lambda v: v * 0.5))
     im.alpha_composite(shadow, (34, 44)); im.alpha_composite(logo, (30, 40))
-    # twitch pill bottom
-    fp = ImageFont.truetype(FONT_XB, 36)
-    txt = 'twitch.tv/teekkaa_'
-    tw = fp.getlength(txt)
-    px0 = W / 2 - tw / 2 - 60; px1 = W / 2 + tw / 2 + 34
-    rounded(d, (px0, H - 170, px1, H - 104), 33, WHITE + (255,))
-    d.ellipse((px0 + 24, H - 148, px0 + 46, H - 126), fill=PURPLE)
-    d.text((px0 + 60, H - 137), txt, font=fp, fill=PURPLE_D, anchor='lm')
+    # twitch pill bottom: live schedule + channel
+    f1 = ImageFont.truetype(FONT_BLACK, 34)
+    f2 = ImageFont.truetype(FONT_XB, 32)
+    l1, l2 = CFG['pill']
+    tw = max(f1.getlength(l1) + 40, f2.getlength(l2))
+    px0 = W / 2 - tw / 2 - 40; px1 = W / 2 + tw / 2 + 40
+    py0, py1 = H - 214, H - 96
+    rounded(d, (px0 + 5, py0 + 7, px1 + 5, py1 + 7), 30, (0, 0, 0, 110))
+    rounded(d, (px0, py0, px1, py1), 30, WHITE + (255,))
+    lx = W / 2 - (f1.getlength(l1) + 40) / 2
+    d.ellipse((lx, py0 + 26, lx + 24, py0 + 50), fill=(255, 59, 92))
+    d.text((lx + 40, py0 + 38), l1, font=f1, fill=PURPLE, anchor='lm')
+    d.text((W / 2, py0 + 86), l2, font=f2, fill=PURPLE_D, anchor='mm')
     im.save(path)
     return (bx0 + 40, bx1 - 40, by1 - 36)
 
@@ -193,9 +218,10 @@ def make_outro(path):
     logo = Image.open(A('logo_white.png')).resize((620, 620), Image.LANCZOS)
     im.alpha_composite(logo, ((W - 620) // 2, (H - 620) // 2 - 120))
     f = ImageFont.truetype(FONT_BLACK, 58)
-    d.text((W / 2, H / 2 + 330), 'ABONNE-TOI', font=f, fill=WHITE, anchor='mm')
-    f2 = ImageFont.truetype(FONT_XB, 40)
-    d.text((W / 2, H / 2 + 410), 'twitch.tv/teekkaa_', font=f2, fill=(220, 200, 255), anchor='mm')
+    d.text((W / 2, H / 2 + 320), CFG['outro'][0], font=f, fill=WHITE, anchor='mm')
+    d.text((W / 2, H / 2 + 395), CFG['outro'][1], font=f, fill=WHITE, anchor='mm')
+    f2 = ImageFont.truetype(FONT_XB, 42)
+    d.text((W / 2, H / 2 + 480), CFG['outro'][2], font=f2, fill=(220, 200, 255), anchor='mm')
     im.convert('RGB').save(path)
 
 
@@ -205,7 +231,48 @@ def ass_time(t):
     return f'{h}:{m:02d}:{s:05.2f}'
 
 
-def make_ass(words, segs, path):
+import re, unicodedata
+
+
+def _norm(t):
+    t = unicodedata.normalize('NFD', t.lower())
+    t = ''.join(c for c in t if unicodedata.category(c) != 'Mn')
+    return re.sub(r"[^a-z0-9']", '', t)
+
+
+def apply_fixes(words, fixes):
+    """words: [{'s','e','w'}] (one per spoken word). fixes: [[old phrase, new phrase], ...].
+    Matching ignores case/accents/punctuation; new words share the old span's timing."""
+    for old, new in fixes:
+        o = [_norm(x) for x in old.split()]
+        o = [x for x in o if x]
+        if not o:
+            continue
+        i = 0
+        while i <= len(words) - len(o):
+            if [_norm(w['w']) for w in words[i:i + len(o)]] == o:
+                s0, e0 = words[i]['s'], words[i + len(o) - 1]['e']
+                tail = re.search(r'[.,!?…]+$', words[i + len(o) - 1]['w'].strip())
+                nw = new.split()
+                if nw and tail and not re.search(r'[.,!?…]$', nw[-1]):
+                    nw[-1] += tail.group(0)
+                if not nw:
+                    del words[i:i + len(o)]
+                    continue
+                tot = sum(len(x) for x in nw)
+                acc, rep = s0, []
+                for x in nw:
+                    d = (e0 - s0) * len(x) / tot
+                    rep.append({'s': acc, 'e': acc + d, 'w': ' ' + x})
+                    acc += d
+                words[i:i + len(o)] = rep
+                i += len(nw)
+            else:
+                i += 1
+    return words
+
+
+def make_ass(words, segs, path, fixes=()):
     hdr = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {W}
@@ -221,7 +288,15 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
     hl = '{\\3c&HFF2C7B&\\bord11\\fscx114\\fscy114}'
     ws = []
+    merged = []
     for w in words:
+        raw = w['w']
+        if merged and raw and (re.fullmatch(r'\s*[.,!?…;:]+\s*', raw) or (not raw.startswith(' ') and w['s'] - merged[-1]['e'] < 0.3)):
+            merged[-1] = dict(merged[-1], w=merged[-1]['w'] + raw, e=w['e'])
+        else:
+            merged.append(dict(w))
+    merged = apply_fixes(merged, list(fixes))
+    for w in merged:
         txt = w['w'].strip().upper()
         if not txt:
             continue
@@ -252,6 +327,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 # ---------------------------------------------------------------- main
 def main(spec_path):
     spec = json.load(open(spec_path))
+    for k in ('pill', 'outro', 'kind', 'cam_top', 'cam_bot', 'cam_cy'):
+        if k in spec:
+            CFG[k] = spec[k]
     vod, start, end = spec['vod'], spec['start'], spec['end']
     words = [w for seg in json.load(open(spec['transcript'])) for w in seg['words']]
     segs, ws = speech_segments(words, start, end)
@@ -261,7 +339,7 @@ def main(spec_path):
     # 1. segments (jump cuts + alternating framing)
     parts, variant, prev_screen = [], 0, None
     for i, (a, b) in enumerate(segs):
-        scr = is_screen(vod, (a + b) / 2)
+        scr = CFG['kind'] or scene_kind(vod, (a + b) / 2)
         variant = variant + 1 if scr == prev_screen else 0
         prev_screen = scr
         p = os.path.join(tmp, f'seg{i:03d}.mp4')
@@ -285,12 +363,14 @@ def main(spec_path):
     p1 = make_popup('ABONNE-TOI !', pop1)
     p2 = make_popup('♥ ENREGISTRE ET LIKE', pop2, PURPLE)
     outro = os.path.join(tmp, 'outro.png'); make_outro(outro)
-    ass = os.path.join(tmp, 'caps.ass'); make_ass(ws, segs, ass)
+    ass = os.path.join(tmp, 'caps.ass')
+    gfix = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixes_global.json')))
+    make_ass(ws, segs, ass, gfix + spec.get('fixes', []))
     t_pop1, t_pop2 = dur * 0.22, dur * 0.62
     OUT_D = 1.6
 
     # 3. compose: banner slides in, captions, progress dot, popups, flash on hard cuts
-    flash = ''.join(f"drawbox=x=0:y=0:w=iw:h=ih:color=white@0.35:t=fill:enable='between(t,{c:.2f},{c + 0.05:.2f})'," for c in cut_times[1::3])
+    flash = ''.join(f"drawbox=x=0:y=0:w=iw:h=ih:color=white@0.35:t=fill:enable='between(t,{c:.2f},{c + 0.05:.2f})'," for c in cut_times[2::5])
     pop_in = lambda t0: f"if(lt(t,{t0}+0.12),(t-{t0})/0.12,1)"
     fc = (
         f"[0:v]{flash}null[v0];"
@@ -309,7 +389,7 @@ def main(spec_path):
     for k, c in enumerate(cut_times):
         if k % 2 == 0:
             sfx.append((A('sfx_whoosh.wav'), max(0, c - 0.12), 0.35))
-    for c in cut_times[1::3]:
+    for c in cut_times[2::5]:
         sfx.append((A('sfx_click.wav'), c, 0.4))
     sfx += [(A('sfx_pop.wav'), t_pop1, 1.0), (A('sfx_pop.wav'), t_pop2, 1.0),
             (A('sfx_riser.wav'), max(0, dur - 2.3), 0.5), (A('sfx_impact.wav'), dur, 0.9)]
